@@ -3,9 +3,13 @@ import styled from 'styled-components';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPlay, faTv } from '@fortawesome/free-solid-svg-icons'
 import Nav from './Nav';
+import Search from './Search';
+
+import * as api from '../utils/api';
+
 
 // Fontawesome custom icon library
-library.add(faPlay, faTv);
+library.add(faPlay);
 
 // Styles
 const AppWrapper = styled.div`
@@ -30,6 +34,7 @@ class App extends Component {
     return (
       <AppWrapper>
         <Nav />
+        <Search />
         <AppFooter>
           <AppTitle>Welcome to React</AppTitle>
         </AppFooter>

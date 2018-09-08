@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../Button';
@@ -10,11 +10,10 @@ const NavContainer = styled.div`
 
 `
 const LogoContainer = styled.div`
-  margin-left: 5%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100px;
+  width: 90px;
 `
 
 const NavLinks = styled.nav`
