@@ -7,17 +7,16 @@ class Search extends Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.searchTitles = this.searchTitles.bind(this);
-  }
+    
+    this.typingTimeout = null;
 
-  state = {
-    query: '',
-    results: [],
-    isLoading: false,
-    error: null
-  }
+    this.state = {
+      query: '',
+      results: [],
+      isLoading: false,
+      error: null
+    }
 
-  componentWillMount() {
-    this.timer = null;
   }
 
   // Searches theMovieDB and filters out actors
@@ -30,18 +29,20 @@ class Search extends Component {
       .catch(error => this.setState({ error, isLoading: false }))
   }
 
-  handleChange() {
-    clearTimeout(this.timer);
-    this.setState({
-      query: this.search.value,
-      isLoading: true
-    }, () => {
-      if (this.state.query && this.state.query.length > 1) {
-        setTimeout(this.searchTitles(this.state.query), 5000);
-      }
-      else this.setState({ results: [], isLoading: false })
-    })
+  handleChange(e) {
+    clearTimeout(this.typingTimeout);
 
+    this.setState({
+      query: e.target.value,
+      isLoading: true
+    });
+
+    if (e.target.value && e.target.value.length > 1) {
+      this.typingTimeout = setTimeout(()=>this.searchTitles(this.state.query), 1000)
+    }
+    else this.setState({
+      results: [], isLoading: false
+    })
   }
 
   render() {
@@ -57,6 +58,7 @@ class Search extends Component {
           results={this.state.results}
           error={this.state.error}
           query={this.state.query}
+          isLoading={this.state.isLoading}
         />
       </form>
     )
