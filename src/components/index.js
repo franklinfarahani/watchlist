@@ -36,7 +36,7 @@ class App extends Component {
         <Nav />
         <Search />
         <AppFooter>
-          <AppTitle>Welcome to React</AppTitle>
+          <AppTitle>Footer</AppTitle>
         </AppFooter>
       </AppWrapper>
     );
