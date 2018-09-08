@@ -16,6 +16,10 @@ class Search extends Component {
     error: null
   }
 
+  componentWillMount() {
+    this.timer = null;
+  }
+
   // Searches theMovieDB and filters out actors
   searchTitles(query) {
     api.search(query)
@@ -27,15 +31,17 @@ class Search extends Component {
   }
 
   handleChange() {
+    clearTimeout(this.timer);
     this.setState({
       query: this.search.value,
       isLoading: true
     }, () => {
       if (this.state.query && this.state.query.length > 1) {
-        this.searchTitles(this.state.query)
+        setTimeout(this.searchTitles(this.state.query), 5000);
       }
       else this.setState({ results: [], isLoading: false })
     })
+
   }
 
   render() {

@@ -17,7 +17,7 @@ const Suggestions = (props) => {
   // If there are no results show the appropriate message
   return <div>
     {props.error ? <p>An error occured. Please try again later.</p> : null}
-    {props.results.length == 0 && props.query > 1 ? <p>No results found.</p>: <ul>{options}</ul>}
+    {props.results.length == 0 && props.query.length > 1 ? <p>No results found.</p>: <ul>{options}</ul>}
   </div>
 }
 
