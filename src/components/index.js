@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlay, faTv } from '@fortawesome/free-solid-svg-icons'
+import { faPlay, faSearch, faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import Nav from './Nav';
 import Search from './Search';
 
@@ -9,7 +9,7 @@ import * as api from '../utils/api';
 
 
 // Fontawesome custom icon library
-library.add(faPlay);
+library.add(faPlay, faSearch, faTimes, faSpinner);
 
 // Styles
 const AppWrapper = styled.div`
@@ -22,11 +22,12 @@ const AppWrapper = styled.div`
 const AppFooter = styled.div`
   background-color: #222;
   height: 150px;
+  margin-top: 50px;
   padding: 20px;
   color: white;
 `
-const AppTitle = styled.h1`
-  font-size: 1.3em;
+const AppTitle = styled.div`
+  font-size: .8em;
 `
 
 class App extends Component {
@@ -36,7 +37,7 @@ class App extends Component {
         <Nav />
         <Search />
         <AppFooter>
-          <AppTitle>Footer</AppTitle>
+          <AppTitle>&copy; Copyright Franklin Farahani 2018</AppTitle>
         </AppFooter>
       </AppWrapper>
     );

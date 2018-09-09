@@ -1,11 +1,51 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Suggestions from './Suggestions';
 import * as api from '../../utils/api';
+
+const SearchContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+  background: #eee;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+`
+
+const SearchBarContainer = styled.div`
+  background: transparent;
+  display: flex;
+`
+const IconContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+`
+
+const SearchBar = styled.input`
+  background: transparent;
+  border: none;
+  box-sizing: border-box;
+  color: #000000;
+  display: block;
+  line-height: 80px;
+  font-size: 40px;
+  font-weight: 100;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+  user-select: auto;
+  appearance: none;
+  box-flex: 1;
+  flex: 1;
+`
 
 class Search extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.searchTitles = this.searchTitles.bind(this);
     
     this.typingTimeout = null;
@@ -37,6 +77,7 @@ class Search extends Component {
       isLoading: true
     });
 
+    // setTimeout requires arrow function
     if (e.target.value && e.target.value.length > 1) {
       this.typingTimeout = setTimeout(()=>this.searchTitles(this.state.query), 1000)
     }
@@ -45,22 +86,42 @@ class Search extends Component {
     })
   }
 
+  handleKeyDown(e) {
+    // Pressing Enter
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      this.searchTitles(this.state.query)
+    }
+  }
+
   render() {
     return (
-      <form>
-        <input
-          type = "search"
-          placeholder = "Search..."
-          ref = {input => this.search = input}
-          onChange = {this.handleChange}
-        />
+      <SearchContainer>
+        <SearchBarContainer>
+          <IconContainer>
+            <FontAwesomeIcon icon ='search' />
+          </IconContainer>          
+          <SearchBar
+            type = "search"
+            placeholder = "Search..."
+            ref = {input => this.search = input}
+            onChange = {this.handleChange}
+            onKeyDown = {this.handleKeyDown}
+          />
+          <IconContainer>
+            <FontAwesomeIcon icon ='spinner' />
+          </IconContainer>
+          <IconContainer>
+            <FontAwesomeIcon icon ='times' />
+          </IconContainer>
+        </SearchBarContainer>
         <Suggestions
           results={this.state.results}
           error={this.state.error}
           query={this.state.query}
           isLoading={this.state.isLoading}
         />
-      </form>
+      </SearchContainer>
     )
   }
 
