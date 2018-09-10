@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled, {injectGlobal} from 'styled-components';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlay, faSearch, faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faPlay, faSearch, faTimes, faImage } from '@fortawesome/free-solid-svg-icons'
 import Nav from './Nav';
 import Search from './Search';
 
@@ -9,7 +9,7 @@ import * as api from '../utils/api';
 
 
 // Fontawesome custom icon library
-library.add(faPlay, faSearch, faTimes, faSpinner);
+library.add(faPlay, faSearch, faTimes, faImage);
 
 // Styles
 

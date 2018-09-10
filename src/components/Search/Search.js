@@ -14,7 +14,7 @@ const SearchContainer = styled.form`
 const SearchBarContainer = styled.div`
   background: transparent;
   display: flex;
-  background: #eee;
+  background: ${colors.bg.LIGHT};
   border-radius: 10px;
   box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
 `
@@ -29,7 +29,7 @@ const SearchBar = styled.input`
   background: transparent;
   border: none;
   box-sizing: border-box;
-  color: #000000;
+  color: ${colors.BLACK};
   display: block;
   line-height: 80px;
   font-size: 40px;

@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {imagesLoaded} from '../../utils';
 import {colors} from '../../utils/GlobalStyles';
 
+// Styles
+
 const SuggestionsContainer = styled.div`
-  background: ${colors.BG};
+  background: ${colors.bg.LIGHT};
   margin: 8px 0;
   border-radius: 10px;
 `
@@ -56,6 +59,15 @@ const CategorySpan = styled.span`
   font-size: .8em;
 `
 
+const EmptyImage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  width: 40px;
+  background: ${colors.bg.MEDIUM};
+`
+
 class Suggestions extends Component {
   constructor(props) {
     super(props)
@@ -66,12 +78,25 @@ class Suggestions extends Component {
 
   render() {
     const options = this.props.results.map(row => (
+      row.vote_count !== 0 &&
       <ResultRow key={row.id}>
-        <img src = {`http://image.tmdb.org/t/p/w92${row.poster_path}`} alt={`poster preview for ${row.media_type === "movie" ? row.title : row.name}`} />
+        {row.poster_path ? 
+          <img src = {`http://image.tmdb.org/t/p/w92${row.poster_path}`} alt={`poster preview for ${row.media_type === "movie" ? row.title : row.name}`} />
+          :
+          <EmptyImage>
+            <FontAwesomeIcon icon='image' color={colors.subtitle.GREY} />
+          </EmptyImage>
+        }
         <RowTextContainer>
           <strong>
             {row.media_type === "movie" ? row.title : row.name}
-            <YearSpan>{row.media_type === "movie" ? '(' + row.release_date.substring(0,4) + ')' : '(' + row.first_air_date.substring(0,4) + ')' } </YearSpan>
+            <YearSpan>
+              {row.media_type === "movie" ?
+                row.release_date ? '(' + row.release_date.substring(0,4) + ')' : '(Unknown)'
+                :
+                row.first_air_date ? '(' + row.first_air_date.substring(0,4) + ')' : '(Unknown)'
+              }
+            </YearSpan>
           </strong>
           <CategorySpan>{row.media_type === "movie" ? "in movies" : "in TV shows"}</CategorySpan>
         </RowTextContainer>
