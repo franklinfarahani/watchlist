@@ -15,8 +15,13 @@ const SearchBarContainer = styled.div`
   background: transparent;
   display: flex;
   background: ${colors.bg.LIGHT};
+  border: solid 3px transparent;
   border-radius: 10px;
   box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+
+  &:focus-within {
+    border: solid 3px;
+  }
 `
 const IconContainer = styled.div`
   display: flex;
@@ -33,13 +38,11 @@ const SearchBar = styled.input`
   display: block;
   line-height: 80px;
   font-size: 40px;
-  font-weight: 100;
+  font-weight: 200;
   margin: 0;
   min-width: 0;
   padding: 0;
-  user-select: auto;
   appearance: none;
-  box-flex: 1;
   flex: 1;
 `
 
@@ -100,6 +103,7 @@ class Search extends Component {
   clearInput(e) {
     e.preventDefault();
     this.search.value = '';
+    this.search.focus();
     this.setState({
       query: ''
     })

@@ -10,6 +10,7 @@ const SuggestionsContainer = styled.div`
   background: ${colors.bg.LIGHT};
   margin: 8px 0;
   border-radius: 10px;
+  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
 `
 
 const ResultList = styled.ul`
@@ -105,10 +106,6 @@ class Suggestions extends Component {
   
     return <SuggestionsContainer>
       {this.props.error && <p>An error occured. Please try again later.</p>}
-  
-      {/* Loading animation/spinner */}
-      {this.props.isLoading && <p>Loading...</p>}
-  
       {/* If there are no results show the appropriate message */}
       {this.props.results.length === 0 && this.props.query.length > 1 && this.props.isLoading === false ? 
         <ResultList>
