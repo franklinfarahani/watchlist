@@ -7,14 +7,14 @@ import * as api from '../../utils/api';
 const SearchContainer = styled.form`
   display: flex;
   flex-direction: column;
-  background: #eee;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
 `
 
 const SearchBarContainer = styled.div`
   background: transparent;
   display: flex;
+  background: #eee;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
 `
 const IconContainer = styled.div`
   display: flex;
@@ -115,12 +115,14 @@ class Search extends Component {
             <FontAwesomeIcon icon ='times' />
           </IconContainer>
         </SearchBarContainer>
-        <Suggestions
-          results={this.state.results}
-          error={this.state.error}
-          query={this.state.query}
-          isLoading={this.state.isLoading}
-        />
+        {this.state.query.length > 1 && 
+          <Suggestions
+            results={this.state.results}
+            error={this.state.error}
+            query={this.state.query}
+            isLoading={this.state.isLoading}
+          />
+        }
       </SearchContainer>
     )
   }

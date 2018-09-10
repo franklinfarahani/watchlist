@@ -3,10 +3,23 @@ import styled from 'styled-components';
 import {imagesLoaded} from '../../utils';
 import {colors} from '../../utils/GlobalStyles';
 
+const SuggestionsContainer = styled.div`
+  background: ${colors.BG};
+  margin: 8px 0;
+  border-radius: 10px;
+`
+
 const ResultList = styled.ul`
   background: transparent;
-  padding: 8px 16px;
   margin: 0;
+  padding: 16px;
+`
+
+const RowTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: space-around;
+  padding-left: 16px;
 `
 
 const ResultRow = styled.li`
@@ -31,13 +44,6 @@ const ResultRow = styled.li`
       }
     }
   }
-`
-
-const RowTextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: space-around;
-  padding-left: 16px;
 `
 
 const YearSpan = styled.span`
@@ -72,7 +78,7 @@ class Suggestions extends Component {
       </ResultRow>
     ))
   
-    return <div>
+    return <SuggestionsContainer>
       {this.props.error && <p>An error occured. Please try again later.</p>}
   
       {/* Loading animation/spinner */}
@@ -80,14 +86,16 @@ class Suggestions extends Component {
   
       {/* If there are no results show the appropriate message */}
       {this.props.results.length === 0 && this.props.query.length > 1 && this.props.isLoading === false ? 
-        <ResultRow>
-          <strong>No results found.</strong>
-        </ResultRow>
-          : 
+        <ResultList>
+          <ResultRow>
+            <strong>No results found.</strong>
+          </ResultRow>
+        </ResultList>
+        : 
         <ResultList>
           {options}
         </ResultList>}
-    </div>
+    </SuggestionsContainer>
   }
 
 }
