@@ -107,13 +107,13 @@ class Suggestions extends Component {
     return <SuggestionsContainer>
       {this.props.error && <p>An error occured. Please try again later.</p>}
       {/* If there are no results show the appropriate message */}
-      {this.props.results.length === 0 && this.props.query.length > 1 && this.props.isLoading === false ? 
+      {this.props.results.length === 0 && this.props.query.length > 1 && !this.props.isLoading ? 
         <ResultList>
           <ResultRow>
             <strong>No results found.</strong>
           </ResultRow>
         </ResultList>
-        : 
+        : !this.props.isLoading &&
         <ResultList>
           {options}
         </ResultList>}

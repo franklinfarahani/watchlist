@@ -20,7 +20,7 @@ const SearchBarContainer = styled.div`
   box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
 
   &:focus-within {
-    border: solid 3px;
+    border: solid 3px ${colors.PRIMARY};
   }
 `
 const IconContainer = styled.div`
@@ -127,7 +127,7 @@ class Search extends Component {
           />
           <IconContainer>
             {this.state.isLoading && 
-              <MDSpinner singleColor={colors.SECONDARY} />
+              <MDSpinner singleColor={colors.PRIMARY} />
             }
           </IconContainer>
           {this.state.query.length !==0 &&
