@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import {imagesLoaded} from '../../utils';
+import {colors} from '../../utils/GlobalStyles';
 
 const ResultList = styled.ul`
   background: transparent;
-  padding: 0;
+  padding: 8px 16px;
   margin: 0;
 `
 
@@ -13,10 +14,22 @@ const ResultRow = styled.li`
   list-style-type: none;
   display: flex;
   align-items: center;
+  padding: 8px 16px;
 
   img {
-    padding: 8px 32px;
     height: 60px;
+  }
+
+  &:hover {
+    background: ${colors.PRIMARY};
+    color: ${colors.WHITE};
+    border-radius: 4px;
+  
+    ${RowTextContainer} {
+      strong span {
+        color: ${colors.subtitle.PINK};
+      }
+    }
   }
 `
 
@@ -24,12 +37,13 @@ const RowTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: space-around;
+  padding-left: 16px;
 `
 
 const YearSpan = styled.span`
   font-weight: normal;
   padding: 0 5px;
-  color: grey;
+  color: ${colors.subtitle.GREY};
 `
 
 const CategorySpan = styled.span`
@@ -65,7 +79,14 @@ class Suggestions extends Component {
       {this.props.isLoading && <p>Loading...</p>}
   
       {/* If there are no results show the appropriate message */}
-      {this.props.results.length === 0 && this.props.query.length > 1 && this.props.isLoading === false ? <p>No results found.</p>: <ResultList>{options}</ResultList>}
+      {this.props.results.length === 0 && this.props.query.length > 1 && this.props.isLoading === false ? 
+        <ResultRow>
+          <strong>No results found.</strong>
+        </ResultRow>
+          : 
+        <ResultList>
+          {options}
+        </ResultList>}
     </div>
   }
 
