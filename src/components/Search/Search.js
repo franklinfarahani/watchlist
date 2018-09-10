@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Suggestions from './Suggestions';
 import * as api from '../../utils/api';
+import MDSpinner from 'react-md-spinner';
+import { colors } from '../../utils/GlobalStyles';
 
 const SearchContainer = styled.form`
   display: flex;
@@ -47,6 +49,7 @@ class Search extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.searchTitles = this.searchTitles.bind(this);
+    this.clearInput = this.clearInput.bind(this);
     
     this.typingTimeout = null;
 
@@ -94,26 +97,42 @@ class Search extends Component {
     }
   }
 
+  clearInput(e) {
+    e.preventDefault();
+    this.search.value = '';
+    this.setState({
+      query: ''
+    })
+  }
+  
+
   render() {
     return (
-      <SearchContainer>
+      <SearchContainer id='search-form'>
         <SearchBarContainer>
           <IconContainer>
             <FontAwesomeIcon icon ='search' />
-          </IconContainer>          
+          </IconContainer>
+          {/* Styled components need innerRef prop instead of ref */}
           <SearchBar
             type = "search"
             placeholder = "Search..."
-            ref = {input => this.search = input}
+            innerRef = {input => this.search = input}
             onChange = {this.handleChange}
             onKeyDown = {this.handleKeyDown}
           />
           <IconContainer>
-            <FontAwesomeIcon icon ='spinner' />
+            {this.state.isLoading && 
+              <MDSpinner singleColor={colors.SECONDARY} />
+            }
           </IconContainer>
-          <IconContainer>
-            <FontAwesomeIcon icon ='times' />
-          </IconContainer>
+          {this.state.query.length !==0 &&
+            <button name="clearInput" onClick={this.clearInput}>
+              <IconContainer>
+                <FontAwesomeIcon icon ='times' />
+              </IconContainer>
+            </button>
+          }
         </SearchBarContainer>
         {this.state.query.length > 1 && 
           <Suggestions
