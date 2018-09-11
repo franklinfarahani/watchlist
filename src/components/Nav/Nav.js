@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../Button';
+import {colors} from '../../utils/GlobalStyles';
 
 const NavContainer = styled.div`
   display: flex;
@@ -39,8 +40,8 @@ const Nav = () => {
   return (
     <NavContainer>
       <LogoContainer>
-        <FontAwesomeIcon icon ='play' />
-        watchlist
+        <FontAwesomeIcon icon ='play' color={colors.PRIMARY} />
+        Watchlist
       </LogoContainer>
       <NavLinks>
         <NavLinksPages role='navigation'>
@@ -49,7 +50,7 @@ const Nav = () => {
         </NavLinksPages>
         <NavLinksCTA>
           <Button href='#'>Log In</Button>
-          <Button href='#'>Sign Up</Button>
+          <Button href='#' category='primary'>Sign Up</Button>
         </NavLinksCTA>
       </NavLinks>
     </NavContainer>
