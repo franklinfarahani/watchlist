@@ -3,6 +3,7 @@ export const colors = {
   SECONDARY: '#F7BB97', //Peach Pink
   WHITE: '#fff',
   BLACK: '#000',
+  BACKDROP: 'rgba(48,48,48,.8)',
   subtitle :
     {
       GREY: '#aaa',
