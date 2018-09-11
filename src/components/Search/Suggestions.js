@@ -73,8 +73,25 @@ class Suggestions extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      imgLoading: true
+      display: true
     }
+    this.handleClick= this.handleClick.bind(this);
+  }
+
+  componentWillMount() {
+    document.addEventListener('mousedown', this.handleClick, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClick, false);
+  }
+
+  handleClick(e) {
+    if (this.node.contains(e.target) || this.node.previousSibling.contains(e.target)) {
+      this.setState({display: true})
+      return;
+    }
+    this.setState({display: false})
   }
 
   render() {
@@ -104,10 +121,12 @@ class Suggestions extends Component {
       </ResultRow>
     ))
   
-    return <SuggestionsContainer>
+    return (
+      <SuggestionsContainer innerRef = {el => this.node = el}>
       {this.props.error && <p>An error occured. Please try again later.</p>}
       {/* If there are no results show the appropriate message */}
-      {this.props.results.length === 0 && this.props.query.length > 1 && !this.props.isLoading ? 
+      {this.state.display ?
+        this.props.results.length === 0 && this.props.query.length > 1 && !this.props.isLoading ? 
         <ResultList>
           <ResultRow>
             <strong>No results found.</strong>
@@ -116,8 +135,11 @@ class Suggestions extends Component {
         : !this.props.isLoading &&
         <ResultList>
           {options}
-        </ResultList>}
-    </SuggestionsContainer>
+        </ResultList>
+      : null
+      }
+      </SuggestionsContainer>
+    )
   }
 
 }
