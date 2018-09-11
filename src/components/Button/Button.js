@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
 import styled from 'styled-components';
+import { colors } from '../../utils/GlobalStyles';
 
 const Button = styled.a`
+  background-origin: border-box;
   text-decoration: none;
   font-size: .9em;
-  background-image: linear-gradient(to right, #DD5E89 0%, #F7BB97 100%);
-  color: white;
+  background-image: ${(props) => props.category === 'primary' ? 'linear-gradient(to bottom, ' + colors.SECONDARY + ' 0%,' + colors.PRIMARY+' 100%)' : colors.white};
+  color: ${(props) => props.category === 'primary' ? 'white' : colors.PRIMARY};
   height: 37px;
   line-height: 37px;
   padding: 0 16px;
+  border: ${(props) => props.category === 'primary' ? 'solid 2px transparent' : 'solid 2px ' + colors.PRIMARY};
   border-radius: 4px;
-  box-shadow: 0 0px 6px 4px hsla(340, 65%, 62%, 0.2);
+  
   &:hover {
     background-position: right center;
   }
