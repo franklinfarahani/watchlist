@@ -88,7 +88,7 @@ class Search extends Component {
 
     // setTimeout requires arrow function
     if (e.target.value && e.target.value.length > 1) {
-      this.typingTimeout = setTimeout(()=>this.searchTitles(this.state.query), 1000)
+      this.typingTimeout = setTimeout(()=>this.searchTitles(this.state.query), 600)
     }
     else this.setState({
       results: [], isLoading: false
