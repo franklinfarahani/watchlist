@@ -9,6 +9,7 @@ import { colors } from '../../utils/GlobalStyles';
 const SearchContainer = styled.form`
   display: flex;
   flex-direction: column;
+  position: relative;
 `
 
 const SearchBarContainer = styled.div`

@@ -11,6 +11,9 @@ const SuggestionsContainer = styled.div`
   margin: 8px 0;
   border-radius: 10px;
   box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+  position: absolute;
+  width: 100%;
+  top: 85px;
 `
 
 const ResultList = styled.ul`
