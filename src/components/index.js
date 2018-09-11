@@ -43,11 +43,9 @@ const AppWrapper = styled.div`
 `
 
 const AppFooter = styled.div`
-  background-color: #222;
-  height: 150px;
   margin-top: 50px;
   padding: 20px;
-  color: white;
+  text-align: center;
 `
 const AppTitle = styled.div`
   font-size: .8em;
