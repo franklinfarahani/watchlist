@@ -44,6 +44,9 @@ const SearchBar = styled.input`
   padding: 0;
   appearance: none;
   flex: 1;
+  &::placeholder {
+    color: ${colors.subtitle.GREY}
+  }
 `
 
 class Search extends Component {
@@ -115,7 +118,10 @@ class Search extends Component {
       <SearchContainer id='search-form'>
         <SearchBarContainer>
           <IconContainer>
-            <FontAwesomeIcon icon ='search' />
+            <FontAwesomeIcon
+              icon ='search'
+              size ='lg'
+            />
           </IconContainer>
           {/* Styled components need innerRef prop instead of ref */}
           <SearchBar
@@ -133,7 +139,10 @@ class Search extends Component {
           {this.state.query.length !==0 &&
             <button name="clearInput" onClick={this.clearInput}>
               <IconContainer>
-                <FontAwesomeIcon icon ='times' />
+              <FontAwesomeIcon
+              icon ='times'
+              size ='lg'
+            />
               </IconContainer>
             </button>
           }
