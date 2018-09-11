@@ -2,11 +2,17 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Suggestions from './Suggestions';
+import SearchBackdrop from './SearchBackdrop'
 import * as api from '../../utils/api';
 import MDSpinner from 'react-md-spinner';
 import { colors } from '../../utils/GlobalStyles';
 
-const SearchContainer = styled.form`
+const SearchContainer = styled.div`
+
+`
+
+const FormContainer = styled.form`
+  z-index: 1001;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -55,6 +61,9 @@ class Search extends Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
+    this.handleBlur= this.handleBlur.bind(this);
+    this.handleOpen= this.handleOpen.bind(this);
     this.searchTitles = this.searchTitles.bind(this);
     this.clearInput = this.clearInput.bind(this);
     
@@ -64,6 +73,7 @@ class Search extends Component {
       query: '',
       results: [],
       isLoading: false,
+      isFocused:false,
       error: null
     }
 
@@ -104,58 +114,82 @@ class Search extends Component {
     }
   }
 
+  handleFocus() {
+    this.setState({ isFocused : true});
+  }
+
+  handleBlur() {
+    console.log(this.state.query.length);
+    if (this.state.query.length<2){
+      this.setState({ isFocused : false});
+    }
+  }
+
+  handleOpen(e) {
+    this.search.focus();
+    this.setState({ isFocused : e});
+  }
+
   clearInput(e) {
     e.preventDefault();
     this.search.value = '';
-    this.search.focus();
     this.setState({
-      query: ''
+      query: '',
+      results: [],
+      isFocused: true
     })
+    this.search.focus();
   }
   
 
   render() {
     return (
-      <SearchContainer id='search-form'>
-        <SearchBarContainer>
-          <IconContainer>
-            <FontAwesomeIcon
-              icon ='search'
-              size ='lg'
-            />
-          </IconContainer>
-          {/* Styled components need innerRef prop instead of ref */}
-          <SearchBar
-            type = "search"
-            placeholder = "Search..."
-            innerRef = {input => this.search = input}
-            onChange = {this.handleChange}
-            onKeyDown = {this.handleKeyDown}
-          />
-          <IconContainer>
-            {this.state.isLoading && 
-              <MDSpinner singleColor={colors.PRIMARY} />
-            }
-          </IconContainer>
-          {this.state.query.length !==0 &&
-            <button name="clearInput" onClick={this.clearInput}>
-              <IconContainer>
+      <SearchContainer>
+        <SearchBackdrop isFocused={this.state.isFocused}/>
+        <FormContainer id='search-form'>
+          <SearchBarContainer>
+            <IconContainer>
               <FontAwesomeIcon
-              icon ='times'
-              size ='lg'
+                icon ='search'
+                size ='lg'
+              />
+            </IconContainer>
+            {/* Styled components need innerRef prop instead of ref */}
+            <SearchBar
+              type = "search"
+              placeholder = "Search Database..."
+              innerRef = {input => this.search = input}
+              onChange = {this.handleChange}
+              // onFocus = {this.handleFocus}
+              // onBlur = {this.handleBlur}
+              onKeyDown = {this.handleKeyDown}
             />
-              </IconContainer>
-            </button>
-          }
-        </SearchBarContainer>
-        {this.state.query.length > 1 && 
-          <Suggestions
-            results={this.state.results}
-            error={this.state.error}
-            query={this.state.query}
-            isLoading={this.state.isLoading}
-          />
-        }
+            <IconContainer>
+              {this.state.isLoading && 
+                <MDSpinner singleColor={colors.PRIMARY} />
+              }
+            </IconContainer>
+            {this.state.query.length !==0 &&
+              <button name="clearInput" onClick={this.clearInput}>
+                <IconContainer>
+                <FontAwesomeIcon
+                icon ='times'
+                size ='lg'
+              />
+                </IconContainer>
+              </button>
+            }
+          </SearchBarContainer>
+
+            <Suggestions
+              results={this.state.results}
+              error={this.state.error}
+              query={this.state.query}
+              isLoading={this.state.isLoading}
+              isOpen={this.handleOpen}
+            />
+         
+        </FormContainer>
       </SearchContainer>
     )
   }

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {imagesLoaded} from '../../utils';
 import {colors} from '../../utils/GlobalStyles';
 
 // Styles
@@ -19,7 +18,7 @@ const SuggestionsContainer = styled.div`
 const ResultList = styled.ul`
   background: transparent;
   margin: 0;
-  padding: 16px;
+  padding: 0 16px;
 `
 
 const RowTextContainer = styled.div`
@@ -50,6 +49,14 @@ const ResultRow = styled.li`
         color: ${colors.subtitle.PINK};
       }
     }
+  }
+
+  &:first-child {
+    margin-top: 16px;
+  }
+
+  &:last-child {
+    margin-bottom: 16px;
   }
 `
 
@@ -92,9 +99,11 @@ class Suggestions extends Component {
   handleClick(e) {
     if (this.node.contains(e.target) || this.node.previousSibling.contains(e.target)) {
       this.setState({display: true})
+      this.props.isOpen(true);
       return;
     }
     this.setState({display: false})
+    this.props.isOpen(false);
   }
 
   render() {
