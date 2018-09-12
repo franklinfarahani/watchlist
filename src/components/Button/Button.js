@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { colors } from '../../utils/GlobalStyles';
 
-const Button = styled.a`
+const Button = styled(Link)`
   background-origin: border-box;
   text-decoration: none;
   font-size: .9em;

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-const Watchlist = () => {
+const Movies = () => {
   return (
     <div>
-      watchlist
+      Popular Movies
     </div>
   )
 }
 
-export default Watchlist;
+export default Movies;

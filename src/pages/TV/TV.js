@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-const Watchlist = () => {
+const TV = () => {
   return (
     <div>
-      watchlist
+      Popular TV Shows
     </div>
   )
 }
 
-export default Watchlist;
+export default TV;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../Button';
@@ -10,12 +11,15 @@ const NavContainer = styled.div`
   justify-content: space-between;
 
 `
-const LogoContainer = styled.div`
+const LogoContainerLink = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-left: 5px;
   width: 135px;
   font-size: 24px;
+  text-decoration:none;
+  color: #000;
 `
 
 const NavLinks = styled.nav`
@@ -31,6 +35,13 @@ const NavLinks = styled.nav`
 const NavLinksPages = styled.ul`
   width: 150px;
   padding : 0 30px;
+  li a {
+    text-decoration: none;
+    color: ${colors.PRIMARY}
+    &:hover {
+      color: ${colors.SECONDARY}
+    }
+  }
 `
 const NavLinksCTA = styled.ul`
   padding: 0;
@@ -40,18 +51,18 @@ const NavLinksCTA = styled.ul`
 const Nav = () => {
   return (
     <NavContainer>
-      <LogoContainer>
-        <FontAwesomeIcon icon ='play' color={colors.PRIMARY} />
-        Watchlist
-      </LogoContainer>
+        <LogoContainerLink exact to='/'>
+          <FontAwesomeIcon icon ='play' color={colors.PRIMARY} />
+          Watchlist
+        </LogoContainerLink>
       <NavLinks>
         <NavLinksPages role='navigation'>
-          <li>Movies</li>
-          <li>TV Shows</li>
+          <li><Link to='/movies'>Movies</Link></li>
+          <li><Link to='/tv'>TV Shows</Link></li>
         </NavLinksPages>
         <NavLinksCTA>
-          <Button href='#'>Log In</Button>
-          <Button href='#' category='primary'>Sign Up</Button>
+          <Button to='/'>Log In</Button>
+          <Button to='/' category='primary'>Sign Up</Button>
         </NavLinksCTA>
       </NavLinks>
     </NavContainer>
