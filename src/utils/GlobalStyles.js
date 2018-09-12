@@ -1,6 +1,6 @@
 export const colors = {
-  PRIMARY: '#DD5E89', //Hot Pink
-  SECONDARY: '#F7BB97', //Peach Pink
+  PRIMARY: '#7301cc', //Purple
+  SECONDARY: '#4776E6', //Blue
   WHITE: '#fff',
   BLACK: '#000',
   BACKDROP: 'rgba(48,48,48,.8)',
