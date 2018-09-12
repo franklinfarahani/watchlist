@@ -14,7 +14,8 @@ const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 90px;
+  width: 135px;
+  font-size: 24px;
 `
 
 const NavLinks = styled.nav`
