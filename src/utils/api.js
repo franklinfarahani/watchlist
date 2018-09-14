@@ -1,4 +1,4 @@
-import config from './config.json';
+import {tmdb} from './config';
 
 // Returns promise that contains data
 function get(url, endpoint) {
@@ -12,4 +12,4 @@ function get(url, endpoint) {
     });
 }
 
-export const search = (query) => get(config.tmdb.url,`/search/multi?api_key=${config.tmdb.key}&query=${query}`);
+export const search = (query) => get(tmdb.url,`/search/multi?api_key=${tmdb.key}&query=${query}`);
