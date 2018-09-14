@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import ToWatchList from '../../components/ToWatchList';
 
-const Watchlist = () => {
-  return (
-    <div>
-      watchlist
-    </div>
-  )
+const mapStateToProps = state => {
+  return {
+    watchList: state.toWatch
+  }
 }
+
+const Watchlist = connect(mapStateToProps)(ToWatchList);
 
 export default Watchlist;

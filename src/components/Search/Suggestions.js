@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import AddToList from '../AddToList';
 import {colors} from '../../utils/GlobalStyles';
 
 // Styles
@@ -130,6 +131,10 @@ class Suggestions extends Component {
           </strong>
           <CategorySpan>{row.media_type === "movie" ? "in movies" : "in TV shows"}</CategorySpan>
         </RowTextContainer>
+        <AddToList
+          item={row.id}
+
+        />
       </ResultRow>
     ))
   
