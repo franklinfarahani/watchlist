@@ -37,9 +37,10 @@ const NavLinksPages = styled.ul`
   padding : 0 30px;
   li a {
     text-decoration: none;
-    color: ${colors.PRIMARY}
+    font-size: 15px;
+    color: ${colors.BLACK};
     &:hover {
-      color: ${colors.SECONDARY}
+      color: ${colors.PRIMARY};
     }
   }
 `
@@ -51,7 +52,7 @@ const NavLinksCTA = styled.ul`
 const Nav = () => {
   return (
     <NavContainer>
-        <LogoContainerLink exact to='/'>
+        <LogoContainerLink to='/'>
           <FontAwesomeIcon icon ='play' color={colors.PRIMARY} />
           Watchlist
         </LogoContainerLink>
