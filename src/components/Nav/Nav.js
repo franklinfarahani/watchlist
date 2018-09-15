@@ -25,7 +25,7 @@ const LogoContainerLink = styled(Link)`
 const NavLinks = styled.nav`
   display: flex;
   align-items: center;
-  ul {
+  ul, div {
     list-style-type: none;
     display: flex;
     justify-content: space-between;
@@ -44,7 +44,7 @@ const NavLinksPages = styled.ul`
     }
   }
 `
-const NavLinksCTA = styled.ul`
+const NavLinksCTA = styled.div`
   padding: 0;
   width: 170px;
 `
@@ -62,8 +62,8 @@ const Nav = () => {
           <li><Link to='/tv'>TV Shows</Link></li>
         </NavLinksPages>
         <NavLinksCTA>
-          <Button to='/'>Log In</Button>
-          <Button to='/' category='primary'>Sign Up</Button>
+          <Button as={Link} to='/'>Log In</Button>
+          <Button as={Link} to='/' category='primary'>Sign Up</Button>
         </NavLinksCTA>
       </NavLinks>
     </NavContainer>
