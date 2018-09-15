@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import styled, {injectGlobal} from 'styled-components';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPlay, faSearch, faTimes, faImage } from '@fortawesome/free-solid-svg-icons'
 
 import Nav from './Nav';
 import Search from './Search';
-import * as api from '../utils/api';
 
 import Watchlist from '../pages/Watchlist/Watchlist';
 import Movies from '../pages/Movies/Movies';
