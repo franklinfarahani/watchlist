@@ -138,7 +138,7 @@ class Suggestions extends Component {
     ))
   
     return (
-      <SuggestionsContainer innerRef = {el => this.node = el}>
+      <SuggestionsContainer ref = {el => this.node = el}>
       {this.props.error && <p>An error occured. Please try again later.</p>}
       {/* If there are no results show the appropriate message */}
       {this.state.display ?
