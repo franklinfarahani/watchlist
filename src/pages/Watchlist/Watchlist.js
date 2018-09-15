@@ -23,8 +23,8 @@ class Watchlist extends Component {
 
     if (this.props.data === "loading") {
       return (
-        <div className="row center-align">
-          <div className="col s4 offset-s4">
+        <div>
+          <div>
             Loading...
           </div>
         </div>
