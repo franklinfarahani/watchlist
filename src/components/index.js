@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import styled, {injectGlobal} from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPlay, faSearch, faTimes, faImage } from '@fortawesome/free-solid-svg-icons'
 
@@ -22,7 +22,7 @@ library.add(faPlay, faSearch, faTimes, faImage);
 
 // Styles
 
-const ResetGlobalStyle = injectGlobal`
+const ResetGlobalStyle = createGlobalStyle`
   padding: 0;
   margin: 0;
   
@@ -80,6 +80,7 @@ class App extends Component {
           <AppFooter>
             <AppTitle>&copy; Copyright Franklin Farahani 2018</AppTitle>
           </AppFooter>
+        <ResetGlobalStyle />
         </AppWrapper>
       </Router>
     );

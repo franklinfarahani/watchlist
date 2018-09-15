@@ -154,11 +154,10 @@ class Search extends Component {
                 size ='lg'
               />
             </IconContainer>
-            {/* Styled components need innerRef prop instead of ref */}
             <SearchBar
               type = "search"
               placeholder = "Search Database..."
-              innerRef = {input => this.search = input}
+              ref = {input => this.search = input}
               onChange = {this.handleChange}
               // onFocus = {this.handleFocus}
               // onBlur = {this.handleBlur}
