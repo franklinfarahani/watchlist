@@ -4,14 +4,6 @@ import ListItem from '../../components/ListItem/ListItem';
 import { map, isEmpty } from 'lodash';
 import * as actions from '../../actions';
 
-// const mapStateToProps = state => {
-//   return {
-//     watchList: state.toWatch
-//   }
-// }
-
-// const Watchlist = connect(mapStateToProps)(ToWatchList);
-
 class Watchlist extends Component {
 
   componentWillMount() {

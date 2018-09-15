@@ -3,22 +3,10 @@ import { connect } from 'react-redux';
 import { addToList } from '../../actions';
 import Button from '../Button';
 
-// const AddToList = ({ item, dispatch }) => {
-//   return (
-//     <button onClick={e => {
-//       e.preventDefault();
-//       dispatch(addToList(item));
-//     }}>
-//     Add to List
-//     </button>
-//   )
-// }
-
-// export default connect()(AddToList);
-
 class AddToList extends Component {
-  handleAddClick = addToListItem => {
+  handleAddClick (e, addToListItem){
     const { addToList, auth } = this.props;
+    e.preventDefault();
     addToList(addToListItem, auth.uid);
   };
 
@@ -26,7 +14,7 @@ class AddToList extends Component {
     const { item } = this.props;
     return (
       <Button
-        onClick={() => this.handleAddClick(item)}
+        onClick={(e) => this.handleAddClick(e, item)}
       >
         Add to List
       </Button>

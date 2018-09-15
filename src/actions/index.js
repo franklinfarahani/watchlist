@@ -3,22 +3,7 @@ import { FETCH_LIST, FETCH_USER } from '../actions/types';
 
 // let nextPosition = 0;
 
-// export const addToList = item => ({
-//   type: 'ADD_TO_LIST',
-//   payload : {
-//     id: item.id,
-//     name: item.media_type === "movie" ? item.title : item.name,
-//     type: item.media_type,
-//     poster: item.poster,
-//     releaseDate: item.media_type === 'movie' ? item.release_date : item.first_air_date,
-//     genreIds: item.genre_ids,
-//     position: nextPosition++,
-//     dateAdded: Date.now()
-//   }  
-// })
-
 export const addToList = (newItem, uid) => async dispatch => {
-  console.log(listRef)
   listRef
     .child(uid)
     .push()
