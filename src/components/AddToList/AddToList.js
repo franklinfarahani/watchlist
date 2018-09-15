@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addToList } from '../../actions';
+import Button from '../Button';
 
 // const AddToList = ({ item, dispatch }) => {
 //   return (
@@ -24,11 +25,11 @@ class AddToList extends Component {
   render() {
     const { item } = this.props;
     return (
-      <span
+      <Button
         onClick={() => this.handleAddClick(item)}
       >
         Add to List
-      </span>
+      </Button>
     );
   }
 }
