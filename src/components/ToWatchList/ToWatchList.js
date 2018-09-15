@@ -7,7 +7,7 @@ const ToWatchList = ({ watchList }) => {
         <li
           key={item.id}
         >
-        {item.id}
+        {item.name + 'Date added: ' + item.dateAdded}
         </li>
       )}
     </ul>

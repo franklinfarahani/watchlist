@@ -132,8 +132,7 @@ class Suggestions extends Component {
           <CategorySpan>{row.media_type === "movie" ? "in movies" : "in TV shows"}</CategorySpan>
         </RowTextContainer>
         <AddToList
-          item={row.id}
-
+          item={row}
         />
       </ResultRow>
     ))

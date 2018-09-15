@@ -1,12 +1,57 @@
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ToWatchList from '../../components/ToWatchList';
+import ListItem from '../../components/ListItem/ListItem';
+import { map, isEmpty } from 'lodash';
+import * as actions from '../../actions';
 
-const mapStateToProps = state => {
-  return {
-    watchList: state.toWatch
+// const mapStateToProps = state => {
+//   return {
+//     watchList: state.toWatch
+//   }
+// }
+
+// const Watchlist = connect(mapStateToProps)(ToWatchList);
+
+class Watchlist extends Component {
+
+  componentWillMount() {
+    const { auth } = this.props;
+    this.props.fetchList(auth.uid);
+  }
+
+  render() {
+
+    if (this.props.data === "loading") {
+      return (
+        <div className="row center-align">
+          <div className="col s4 offset-s4">
+            Loading...
+          </div>
+        </div>
+      );
+    }
+
+    const { data } = this.props;
+    const list = map(data, (value, key) => {
+      return <ListItem key={key} itemId={key} item={value} />;
+    });
+    if (!isEmpty(list)) {
+      return <ul>{list}</ul>;
+    }
+    return (
+      <div>
+        <h4>List is empty.</h4>
+        <p>Start by searching for titles and adding them to the list.</p>
+      </div>
+    );
   }
 }
 
-const Watchlist = connect(mapStateToProps)(ToWatchList);
+const mapStateToProps = ({ data, auth }) => {
+  return {
+    data,
+    auth
+  };
+};
 
-export default Watchlist;
+export default connect(mapStateToProps, actions)(Watchlist);
