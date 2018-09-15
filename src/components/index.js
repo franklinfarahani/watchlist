@@ -4,9 +4,14 @@ import styled, {injectGlobal} from 'styled-components';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPlay, faSearch, faTimes, faImage } from '@fortawesome/free-solid-svg-icons'
 
+import { fetchUser } from '../actions';
+import { connect } from 'react-redux';
+
 import Nav from './Nav';
 import Search from './Search';
+import requireAuth from './auth/requireAuth';
 
+import SignIn from '../pages/SignIn/SignIn';
 import Watchlist from '../pages/Watchlist/Watchlist';
 import Movies from '../pages/Movies/Movies';
 import TV from '../pages/TV/TV';
@@ -57,13 +62,19 @@ const AppTitle = styled.div`
 `
 
 class App extends Component {
+
+  componentWillMount() {
+    this.props.fetchUser();
+  }
+
   render() {
     return (
       <Router>
         <AppWrapper>
           <Nav />
           <Search />
-          <Route exact path='/' component={Watchlist} />
+          <Route exact path='/' component={SignIn} />
+          <Route path='/app' component={requireAuth(Watchlist)} />
           <Route path='/movies' component={Movies} />
           <Route path='/tv' component={TV} />
           <AppFooter>
@@ -75,4 +86,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(null, { fetchUser })(App);

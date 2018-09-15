@@ -18,6 +18,7 @@ import { FETCH_LIST, FETCH_USER } from '../actions/types';
 // })
 
 export const addToList = (newItem, uid) => async dispatch => {
+  console.log(listRef)
   listRef
     .child(uid)
     .push()

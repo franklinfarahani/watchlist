@@ -17,8 +17,8 @@ import { addToList } from '../../actions';
 
 class AddToList extends Component {
   handleAddClick = addToListItem => {
-    const { addToList } = this.props;
-    addToList(addToListItem);
+    const { addToList, auth } = this.props;
+    addToList(addToListItem, auth.uid);
   };
 
   render() {
@@ -33,4 +33,10 @@ class AddToList extends Component {
   }
 }
 
-export default connect(null, { addToList })(AddToList);
+const mapStateToProps = ({ auth }) => {
+  return {
+    auth
+  };
+};
+
+export default connect(mapStateToProps, { addToList })(AddToList);
