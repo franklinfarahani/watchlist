@@ -24,6 +24,7 @@ const ResultList = styled.ul`
 
 const RowTextContainer = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: space-around;
   padding-left: 16px;
@@ -41,15 +42,9 @@ const ResultRow = styled.li`
   }
 
   &:hover {
-    background: ${colors.PRIMARY};
-    color: ${colors.WHITE};
+    background: ${colors.WHITE};
     border-radius: 4px;
-  
-    ${RowTextContainer} {
-      strong span {
-        color: ${colors.subtitle.PINK};
-      }
-    }
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   }
 
   &:first-child {
