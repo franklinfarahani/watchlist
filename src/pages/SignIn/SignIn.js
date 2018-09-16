@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signIn } from '../../actions';
 import PropTypes from 'prop-types';
+import Button from '../../components/Button'
 
 class Signin extends Component {
   static contextTypes = {
@@ -19,9 +20,9 @@ class Signin extends Component {
       <div>
         <div>
           <h4>Sign In to start</h4>
-          <span onClick={this.props.signIn}>
+          <Button onClick={this.props.signIn}>
             Sign In With Google
-          </span>
+          </Button>
         </div>
       </div>
     );
