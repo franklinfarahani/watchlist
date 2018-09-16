@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled, { createGlobalStyle } from 'styled-components';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPlay, faSearch, faTimes, faImage } from '@fortawesome/free-solid-svg-icons'
@@ -15,6 +15,7 @@ import SignIn from '../pages/SignIn/SignIn';
 import Watchlist from '../pages/Watchlist/Watchlist';
 import Movies from '../pages/Movies/Movies';
 import TV from '../pages/TV/TV';
+import AppWrapper from '../pages/AppWrapper'
 
 
 // Fontawesome custom icon library
@@ -45,7 +46,7 @@ const ResetGlobalStyle = createGlobalStyle`
   }
 `
 
-const AppWrapper = styled.div`
+const AppWrapperRENAME = styled.div`
   max-width: 720px;
   margin: auto;
   display: flex;
@@ -63,28 +64,29 @@ const AppTitle = styled.div`
 
 class App extends Component {
 
-  componentDidMount() {
-    this.props.fetchUser();
-  }
+  
 
   render() {
     return (
       <Router>
         <AppWrapper>
+          
           <Nav />
           <Search />
-          <Route exact path='/' component={SignIn} />
-          <Route path='/app' component={requireAuth(Watchlist)} />
-          <Route path='/movies' component={Movies} />
-          <Route path='/tv' component={TV} />
+          <Switch>
+            <Route exact path='/' component={SignIn} />
+            <Route path='/app' component={requireAuth(Watchlist)} />
+            <Route path='/movies' component={Movies} />
+            <Route path='/tv' component={TV} />
+          </Switch>
           <AppFooter>
             <AppTitle>&copy; Copyright Franklin Farahani 2018</AppTitle>
           </AppFooter>
-        <ResetGlobalStyle />
+          <ResetGlobalStyle />
         </AppWrapper>
       </Router>
     );
   }
 }
 
-export default connect(null, { fetchUser })(App);
+export default App;
