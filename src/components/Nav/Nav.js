@@ -46,7 +46,7 @@ const NavLinksPages = styled.ul`
 `
 const NavLinksCTA = styled.div`
   padding: 0;
-  width: 170px;
+  width: 175px;
 `
 
 const Nav = () => {
@@ -63,7 +63,7 @@ const Nav = () => {
         </NavLinksPages>
         <NavLinksCTA>
           <Button as={Link} to='/'>Log In</Button>
-          <Button as={Link} to='/' category='primary'>Sign Up</Button>
+          <Button as={Link} to='/' category='primary'>Register</Button>
         </NavLinksCTA>
       </NavLinks>
     </NavContainer>
