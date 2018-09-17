@@ -6,7 +6,7 @@ import * as actions from '../../actions';
 
 class Watchlist extends Component {
 
-  componentWillMount() {
+  componentDidMount() {
     const { auth } = this.props;
     this.props.fetchList(auth.uid);
   }
