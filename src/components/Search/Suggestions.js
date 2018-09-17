@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AddToList from '../AddToList';
-import {colors} from '../../utils/GlobalStyles';
+import { colors } from '../../utils/GlobalStyles';
 
 // Styles
 
@@ -103,34 +103,44 @@ class Suggestions extends Component {
   }
 
   render() {
-    const options = this.props.results.map(row => (
-      row.vote_count !== 0 &&
-      <ResultRow key={row.id}>
-        {row.poster_path ? 
-          <img src = {`http://image.tmdb.org/t/p/w92${row.poster_path}`} alt={`poster preview for ${row.media_type === "movie" ? row.title : row.name}`} />
-          :
-          <EmptyImage>
-            <FontAwesomeIcon icon='image' color={colors.subtitle.GREY} />
-          </EmptyImage>
-        }
-        <RowTextContainer>
-          <strong>
-            {row.media_type === "movie" ? row.title : row.name}
-            <YearSpan>
-              {row.media_type === "movie" ?
-                row.release_date ? '(' + row.release_date.substring(0,4) + ')' : '(Unknown)'
-                :
-                row.first_air_date ? '(' + row.first_air_date.substring(0,4) + ')' : '(Unknown)'
-              }
-            </YearSpan>
-          </strong>
-          <CategorySpan>{row.media_type === "movie" ? "in movies" : "in TV shows"}</CategorySpan>
-        </RowTextContainer>
-        <AddToList
-          item={row}
-        />
-      </ResultRow>
-    ))
+    const options = this.props.results.map(row => {
+      const item = {
+        id: row.id,
+        media_type: row.media_type,
+        title: row.media_type === 'movie' ? row.title : row.name,
+        poster: row.poster_path,
+        year: row.media_type === "movie" ? row.release_date : row.first_air_date,
+        genre_ids: row.genre_ids,
+        synopsis: row.overview
+      };
+      return (
+        row.vote_count !== 0 &&
+        <ResultRow key={item.id}>
+          {item.poster ? 
+            <img
+              src = {`http://image.tmdb.org/t/p/w92${item.poster}`}
+              alt = {`poster preview for ${item.title}`}
+            />
+            :
+            <EmptyImage>
+              <FontAwesomeIcon icon='image' color={colors.subtitle.GREY} />
+            </EmptyImage>
+          }
+          <RowTextContainer>
+            <strong>
+              {item.title}
+              <YearSpan>
+                {item.year ? '(' + item.year.substring(0,4) + ')' : '(Unknown)'}
+              </YearSpan>
+            </strong>
+            <CategorySpan>{item.media_type === "movie" ? "in movies" : "in TV shows"}</CategorySpan>
+          </RowTextContainer>
+          <AddToList
+            item={ item }
+          />
+        </ResultRow>
+      )
+    })
   
     return (
       <SuggestionsContainer ref = {el => this.node = el}>
