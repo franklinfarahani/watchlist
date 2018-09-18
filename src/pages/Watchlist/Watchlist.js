@@ -7,13 +7,12 @@ import * as actions from '../../actions';
 class Watchlist extends Component {
 
   componentDidMount() {
-    const { auth } = this.props;
-    this.props.fetchList(auth.uid);
+    const { auth, fetchList } = this.props;
+    fetchList(auth.user.uid);
   }
 
   render() {
-
-    if (this.props.data === "loading") {
+    if (this.props.data.isLoading) {
       return (
         <div>
           <div>
@@ -24,9 +23,10 @@ class Watchlist extends Component {
     }
 
     const { data } = this.props;
-    const list = map(data, (value, key) => {
-      return <ListItem key={key} itemId={key} item={value} />;
+    const list = map(data.list, (value, key) => {
+      return <ListItem key={key} itemId={value.id} item={value} />;
     });
+    
     if (!isEmpty(list)) {
       return <ul>{list}</ul>;
     }

@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { removeFromList } from "../../actions";
+import Button from '../../components/Button';
 
 class ListItem extends Component {
   handleRemoveClick = removeFromListId => {
     const { removeFromList, auth } = this.props;
-    removeFromList(removeFromListId, auth.uid);
+    removeFromList(removeFromListId, auth.user.uid);
   };
 
   render() {
@@ -14,11 +15,11 @@ class ListItem extends Component {
       <li>
         <h4>
           {item.title}{" "}
-          <span
+          <Button
             onClick={() => this.handleRemoveClick(itemId)}
           >
             Remove
-          </span>
+          </Button>
         </h4>
       </li>
     );

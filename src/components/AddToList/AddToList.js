@@ -7,7 +7,7 @@ class AddToList extends Component {
   handleAddClick (e, addToListItem){
     const { addToList, auth } = this.props;
     e.preventDefault();
-    addToList(addToListItem, auth.uid);
+    addToList(addToListItem, auth.user.uid);
   };
 
   render() {
