@@ -29,7 +29,6 @@ export const changeItemStatus = (existingItemId, uid) => async dispatch => {
 };
 
 export const removeFromList = (removeItemId, uid) => async dispatch => {
-  console.log(removeItemId,uid)
   listRef
     .child(uid)
     .child(removeItemId)
