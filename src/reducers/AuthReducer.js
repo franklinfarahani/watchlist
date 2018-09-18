@@ -1,10 +1,32 @@
-import { FETCH_USER } from "../actions/types";
+import { AUTH_USER, SIGN_OUT_USER, AUTH_ERROR } from "../actions/types";
 
-export default (state = false, action) => {
+const initialState = {
+  user: {},
+  authenticated: false,
+  error: null
+}
+
+export default (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_USER:
-      return action.payload || null;
-    default:
-      return state;
+      case AUTH_USER:
+          return {
+              ...state,
+              user: action.payload,
+              authenticated: true,
+              error: null
+          };
+      case SIGN_OUT_USER:
+          return {
+              ...state,
+              authenticated: false,
+              error: null
+          };
+      case AUTH_ERROR:
+          return {
+              ...state,
+              error: action.payload.message
+          };
+      default:
+          return state;
   }
-};
+}

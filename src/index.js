@@ -5,10 +5,13 @@ import { Provider } from 'react-redux'
 import ReduxThunk from 'redux-thunk';
 import './index.css';
 import App from './components/App';
+import { verifyAuth } from './actions';
 import rootReducer from './reducers';
 import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(rootReducer, {}, applyMiddleware(ReduxThunk));
+
+store.dispatch(verifyAuth());
 
 ReactDOM.render(
   <Provider store={store}>

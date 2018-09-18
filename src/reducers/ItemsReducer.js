@@ -1,39 +1,41 @@
-// const toWatch = (state =[], action ) => {
-//   switch (action.type) {
-//     case 'ADD_TO_LIST':
-//       return [
-//         ...state,
-//         {
-//           id: action.payload.id,
-//           name: action.payload.name,
-//           type: action.payload.type,
-//           poster: action.payload.poster,
-//           releaseDate: action.payload.releaseDate,
-//           genreIds: action.payload.genreIds,
-//           dateAdded: action.payload.dateAdded,
-//           position: action.payload.position,
-//           isWatched: false
-//         }
-//       ]
-//     case 'TOGGLE_WATCHED':
-//       return state.map(item =>
-//         (item.id === action.payload.id)
-//           ? {...item, isWatched: !item.isWatched}
-//           : item
-//       )
-//     default:
-//         return state;
-//   }
-// }
+import { SEARCH_TITLES, FETCH_LIST } from '../actions/types';
 
-// export default toWatch;
+const initialState = {
+  results: [],
+  list: [],
+  isLoading: true,
+  error: null
+}
 
-import { FETCH_LIST } from '../actions/types';
-
-export default (state = {}, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
+    case SEARCH_TITLES:
+      action.payload.then((data) => {
+        const filteredResults = data.results.filter(item => item.media_type !== "person");
+        return {
+          ...state,
+          results: filteredResults,
+          isLoading: false
+        };
+      })
+      .catch(error => (
+        {
+          ...state,
+          isLoading: false,
+          error
+        }
+      ));
+      break;
     case FETCH_LIST:
-      return action.payload;
+      let arr = [];
+      if (action.payload){
+        arr = Object.keys(action.payload).map((i) => action.payload[i]);
+      }
+      return {
+        ...state,
+        list: arr,
+        isLoading: false
+      }
     default:
       return state;
   }
