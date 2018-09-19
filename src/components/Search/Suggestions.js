@@ -7,9 +7,9 @@ import { colors } from '../../utils/GlobalStyles';
 // Styles
 
 const SuggestionsContainer = styled.div`
-  background: ${colors.bg.LIGHT};
+  background: ${colors.WHITE};
   margin: 8px 0;
-  border-radius: 10px;
+  border-radius: 4px;
   box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
   position: absolute;
   width: 100%;
@@ -42,9 +42,8 @@ const ResultRow = styled.li`
   }
 
   &:hover {
-    background: ${colors.WHITE};
+    background: ${colors.bg.LIGHT};
     border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   }
 
   &:first-child {

@@ -4,6 +4,7 @@ export const colors = {
   WHITE: '#fff',
   BLACK: '#000',
   BACKDROP: 'rgba(48,48,48,.8)',
+  NAV : '#777',
   subtitle :
     {
       GREY: '#aaa',

@@ -5,6 +5,7 @@ import { withRouter, Route, Redirect, Switch } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPlay, faSearch, faTimes, faImage } from '@fortawesome/free-solid-svg-icons'
+import { colors } from '../utils/GlobalStyles';
 
 import Nav from '../components/Nav';
 import Search from '../components/Search';
@@ -20,9 +21,23 @@ library.add(faPlay, faSearch, faTimes, faImage);
 // Styles
 
 const ResetGlobalStyle = createGlobalStyle`
-  padding: 0;
-  margin: 0;
-  
+  body {
+    background-color: ${colors.bg.LIGHT};
+    padding: 0;
+    margin: 0;
+    font-family: "SF UI Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(to right, ${colors.SECONDARY} 0%, ${colors.PRIMARY} 100%);
+    }
+  }
+
   input:focus,
   select:focus,
   textarea:focus,

@@ -1,7 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { removeFromList } from "../../actions";
+
+import styled from 'styled-components';
 import Button from '../../components/Button';
+
+const ListItemWrapper = styled.li`
+  background: transparent;
+  list-style-type: none;
+  display: flex;
+  padding: 8px 16px;
+  padding-left: 16px;
+`
 
 class ListItem extends Component {
   handleRemoveClick = removeFromListId => {
@@ -12,16 +22,14 @@ class ListItem extends Component {
   render() {
     const { itemId, item } = this.props;
     return (
-      <li>
-        <h4>
-          {item.title}{" "}
-          <Button
+      <ListItemWrapper>
+        <h4>{item.title}</h4>
+        <Button
             onClick={() => this.handleRemoveClick(itemId)}
           >
             Remove
-          </Button>
-        </h4>
-      </li>
+        </Button>
+      </ListItemWrapper>
     );
   }
 }

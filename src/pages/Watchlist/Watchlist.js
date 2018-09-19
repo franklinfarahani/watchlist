@@ -7,9 +7,10 @@ import { map, isEmpty } from 'lodash';
 import * as actions from '../../actions';
 
 const WatchlistContainer = styled.div`
-  background: ${colors.bg.LIGHT};
-  margin: 8px 0;
-  border-radius: 10px;
+  background: ${colors.WHITE};
+  /* TODO: get rid of space between search bar and watchlist */
+  margin: 110px 0; 
+  border-radius: 4px;
   box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
   width: 100%;
 `

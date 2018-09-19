@@ -21,14 +21,14 @@ const FormContainer = styled.form`
 const SearchBarContainer = styled.div`
   background: transparent;
   display: flex;
-  background: ${colors.bg.LIGHT};
+  background: ${colors.WHITE};
   border: solid 3px transparent;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+  border-radius: 4px;
+  box-shadow: 0 10px 30px 2px hsla(0, 0%, 0%, 0.15);
 
-  &:focus-within {
+  /* &:focus-within {
     border: solid 3px ${colors.PRIMARY};
-  }
+  } */
 `
 const IconContainer = styled.div`
   display: flex;

@@ -18,6 +18,7 @@ const LogoContainerLink = styled(Link)`
   padding-left: 5px;
   width: 135px;
   font-size: 24px;
+  font-weight: 600;
   text-decoration:none;
   color: #000;
 `
@@ -38,7 +39,7 @@ const NavLinksPages = styled.ul`
   li a {
     text-decoration: none;
     font-size: 15px;
-    color: ${colors.BLACK};
+    color: ${colors.NAV};
     &:hover {
       color: ${colors.PRIMARY};
     }
@@ -46,7 +47,7 @@ const NavLinksPages = styled.ul`
 `
 const NavLinksCTA = styled.div`
   padding: 0;
-  width: 175px;
+  width: 180px;
 `
 
 const Nav = () => {

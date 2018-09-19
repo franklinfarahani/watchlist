@@ -6,7 +6,7 @@ const bgImage = ({ category }) => {
 }
 
 const textColor = ({ category }) => {
-  return category ==='primary' ? 'white' : colors.PRIMARY;
+  return category ==='primary' ? 'white' : colors.NAV;
 }
 
 const borderColor = ({ category }) => {
@@ -36,9 +36,10 @@ const Button = styled.button`
   background-origin: border-box;
   text-decoration: none;
   font-size: .9em;
+  font-weight: 500;
   background-image: ${bgImage};
   background-size: auto 200%;
-  background-color: ${colors.WHITE};
+  background-color: transparent;
   color: ${textColor};
   height: 37px;
   padding: 0 16px;
