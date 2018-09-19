@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Route, Redirect, Switch } from 'react-router-dom';
 
-import styled, { createGlobalStyle } from 'styled-components';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlay, faSearch, faTimes, faImage } from '@fortawesome/free-solid-svg-icons'
-import { colors } from '../utils/GlobalStyles';
+import styled from 'styled-components';
+import GlobalStyles from '../config/GlobalStyles'
 
 import Nav from '../components/Nav';
 import Search from '../components/Search';
@@ -15,47 +13,7 @@ import Watchlist from '../pages/Watchlist/Watchlist';
 import Movies from '../pages/Movies/Movies';
 import TV from '../pages/TV/TV';
 
-// Fontawesome custom icon library
-library.add(faPlay, faSearch, faTimes, faImage);
-
 // Styles
-
-const ResetGlobalStyle = createGlobalStyle`
-  body {
-    background-color: ${colors.bg.LIGHT};
-    padding: 0;
-    margin: 0;
-    font-family: "SF UI Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(to right, ${colors.SECONDARY} 0%, ${colors.PRIMARY} 100%);
-    }
-  }
-
-  input:focus,
-  select:focus,
-  textarea:focus,
-  button:focus {
-    outline: none;
-  }
-
-  input[type="search"]::-webkit-search-cancel-button {
-  -webkit-appearance: none;
-  }
-
-  button {
-    background: transparent;
-    border : none;
-    font: inherit;
-    cursor: pointer;
-  }
-`
 
 const AppFooter = styled.div`
   margin-top: 50px;
@@ -119,7 +77,7 @@ class AppWrapper extends Component{
           <AppFooter>
             <AppTitle>&copy; Copyright Franklin Farahani 2018</AppTitle>
           </AppFooter>
-          <ResetGlobalStyle />
+          <GlobalStyles />
       </Wrapper>
     )
   }
