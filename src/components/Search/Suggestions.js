@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AddToList from '../AddToList';
-import { colors } from '../../utils/GlobalStyles';
+import { colors } from '../../config/styleVariables';
 
 // Styles
 

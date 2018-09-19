@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {colors} from '../../utils/GlobalStyles'
+import {colors} from '../../config/styleVariables'
 
 const SearchBackdrop = styled.div`
   background: ${colors.BACKDROP};

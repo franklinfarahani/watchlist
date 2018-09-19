@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { colors } from '../../utils/GlobalStyles';
+import { colors } from '../../config/styleVariables';
 
 const bgImage = ({ category }) => {
   return category ==='primary' && 'linear-gradient(to bottom, ' + colors.SECONDARY + ' 0%,' + colors.PRIMARY+' 50%,' + colors.SECONDARY + ' 100%)';

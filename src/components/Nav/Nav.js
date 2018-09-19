@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../Button';
-import {colors} from '../../utils/GlobalStyles';
+import {colors} from '../../config/styleVariables';
 
 const NavContainer = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ const LogoContainerLink = styled(Link)`
   font-size: 24px;
   font-weight: 600;
   text-decoration:none;
-  color: #000;
+  color: ${colors.BLACK};
 `
 
 const NavLinks = styled.nav`

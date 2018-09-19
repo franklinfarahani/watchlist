@@ -1,15 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Suggestions from './Suggestions';
 import SearchBackdrop from './SearchBackdrop'
 import * as api from '../../utils/api';
 import MDSpinner from 'react-md-spinner';
-import { colors } from '../../utils/GlobalStyles';
+import { colors } from '../../config/styleVariables';
 
-const SearchContainer = styled.div`
-
-`
 
 const FormContainer = styled.form`
   z-index: 1001;
@@ -144,7 +141,7 @@ class Search extends Component {
 
   render() {
     return (
-      <SearchContainer>
+      <Fragment>
         <SearchBackdrop isFocused={this.state.isFocused}/>
         <FormContainer id='search-form'>
           <SearchBarContainer>
@@ -189,7 +186,7 @@ class Search extends Component {
             />
          
         </FormContainer>
-      </SearchContainer>
+      </Fragment>
     )
   }
 

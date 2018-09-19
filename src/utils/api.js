@@ -1,4 +1,4 @@
-import {tmdb} from './config';
+import {tmdb} from '../config/keys';
 
 // Returns promise that contains data
 function get(url, endpoint) {

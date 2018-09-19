@@ -1,5 +1,5 @@
 import { listRef, authRef, provider } from '../firebase';
-import {tmdb} from '../utils/config';
+import {tmdb} from '../config/keys';
 import { SEARCH_TITLES, FETCH_LIST, AUTH_USER, AUTH_ERROR, SIGN_OUT_USER } from '../actions/types';
 
 // let nextPosition = 0;

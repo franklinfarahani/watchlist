@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { colors } from '../../utils/GlobalStyles';
+import { colors } from '../../config/styleVariables';
 import ListItem from '../../components/ListItem/ListItem';
 import { map, isEmpty } from 'lodash';
 import * as actions from '../../actions';
