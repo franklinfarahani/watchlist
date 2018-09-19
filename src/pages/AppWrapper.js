@@ -8,7 +8,6 @@ import { faPlay, faSearch, faTimes, faImage } from '@fortawesome/free-solid-svg-
 
 import Nav from '../components/Nav';
 import Search from '../components/Search';
-// import requireAuth from './auth/requireAuth';
 
 import SignIn from '../pages/SignIn/SignIn';
 import Watchlist from '../pages/Watchlist/Watchlist';
@@ -65,7 +64,7 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
       {...rest}
       render={(props) => authed === true
         ? <Component {...props} />
-        : <Redirect to={{pathname: '/SignIn', state: {from: props.location}}} />}
+        : <Redirect to={{pathname: '/signin', state: {from: props.location}}} />}
     />
   )
 }
@@ -85,18 +84,23 @@ class AppWrapper extends Component{
   
   render(){
     return (
-      // styled-components uses Pure Components which means location needs to be explicitly passed
+      // styled-components uses Pure Components which means location needs to be explicitly passed to avoid blocking router updates
       <Wrapper location={this.props.location}>
         <Nav />
           <Search />
-          <Switch>
-            <PublicRoute authed={this.props.authenticated} exact path='/' component={Movies} />
-            <PublicRoute authed={this.props.authenticated} path='/SignIn' component={SignIn} />
-            <PrivateRoute authed={this.props.authenticated} path='/app' component={Watchlist} />
-            <Route path='/movies' component={Movies} />
-            <Route path='/tv' component={TV} />
-            <Route render={() => <h3>No Match</h3>} />
-          </Switch>
+           
+            <Switch>
+            
+              <PublicRoute authed={this.props.authenticated} exact path='/' component={Movies} />
+              {this.props.loading ? <Route render={() => <h3>Logging in...</h3>} /> : 
+              <PublicRoute authed={this.props.authenticated} path='/signin' component={SignIn} />
+              }
+              <PrivateRoute authed={this.props.authenticated} path='/app' component={Watchlist} />
+              <Route path='/movies' component={Movies} />
+              <Route path='/tv' component={TV} />
+              <Route render={() => <h3>404: Not Found</h3>} />
+            </Switch>
+          
           <AppFooter>
             <AppTitle>&copy; Copyright Franklin Farahani 2018</AppTitle>
           </AppFooter>
@@ -108,7 +112,8 @@ class AppWrapper extends Component{
 
 function mapStateToProps({auth}) {
   return { 
-    authenticated: auth.authenticated
+    authenticated: auth.authenticated,
+    loading: auth.loading
   };
 }
 
