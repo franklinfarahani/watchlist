@@ -1,8 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+import { colors } from '../../utils/GlobalStyles';
 import ListItem from '../../components/ListItem/ListItem';
 import { map, isEmpty } from 'lodash';
 import * as actions from '../../actions';
+
+const WatchlistContainer = styled.div`
+  background: ${colors.bg.LIGHT};
+  margin: 8px 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+  width: 100%;
+`
+
+const WatchlistWrapper = styled.ul`
+  background: transparent;
+  margin: 0;
+  padding: 0 16px;
+`
 
 class Watchlist extends Component {
 
@@ -12,23 +28,26 @@ class Watchlist extends Component {
   }
 
   render() {
-    if (this.props.data.isLoading) {
+    const { data } = this.props;
+    
+    if (data.isLoading) {
       return (
-        <div>
-          <div>
-            Loading...
-          </div>
-        </div>
+        <h3>Getting List...</h3>
       );
     }
-
-    const { data } = this.props;
+    
     const list = map(data.list, (value, key) => {
       return <ListItem key={key} itemId={value.id} item={value} />;
     });
     
     if (!isEmpty(list)) {
-      return <ul>{list}</ul>;
+      return (
+      <WatchlistContainer>
+        <WatchlistWrapper>
+          {list}
+        </WatchlistWrapper>        
+      </WatchlistContainer>
+      );
     }
     return (
       <div>
