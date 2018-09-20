@@ -24,8 +24,8 @@ const WatchlistWrapper = styled.ul`
 class Watchlist extends Component {
 
   componentDidMount() {
-    const { auth, fetchList } = this.props;
-    fetchList(auth.user.uid);
+    const { user, fetchList } = this.props;
+    user && fetchList(user.uid);
   }
 
   render() {
@@ -62,7 +62,7 @@ class Watchlist extends Component {
 const mapStateToProps = ({ data, auth }) => {
   return {
     data,
-    auth
+    user: auth.user
   };
 };
 
