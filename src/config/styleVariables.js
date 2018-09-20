@@ -23,3 +23,7 @@ export const fonts = {
   SYSTEM: `"SF UI Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
   MAIN: `'Circular Std'`
 }
+
+export const shadows = {
+  VERYLOW: `0 2px 6px 0 hsla(0, 0%, 0%, 0.2)`
+}
