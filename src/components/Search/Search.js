@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {Search as faSearch} from 'styled-icons/fa-solid/Search';
+import {Close as mdClose} from 'styled-icons/material/Close';
 import Suggestions from './Suggestions';
 import SearchBackdrop from './SearchBackdrop'
 import * as api from '../../utils/api';
@@ -32,6 +33,16 @@ const IconContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 80px;
+`
+
+const IconSearch = styled(faSearch)`
+  color: ${colors.subtitle.MEDIUM};
+  width: 32px;
+`
+
+const IconClose = styled(mdClose)`
+  color: ${colors.BLACK};
+  width: 32px;
 `
 
 const SearchBar = styled.input`
@@ -146,10 +157,7 @@ class Search extends Component {
         <FormContainer id='search-form'>
           <SearchBarContainer>
             <IconContainer>
-              <FontAwesomeIcon
-                icon ='search'
-                size ='lg'
-              />
+              <IconSearch title='Search Icon' />
             </IconContainer>
             <SearchBar
               type = "search"
@@ -168,10 +176,7 @@ class Search extends Component {
             {this.state.query.length !==0 &&
               <button name="clearInput" onClick={this.clearInput}>
                 <IconContainer>
-                <FontAwesomeIcon
-                icon ='times'
-                size ='lg'
-              />
+                  <IconClose title='Close Icon' />
                 </IconContainer>
               </button>
             }

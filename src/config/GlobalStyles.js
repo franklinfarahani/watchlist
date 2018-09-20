@@ -1,6 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlay, faSearch, faTimes, faImage } from '@fortawesome/free-solid-svg-icons'
 import { colors, fonts } from './styleVariables';
 
 import CircularStdBook from '../assets/fonts/circular/CircularStdBook.woff';
@@ -11,9 +9,6 @@ import CircularStdBold from '../assets/fonts/circular/CircularStdBold.woff';
 import CircularStdBold2 from '../assets/fonts/circular/CircularStdBold.woff2';
 import CircularStdBlack from '../assets/fonts/circular/CircularStdBlack.woff';
 import CircularStdBlack2 from '../assets/fonts/circular/CircularStdBlack.woff2';
-
-// Fontawesome custom icon library
-library.add(faPlay, faSearch, faTimes, faImage);
 
 export default createGlobalStyle`
 

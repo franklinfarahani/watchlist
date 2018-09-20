@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {Image as faImage} from 'styled-icons/fa-regular/Image';
+import {Movie as IconMovie} from 'styled-icons/material/Movie';
+import {Tv as IconTV} from 'styled-icons/material/Tv';
 import AddToList from '../AddToList';
 import { colors } from '../../config/styleVariables';
 
@@ -74,6 +76,9 @@ const YearSpan = styled.span`
 
 const CategorySpan = styled.span`
   font-size: .8em;
+  svg {
+    width: 14px;
+  }
 `
 
 const EmptyImage = styled.div`
@@ -83,6 +88,11 @@ const EmptyImage = styled.div`
   height: 60px;
   width: 40px;
   background: ${colors.bg.MEDIUM};
+`
+
+const IconImage = styled(faImage)`
+  color: ${colors.subtitle.MEDIUM};
+  width: 24px;
 `
 
 class Suggestions extends Component {
@@ -133,17 +143,23 @@ class Suggestions extends Component {
             />
             :
             <EmptyImage>
-              <FontAwesomeIcon icon='image' color={colors.subtitle.MEDIUM} />
+              <IconImage title='No Image Icon' />
             </EmptyImage>
           }
           <RowTextContainer>
             <h4>
               {item.title}
               <YearSpan>
-                {item.year ? '(' + item.year.substring(0,4) + ')' : '(Unknown)'}
+                {item.year ? '(' + item.year.substring(0,4) + ')' : '(TBA)'}
               </YearSpan>
             </h4>
-            <CategorySpan>{item.media_type === "movie" ? "in movies" : "in TV shows"}</CategorySpan>
+            <CategorySpan>
+              {
+                item.media_type === "movie" ?
+                <Fragment><IconMovie /> movie</Fragment> :
+                <Fragment><IconTV /> tv show</Fragment>
+              }
+            </CategorySpan>
           </RowTextContainer>
           <AddToList
             item={ item }
