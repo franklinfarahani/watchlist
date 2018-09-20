@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { signIn, signOut } from '../../actions';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../Button';
+import DropMenu from '../DropMenu';
 import {colors} from '../../config/styleVariables';
 
 const NavContainer = styled.div`
@@ -40,6 +44,7 @@ const NavLinksPages = styled.ul`
     text-decoration: none;
     font-size: 15px;
     color: ${colors.NAV};
+    transition: color .2s;
     &:hover {
       color: ${colors.PRIMARY};
     }
@@ -47,28 +52,72 @@ const NavLinksPages = styled.ul`
 `
 const NavLinksCTA = styled.div`
   padding: 0;
-  width: 180px;
+  display: flex;
+  align-items: center;
+  
+  button {
+    margin-left: .5em;
+  }
+
+  img {
+    height: 30px;
+    width: auto;
+    border-radius: 15px;
+  }
+
+  a {
+    font-size: 12px;
+    padding-left: 8px; 
+  }
 `
 
-const Nav = () => {
-  return (
-    <NavContainer>
-        <LogoContainerLink to='/'>
-          <FontAwesomeIcon icon ='play' color={colors.PRIMARY} />
-          Watchlist
-        </LogoContainerLink>
-      <NavLinks>
-        <NavLinksPages role='navigation'>
-          <li><Link to='/movies'>Movies</Link></li>
-          <li><Link to='/tv'>TV Shows</Link></li>
-        </NavLinksPages>
-        <NavLinksCTA>
-          <Button as={Link} to='/'>Log In</Button>
-          <Button as={Link} to='/' category='primary'>Register</Button>
-        </NavLinksCTA>
-      </NavLinks>
-    </NavContainer>
-  )
+class Nav extends Component {
+  static contextTypes = {
+    router: PropTypes.object
+  };
+
+  render(){
+    const { authenticated, signIn, signOut, username, avatar } = this.props;
+    return (
+      <NavContainer>
+          <LogoContainerLink to='/'>
+            <FontAwesomeIcon icon ='play' color={colors.PRIMARY} />
+            Watchlist
+          </LogoContainerLink>
+        <NavLinks>
+          <NavLinksPages role='navigation'>
+            <li><Link to='/movies'>Movies</Link></li>
+            <li><Link to='/tv'>TV Shows</Link></li>
+          </NavLinksPages>
+          <NavLinksCTA>
+            {authenticated ? 
+              <Fragment>
+                <DropMenu button={<img src={avatar} alt='avatar'/>}>
+                  <li>{username}</li>
+                  <li>My List</li>
+                  <li onClick={signOut}>Log Out</li>
+                </DropMenu>
+              </Fragment>
+              :
+              <Fragment>
+                <Button onClick={signIn}>Log In</Button>
+                <Button onClick={signIn} category='primary'>Register</Button>
+              </Fragment>
+            }
+          </NavLinksCTA>
+        </NavLinks>
+      </NavContainer>
+    )
+  }
 };
 
-export default Nav;
+function mapStateToProps({ auth }) {
+  return {
+    authenticated: auth.authenticated,
+    username: auth.user.displayName,
+    avatar: auth.user.photoURL,
+    loading: auth.loading
+  };
+}
+
+export default connect(mapStateToProps, { signIn, signOut })(Nav);
