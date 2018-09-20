@@ -4,10 +4,15 @@ import { connect } from 'react-redux';
 import { signIn, signOut } from '../../actions';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Play as faPlay } from 'styled-icons/fa-solid/Play';
 import Button from '../Button';
 import DropMenu from '../DropMenu';
 import {colors} from '../../config/styleVariables';
+
+const IconPlay = styled(faPlay)`
+  color: ${colors.PRIMARY};
+  width: 20px;
+`
 
 const NavContainer = styled.div`
   display: flex;
@@ -81,7 +86,7 @@ class Nav extends Component {
     return (
       <NavContainer>
           <LogoContainerLink to='/'>
-            <FontAwesomeIcon icon ='play' color={colors.PRIMARY} />
+            <IconPlay title='Logo Play Icon'/>
             Watchlist
           </LogoContainerLink>
         <NavLinks>
@@ -91,13 +96,11 @@ class Nav extends Component {
           </NavLinksPages>
           <NavLinksCTA>
             {authenticated ? 
-              <Fragment>
-                <DropMenu button={<img src={avatar} alt='avatar'/>}>
-                  <li>{username}</li>
-                  <li>My List</li>
-                  <li onClick={signOut}>Log Out</li>
-                </DropMenu>
-              </Fragment>
+              <DropMenu button={<img src={avatar} alt='avatar'/>}>
+                <span>{username}</span>
+                <Link to='/'>My List</Link>
+                <button onClick={signOut}>Log Out</button>
+              </DropMenu>
               :
               <Fragment>
                 <Button onClick={signIn}>Log In</Button>
