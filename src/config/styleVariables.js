@@ -7,7 +7,8 @@ export const colors = {
   NAV : '#777',
   subtitle :
     {
-      GREY: '#aaa',
+      LIGHT: '#ccc',
+      MEDIUM: '#aaa',
       PINK: '#cea5c1'
     },
   bg :

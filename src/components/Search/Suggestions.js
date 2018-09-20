@@ -28,6 +28,16 @@ const RowTextContainer = styled.div`
   flex-direction: column;
   align-items: space-around;
   padding-left: 16px;
+  
+  h4{
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  span {
+    color: ${colors.subtitle.MEDIUM}
+    margin-top: 4px;
+  }
 `
 
 const ResultRow = styled.li`
@@ -38,6 +48,7 @@ const ResultRow = styled.li`
   padding: 8px 16px;
 
   img {
+    width: 40px;
     height: 60px;
   }
 
@@ -58,7 +69,7 @@ const ResultRow = styled.li`
 const YearSpan = styled.span`
   font-weight: normal;
   padding: 0 5px;
-  color: ${colors.subtitle.GREY};
+  color: ${colors.subtitle.MEDIUM};
 `
 
 const CategorySpan = styled.span`
@@ -122,16 +133,16 @@ class Suggestions extends Component {
             />
             :
             <EmptyImage>
-              <FontAwesomeIcon icon='image' color={colors.subtitle.GREY} />
+              <FontAwesomeIcon icon='image' color={colors.subtitle.MEDIUM} />
             </EmptyImage>
           }
           <RowTextContainer>
-            <strong>
+            <h4>
               {item.title}
               <YearSpan>
                 {item.year ? '(' + item.year.substring(0,4) + ')' : '(Unknown)'}
               </YearSpan>
-            </strong>
+            </h4>
             <CategorySpan>{item.media_type === "movie" ? "in movies" : "in TV shows"}</CategorySpan>
           </RowTextContainer>
           <AddToList

@@ -41,7 +41,7 @@ const SearchBar = styled.input`
   color: ${colors.BLACK};
   display: block;
   line-height: 80px;
-  font-size: 40px;
+  font-size: 32px;
   font-weight: 200;
   margin: 0;
   min-width: 0;
@@ -49,7 +49,7 @@ const SearchBar = styled.input`
   appearance: none;
   flex: 1;
   &::placeholder {
-    color: ${colors.subtitle.GREY}
+    color: ${colors.subtitle.LIGHT}
   }
 `
 
