@@ -1,31 +1,80 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { addToList } from '../../actions';
+import { addToList, removeFromList } from '../../actions';
 import Button from '../Button';
+import styled from 'styled-components';
+import { Add as mdAdd } from 'styled-icons/material/Add';
+import { Remove as mdRemove } from 'styled-icons/material/Remove';
+
+const IconAdd = styled(mdAdd)`
+  width: 15px;
+  margin-bottom: 1px;
+`
+
+const IconRemove = styled(mdRemove)`
+  width: 15px;
+  margin-bottom: 1px;
+`
 
 class AddToList extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      duplicate: false
+    }
+
+    this.handleAddClick = this.handleAddClick.bind(this);
+    this.handleRemoveClick = this.handleRemoveClick.bind(this);
+  }
+
+  componentDidMount(){
+    // Array.prototype.some is similar to .map but will break as soon as the condition is met
+    this.props.watchlist.some(
+      listItem => this.props.item.id === listItem.id &&
+        this.setState({duplicate: true}))
+  }
+
   handleAddClick (e, addToListItem){
     const { addToList, auth } = this.props;
     e.preventDefault();
     addToList(addToListItem, auth.user.uid);
+    this.setState({duplicate: true})
+  };
+
+  handleRemoveClick (e, removeFromListId){
+    const { removeFromList, auth } = this.props;
+    e.preventDefault();
+    removeFromList(removeFromListId, auth.user.uid);
+    this.setState({duplicate: false})
   };
 
   render() {
     const { item } = this.props;
     return (
       <Button
-        onClick={(e) => this.handleAddClick(e, item)}
+        category='pill'
+        danger={!this.state.duplicate ? false : true}
+        onClick={(e) => !this.state.duplicate ? this.handleAddClick(e, item): this.handleRemoveClick(e, item.id)}
       >
-        Add to List
+      {!this.state.duplicate ?
+        <Fragment>
+          <IconAdd />
+          {' Add'}
+        </Fragment> : 
+        <Fragment>
+          <IconRemove />
+          {' Remove'}
+        </Fragment>}
       </Button>
     );
   }
 }
 
-const mapStateToProps = ({ auth }) => {
+const mapStateToProps = ({ auth, data }) => {
   return {
-    auth
+    auth,
+    watchlist: data.list
   };
 };
 
-export default connect(mapStateToProps, { addToList })(AddToList);
+export default connect(mapStateToProps, { addToList, removeFromList })(AddToList);
