@@ -14,7 +14,8 @@ export const colors = {
   bg :
     {
       LIGHT: '#eee',
-      MEDIUM: '#d3d3d3'
+      MEDIUM: '#d3d3d3',
+      DARK: '#333'
     }
 
 };

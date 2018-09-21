@@ -19,20 +19,31 @@ const MenuList = styled.ul`
   flex-direction: column;
   position: absolute;
   top: 40px;
-  right: -30px;
-  background: ${colors.WHITE};
+  background: ${colors.bg.DARK};
   margin: 0; 
   border-radius: 4px;
   box-shadow: ${shadows.VERYLOW};
-  width: 140px;
-  padding: 16px;
+  width: max-content;
+  padding: 2px;
 `
 
 const MenuListItem = styled.li`
-  padding-bottom: 4px;
   font-size: 14px;
-  &:last-child {
-    padding-bottom: 0;
+  color: ${colors.subtitle.MEDIUM}; 
+  border-radius: 4px;
+  
+  a {
+    padding: 8px 16px;
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    flex:1;
+    cursor: pointer;
+  }
+
+  &:hover {
+    color: ${colors.WHITE};
+    background-color: ${colors.BLACK}
   }
 `
 
@@ -41,14 +52,31 @@ class DropMenu extends Component {
     super(props);
     
     this.state = {
-      isOpen: false
+      display: false
     }
 
     this.handleClick = this.handleClick.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside, false);
+  }
+
+  handleClickOutside(e) {
+    if (this.node.contains(e.target)) {
+      this.setState({display: true})
+      return;
+    }
+    this.setState({display: false})
   }
 
   handleClick() {
-    this.setState({isOpen : !this.state.isOpen})
+    this.setState({ display: !this.state.display})
   }
 
   
@@ -57,8 +85,8 @@ class DropMenu extends Component {
     return(
       <MenuContainer>
         <MenuButton onClick={this.handleClick}>{this.props.button}</MenuButton>
-        {this.state.isOpen &&
-          <MenuList>
+        {this.state.display &&
+          <MenuList ref = {node => this.node = node}>
             {this.props.children.map(menuItem => <MenuListItem key={menuItem.props.children}>{ menuItem }</MenuListItem>)}
           </MenuList>
         }

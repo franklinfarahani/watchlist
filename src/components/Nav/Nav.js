@@ -5,9 +5,16 @@ import { signIn, signOut } from '../../actions';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Play as faPlay } from 'styled-icons/fa-solid/Play';
+import { ChevronDown as faChevronDown } from 'styled-icons/fa-solid/ChevronDown';
 import Button from '../Button';
 import DropMenu from '../DropMenu';
 import {colors} from '../../config/styleVariables';
+
+const IconDown = styled(faChevronDown)`
+  color: ${colors.PRIMARY};
+  width: 10px;
+  margin-bottom: -1px;
+`
 
 const IconPlay = styled(faPlay)`
   color: ${colors.PRIMARY};
@@ -60,7 +67,7 @@ const NavLinksCTA = styled.div`
   display: flex;
   align-items: center;
   
-  button {
+  ${Button} {
     margin-left: .5em;
   }
 
@@ -69,10 +76,15 @@ const NavLinksCTA = styled.div`
     width: auto;
     border-radius: 15px;
   }
+`
 
-  a {
-    font-size: 12px;
-    padding-left: 8px; 
+const UserMenu = styled.div`
+  display: flex;
+  align-items: center;
+  span {
+    font-size:13px;
+    color: ${colors.BLACK};
+    padding: 8px;
   }
 `
 
@@ -82,7 +94,8 @@ class Nav extends Component {
   };
 
   render(){
-    const { authenticated, signIn, signOut, username, avatar } = this.props;
+    const { authenticated, signIn, signOut, user } = this.props;
+
     return (
       <NavContainer>
           <LogoContainerLink to='/'>
@@ -96,10 +109,18 @@ class Nav extends Component {
           </NavLinksPages>
           <NavLinksCTA>
             {authenticated ? 
-              <DropMenu button={<img src={avatar} alt='avatar'/>}>
-                <span>{username}</span>
-                <Link to='/'>My List</Link>
-                <button onClick={signOut}>Log Out</button>
+              <DropMenu
+                button={
+                  <UserMenu>
+                    <img src={user.photoURL} alt='avatar'/>
+                    <span>{user.displayName.split(" ")[0]}</span>
+                    <IconDown title='Menu Dropdown Button' />
+                  </UserMenu>                  
+                }
+              >
+                
+                <Link to='/app'>My List</Link>
+                <a role='menuitem' onClick={signOut}>Log Out</a>
               </DropMenu>
               :
               <Fragment>
@@ -117,8 +138,9 @@ class Nav extends Component {
 function mapStateToProps({ auth }) {
   return {
     authenticated: auth.authenticated,
-    username: auth.user.displayName,
-    avatar: auth.user.photoURL,
+    user: auth.user,
+    // username: auth.user.displayName,
+    // avatar: auth.user.photoURL,
     loading: auth.loading
   };
 }
