@@ -9,6 +9,7 @@ const ListItemWrapper = styled.li`
   background: transparent;
   list-style-type: none;
   display: flex;
+  align-items: center;
   padding: 8px 16px;
   padding-left: 16px;
 `
