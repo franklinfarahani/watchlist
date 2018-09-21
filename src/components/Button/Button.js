@@ -1,16 +1,75 @@
 import styled from 'styled-components';
 import { colors } from '../../config/styleVariables';
 
+const height = ({ category }) => {
+  switch(category){
+    case 'pill':
+      return '18px';
+    default:
+      return '37px';
+  }
+}
+
+const padding = ({ category }) => {
+  switch(category){
+    case 'pill':
+      return '0 5px';
+    default:
+      return '0 16px';
+  }
+}
+
 const bgImage = ({ category }) => {
   return category ==='primary' && 'linear-gradient(to bottom, ' + colors.SECONDARY + ' 0%,' + colors.PRIMARY+' 50%,' + colors.SECONDARY + ' 100%)';
 }
 
 const textColor = ({ category }) => {
-  return category ==='primary' ? 'white' : colors.BLACK;
+  switch(category){
+    case 'pill':
+      return colors.subtitle.MEDIUM;
+    case 'primary':
+      return colors.WHITE;
+    default:
+      return colors.BLACK;
+  }
 }
 
 const borderColor = ({ category }) => {
-  return category ==='primary' ? 'solid 2px transparent' : 'solid 2px ' + colors.PRIMARY;
+  switch(category){
+    case 'pill':
+      return 'none';
+    case 'primary':
+      return 'solid 2px transparent';
+    default:
+      return 'solid 2px ' + colors.PRIMARY;
+  }
+}
+
+const fontSize = ({ category }) => {
+  switch(category){
+    case 'pill':
+      return '12px';
+    default:
+      return '14px';
+  }
+}
+
+const fontWeight = ({ category }) => {
+  switch(category){
+    case 'pill':
+      return '400';
+    default:
+      return '500';
+  }
+}
+
+const textTransform = ({ category }) => {
+  switch(category){
+    case 'pill':
+      return 'uppercase';
+    default:
+      return 'initial';
+  }
 }
 
 const hoverBgPosition = ({ category }) => {
@@ -23,7 +82,14 @@ const hoverBgImage = ({ category }) => {
 }
 
 const hoverBorderColor = ({ category }) => {
-  return category !=='primary' && 'solid 2px transparent';
+  switch(category){
+    case 'pill':
+      return 'none';
+    case 'primary':
+      return;
+    default:
+      return 'solid 2px transparent';
+  }
 }
 
 const hoverTextColor = ({ category }) => {
@@ -35,14 +101,15 @@ const Button = styled.button`
   align-items: center;
   background-origin: border-box;
   text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: ${fontSize};
+  font-weight: ${fontWeight};
+  text-transform: ${textTransform};
   background-image: ${bgImage};
   background-size: auto 200%;
   background-color: transparent;
   color: ${textColor};
-  height: 37px;
-  padding: 0 16px;
+  height: ${height};
+  padding: ${padding};
   border: ${borderColor};
   border-radius: 4px;
   background-position: top;
