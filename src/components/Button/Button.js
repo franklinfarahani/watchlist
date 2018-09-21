@@ -13,7 +13,7 @@ const height = ({ category }) => {
 const padding = ({ category }) => {
   switch(category){
     case 'pill':
-      return '0 5px';
+      return '0 5px 0 2px';
     default:
       return '0 16px';
   }
@@ -76,8 +76,9 @@ const hoverBgPosition = ({ category }) => {
   return category === 'primary' ? 'bottom' : 'top';
 }
 
-const hoverBgImage = ({ category }) => {
-  return category !== 'primary' && 
+const hoverBgImage = ({ category, danger }) => {
+  return danger ? 'linear-gradient(to bottom, ' + colors.DANGER_TOP + ' 0%,' + colors.DANGER_BOT+' 100%)' :
+    category !== 'primary' && 
     'linear-gradient(to bottom, ' + colors.SECONDARY + ' 0%,' + colors.PRIMARY+' 50%,' + colors.SECONDARY + ' 100%)';
 }
 
