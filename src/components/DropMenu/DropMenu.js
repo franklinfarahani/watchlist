@@ -66,6 +66,7 @@ class DropMenu extends Component {
     document.removeEventListener('mousedown', this.handleClick, false);
   }
 
+  // Send the Open/Close state back to parent via this.props.isOpen
   handleClick(e) {
     if (this.menu.lastChild.contains(e.target)) {
       this.setState({display: true})
