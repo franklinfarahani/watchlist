@@ -37,7 +37,7 @@ const IconContainer = styled.div`
 
 const IconSearch = styled(faSearch)`
   color: ${colors.subtitle.MEDIUM};
-  width: 32px;
+  width: 24px;
 `
 
 const IconClose = styled(mdClose)`
