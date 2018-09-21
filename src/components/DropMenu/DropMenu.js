@@ -7,7 +7,6 @@ const MenuContainer = styled.div`
   flex-direction: column;
   position: relative;
   align-items: flex-end;
-  z-index: 2000;
 `
 
 const MenuButton = styled.div`
@@ -25,6 +24,7 @@ const MenuList = styled.ul`
   box-shadow: ${shadows.VERYLOW};
   width: max-content;
   padding: 2px;
+  z-index: 2000;
 `
 
 const MenuListItem = styled.li`
@@ -56,37 +56,30 @@ class DropMenu extends Component {
     }
 
     this.handleClick = this.handleClick.bind(this);
-    this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
   componentDidMount() {
-    document.addEventListener('mousedown', this.handleClickOutside, false);
+    document.addEventListener('mousedown', this.handleClick, false);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside, false);
+    document.removeEventListener('mousedown', this.handleClick, false);
   }
 
-  handleClickOutside(e) {
-    if (this.node.contains(e.target)) {
+  handleClick(e) {
+    if (this.menu.lastChild.contains(e.target)) {
       this.setState({display: true})
       return;
     }
     this.setState({display: false})
   }
 
-  handleClick() {
-    this.setState({ display: !this.state.display})
-  }
-
-  
-
   render(){
     return(
-      <MenuContainer>
-        <MenuButton onClick={this.handleClick}>{this.props.button}</MenuButton>
+      <MenuContainer ref = {node => this.menu = node}>
+        <MenuButton>{this.props.button}</MenuButton>
         {this.state.display &&
-          <MenuList ref = {node => this.node = node}>
+          <MenuList>
             {this.props.children.map(menuItem => <MenuListItem key={menuItem.props.children}>{ menuItem }</MenuListItem>)}
           </MenuList>
         }
