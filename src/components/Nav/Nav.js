@@ -6,11 +6,18 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Play as faPlay } from 'styled-icons/fa-solid/Play';
 import { ChevronDown as faChevronDown } from 'styled-icons/fa-solid/ChevronDown';
+import { ChevronUp as faChevronUp } from 'styled-icons/fa-solid/ChevronUp';
 import Button from '../Button';
 import DropMenu from '../DropMenu';
 import {colors} from '../../config/styleVariables';
 
 const IconDown = styled(faChevronDown)`
+  color: ${colors.PRIMARY};
+  width: 10px;
+  margin-bottom: -1px;
+`
+
+const IconUp = styled(faChevronUp)`
   color: ${colors.PRIMARY};
   width: 10px;
   margin-bottom: -1px;
@@ -89,6 +96,20 @@ const UserMenu = styled.div`
 `
 
 class Nav extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isOpen: false
+    }
+
+    this.updateChevron = this.updateChevron.bind(this);
+  }
+
+  updateChevron(dataFromMenu){
+    this.setState({isOpen: dataFromMenu});
+  }
+  
   static contextTypes = {
     router: PropTypes.object
   };
@@ -114,9 +135,13 @@ class Nav extends Component {
                   <UserMenu>
                     <img src={user.photoURL} alt='avatar'/>
                     <span>{user.displayName.split(" ")[0]}</span>
-                    <IconDown title='Menu Dropdown Button' />
+                    {!this.state.isOpen ?
+                    <IconDown title='Menu Open Arrow Button' /> :
+                    <IconUp title='Menu Close Arrow Button' />
+                    }
                   </UserMenu>                  
                 }
+                isOpen={this.updateChevron}
               >
                 
                 <Link to='/app'>My List</Link>

@@ -69,9 +69,11 @@ class DropMenu extends Component {
   handleClick(e) {
     if (this.menu.lastChild.contains(e.target)) {
       this.setState({display: true})
+      this.props.isOpen(true);
       return;
     }
     this.setState({display: false})
+    this.props.isOpen(false);
   }
 
   render(){
