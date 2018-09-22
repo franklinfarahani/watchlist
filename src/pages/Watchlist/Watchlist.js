@@ -1,24 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { colors } from '../../config/styleVariables';
 import ListItem from '../../components/ListItem/ListItem';
 import { map, isEmpty } from 'lodash';
 import * as actions from '../../actions';
 
 const WatchlistContainer = styled.div`
-  background: ${colors.WHITE};
   /* TODO: get rid of space between search bar and watchlist */
-  margin: 110px 0; 
-  border-radius: 4px;
-  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+  margin: 110px 0;
   width: 100%;
 `
 
 const WatchlistWrapper = styled.ul`
   background: transparent;
-  margin: 0;
-  padding: 0 16px;
 `
 
 class Watchlist extends Component {
