@@ -127,14 +127,11 @@ class Search extends Component {
   }
 
   handleBlur() {
-    console.log(this.state.query.length);
-    if (this.state.query.length<2){
-      this.setState({ isFocused : false});
-    }
+    this.setState({ isFocused : false});
   }
 
   handleOpen(e) {
-    this.search.focus();
+    e && this.search.focus();
     this.setState({ isFocused : e});
   }
 
@@ -164,7 +161,7 @@ class Search extends Component {
               placeholder = "Search Database..."
               ref = {input => this.search = input}
               onChange = {this.handleChange}
-              // onFocus = {this.handleFocus}
+              onFocus = {this.handleFocus}
               // onBlur = {this.handleBlur}
               onKeyDown = {this.handleKeyDown}
             />
@@ -188,6 +185,7 @@ class Search extends Component {
               query={this.state.query}
               isLoading={this.state.isLoading}
               isOpen={this.handleOpen}
+              isFocused={this.state.isFocused}
             />
          
         </FormContainer>

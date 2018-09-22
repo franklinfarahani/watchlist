@@ -104,12 +104,14 @@ class Suggestions extends Component {
     this.handleClick= this.handleClick.bind(this);
   }
 
-  componentWillMount() {
-    document.addEventListener('mousedown', this.handleClick, false);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClick, false);
+  componentDidUpdate(prevProps) {
+    if (this.props.isFocused !== prevProps.isFocused && this.props.isFocused) {
+      document.addEventListener('mousedown', this.handleClick, false);
+      this.setState({display: true})
+    } else if (this.props.isFocused !== prevProps.isFocused){
+      document.removeEventListener('mousedown', this.handleClick, false);
+      this.props.isOpen(false);
+    }
   }
 
   handleClick(e) {
@@ -163,6 +165,7 @@ class Suggestions extends Component {
           </RowTextContainer>
           <AddToList
             item={ item }
+            callback={ () => {this.setState({ display: false }); this.props.isOpen(false);}  }
           />
         </ResultRow>
       )
