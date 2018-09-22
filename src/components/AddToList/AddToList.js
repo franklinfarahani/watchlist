@@ -48,13 +48,27 @@ class AddToList extends Component {
     this.setState({duplicate: false})
   };
 
+  handleClick(e, itemSelected) {
+    const { addToList, removeFromList, auth } = this.props;
+    e.preventDefault();
+    if (!this.state.duplicate) {
+      addToList(itemSelected, auth.user.uid);
+      this.setState({duplicate: true})
+    }
+    else {
+      removeFromList(itemSelected.id, auth.user.uid);
+      this.setState({duplicate: false})
+    }
+    this.props.callback();    
+  }
+
   render() {
     const { item } = this.props;
     return (
       <Button
         category='pill'
         danger={!this.state.duplicate ? false : true}
-        onClick={(e) => !this.state.duplicate ? this.handleAddClick(e, item): this.handleRemoveClick(e, item.id)}
+        onClick={(e) => this.handleClick(e, item)}
       >
       {!this.state.duplicate ?
         <Fragment>
