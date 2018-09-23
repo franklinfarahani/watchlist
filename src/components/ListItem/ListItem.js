@@ -1,6 +1,7 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { removeFromList } from "../../actions";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { removeFromList } from '../../actions';
+import { getGenreName, formatDate } from '../../utils'
 
 import styled from 'styled-components';
 import {Image as faImage} from 'styled-icons/fa-regular/Image';
@@ -42,6 +43,7 @@ const InformationContainer = styled.div`
 const Title = styled.h3`
   font-size: 26px;
   font-weight: 600;
+  padding-bottom: 8px;
 `
 
 const YearSpan = styled.span`
@@ -52,19 +54,28 @@ const YearSpan = styled.span`
 
 const MetaSpan = styled.span`
   color: ${colors.subtitle.LIGHT};
-  font-size: 15px;
+  font-size: 13px;
+  padding-bottom: 8px;
+  
+  & span:first-child {
+    padding-right: 10px;
+  }
+
+  & span:last-child {
+    padding-left: 10px;
+  }
 `
 
 const Synopsis = styled.p`
   color: ${colors.BLACK};
   font-size: 15px;
   line-height: 20px;
+  flex: 1;
 `
 
 const Ratings = styled.div`
   display: flex;
   align-items: center;
-  height: 36px;
   font-size: 20px;
   color: ${colors.subtitle.MEDIUM};
 `
@@ -81,6 +92,7 @@ class ListItem extends Component {
 
   render() {
     const { itemId, item } = this.props;
+    const convertedDate = formatDate(item.year);
     return (
       <ListItemWrapper>
         {item.poster ? 
@@ -97,12 +109,26 @@ class ListItem extends Component {
           <Title>
             {item.title}
             <YearSpan>
-              {item.year ? '(' + item.year.substring(0,4) + ')' : '(TBA)'}
+              {item.year ? '(' + convertedDate.year + ')' : '(TBA)'}
             </YearSpan>
           </Title>
           <MetaSpan>
-            {item.genre_ids.map(genre => `${genre}, `)}
-            {item.year}
+            <span>
+              {/* Put a comma after every genre except the last on the list */}
+              {item.genre_ids.map((genre, index, genre_ids) => 
+                (index !== genre_ids.length - 1) ?
+                `${getGenreName(genre, item.media_type)}, ` :
+                getGenreName(genre, item.media_type)
+              )}
+            </span>
+            {`|`}
+            <span>
+              {
+                item.year ?
+                `${convertedDate.day} ${convertedDate.month} ${convertedDate.year}` :
+                'Unknown Date'
+              }
+            </span>
           </MetaSpan>
           <Synopsis>
             {item.synopsis.length > 160 ? `${item.synopsis.substring(0, 160)}...` : item.synopsis}
