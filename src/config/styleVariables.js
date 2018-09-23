@@ -1,8 +1,8 @@
 export const colors = {
   PRIMARY: '#7301cc', //Purple
   SECONDARY: '#4776E6', //Blue
-  DANGER_TOP: '#ff0066', //Pink Red
-  DANGER_BOT: '#c30303', //Brick Red
+  DANGER_TOP: '#ff0066', //Pink-Red
+  DANGER_BOT: '#c30303', //Brick-Red
   WHITE: '#fff',
   BLACK: '#222',
   BACKDROP: 'rgba(48,48,48,.8)',
