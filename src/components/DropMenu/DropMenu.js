@@ -40,7 +40,6 @@ const MenuListItem = styled.li`
     flex:1;
     cursor: pointer;
   }
-
   &:hover {
     color: ${colors.WHITE};
     background-color: ${colors.BLACK}
@@ -55,39 +54,37 @@ class DropMenu extends Component {
       display: false
     }
 
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  componentDidMount() {
-    document.addEventListener('mousedown', this.handleClick, false);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClick, false);
+    this.handleShow = this.handleShow.bind(this);
+    this.handleHide = this.handleHide.bind(this);
   }
 
   // Send the Open/Close state back to parent via this.props.isOpen
-  handleClick(e) {
-    if (this.menu.lastChild.contains(e.target)) {
-      this.setState({display: true})
-      this.props.isOpen(true);
-      return;
-    }
-    this.setState({display: false})
-    this.props.isOpen(false);
+  handleShow(e) {
+    e.preventDefault();
+    this.setState({ display: true });
+    document.addEventListener("click", this.handleHide);
   }
 
-  render(){
-    return(
-      <MenuContainer ref = {node => this.menu = node}>
-        <MenuButton>{this.props.button}</MenuButton>
-        {this.state.display &&
+  handleHide() {
+    this.setState({ display: false });
+    document.removeEventListener("click", this.handleHide);
+  }
+
+  render() {
+    return (
+      <MenuContainer ref = {node => (this.menu = node)}>
+        <MenuButton onClick={this.handleShow}>{this.props.button}</MenuButton>
+        {this.state.display && (
           <MenuList>
-            {this.props.children.map(menuItem => <MenuListItem key={menuItem.props.children}>{ menuItem }</MenuListItem>)}
+            {this.props.children.map(menuItem => (
+              <MenuListItem key={menuItem.props.children}>
+                {menuItem}
+              </MenuListItem>
+            ))}
           </MenuList>
-        }
+        )}
       </MenuContainer>
-    )
+    );
   }
 }
 
