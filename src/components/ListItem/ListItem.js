@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { removeFromList } from '../../actions';
 import { getGenreName, formatDate } from '../../utils'
+import { getImdbId } from '../../utils/api';
 
 import styled from 'styled-components';
 import {Image as faImage} from 'styled-icons/fa-regular/Image';
@@ -16,6 +17,9 @@ const ListItemWrapper = styled.li`
   overflow: hidden;
   border-radius: 4px;
   box-shadow: ${shadows.VERYLOW};
+  img {
+    max-height: 100%;
+  }
 `
 
 const EmptyImage = styled.div`
@@ -71,6 +75,7 @@ const Synopsis = styled.p`
   font-size: 15px;
   line-height: 20px;
   flex: 1;
+  margin-top: 8px;
 `
 
 const Ratings = styled.div`
@@ -85,6 +90,18 @@ const ControlsContainer = styled.div`
 `
 
 class ListItem extends Component {
+  constructor(props){
+    super(props)
+
+    this.state = {
+      imdbId: ''
+    }
+  }
+
+  componentDidMount(){
+    getImdbId(this.props.item.id).then(res => this.setState({ imdbId: res}));
+  }
+
   handleRemoveClick = removeFromListId => {
     const { removeFromList, auth } = this.props;
     removeFromList(removeFromListId, auth.user.uid);
@@ -93,6 +110,9 @@ class ListItem extends Component {
   render() {
     const { itemId, item } = this.props;
     const convertedDate = formatDate(item.year);
+    
+
+
     return (
       <ListItemWrapper>
         {item.poster ? 
@@ -114,9 +134,9 @@ class ListItem extends Component {
           </Title>
           <MetaSpan>
             <span>
-              {/* Put a comma after every genre except the last on the list */}
-              {item.genre_ids.map((genre, index, genre_ids) => 
-                (index !== genre_ids.length - 1) ?
+              {/* Slice the array into only 3 genres for better Ui, put a comma after every genre except the last on the list */}
+              {item.genre_ids.slice(0, 3).map((genre, index, genre_ids) => 
+                (index !== genre_ids.slice(0, 3).length - 1) ?
                 `${getGenreName(genre, item.media_type)}, ` :
                 getGenreName(genre, item.media_type)
               )}
@@ -134,7 +154,7 @@ class ListItem extends Component {
             {item.synopsis.length > 160 ? `${item.synopsis.substring(0, 160)}...` : item.synopsis}
           </Synopsis>
           <Ratings>
-            IMDB and RottenTomatos
+            {`IMDB: ${this.state.imdbId}`}
           </Ratings>
         </InformationContainer>
         <ControlsContainer>
