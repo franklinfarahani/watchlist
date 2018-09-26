@@ -5,6 +5,8 @@ const height = ({ category }) => {
   switch(category){
     case 'pill':
       return '18px';
+    case 'icon':
+      return 'initial';
     default:
       return '37px';
   }
@@ -14,6 +16,8 @@ const padding = ({ category }) => {
   switch(category){
     case 'pill':
       return '0 5px 0 2px';
+    case 'icon':
+      return '4px';
     default:
       return '0 16px';
   }
@@ -26,6 +30,7 @@ const bgImage = ({ category }) => {
 const textColor = ({ category }) => {
   switch(category){
     case 'pill':
+    case 'icon':
       return colors.subtitle.MEDIUM;
     case 'primary':
       return colors.WHITE;
@@ -34,9 +39,19 @@ const textColor = ({ category }) => {
   }
 }
 
+const borderRadius = ({ category }) => {
+  switch(category){
+    case 'icon':
+      return '40px';
+    default:
+      return '4px';
+  }
+}
+
 const borderColor = ({ category }) => {
   switch(category){
     case 'pill':
+    case 'icon':
       return 'none';
     case 'primary':
       return 'solid 2px transparent';
@@ -85,6 +100,7 @@ const hoverBgImage = ({ category, danger }) => {
 const hoverBorderColor = ({ category }) => {
   switch(category){
     case 'pill':
+    case 'icon':
       return 'none';
     case 'primary':
       return;
@@ -112,7 +128,7 @@ const Button = styled.button`
   height: ${height};
   padding: ${padding};
   border: ${borderColor};
-  border-radius: 4px;
+  border-radius: ${borderRadius};
   background-position: top;
   transition: background .3s;
   

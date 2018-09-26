@@ -6,6 +6,7 @@ import { getImdbId, getTitle } from '../../utils/api';
 
 import styled from 'styled-components';
 import {Image as faImage} from 'styled-icons/fa-regular/Image';
+import {Close as mdClose} from 'styled-icons/material/Close';
 import ImdbIcon from '../../components/ImdbIcon';
 import { colors, shadows } from '../../config/styleVariables';
 import Button from '../../components/Button';
@@ -35,6 +36,10 @@ const EmptyImage = styled.div`
 const IconImage = styled(faImage)`
   color: ${colors.subtitle.MEDIUM};
   width: 60px;
+`
+
+const IconClose = styled(mdClose)`
+  width: 30px;
 `
 
 const InformationContainer = styled.div`
@@ -195,10 +200,11 @@ class ListItem extends Component {
         </InformationContainer>
         <ControlsContainer>
           <Button
-            category='pill'
+            category='icon'
+            danger
             onClick={() => this.handleRemoveClick(item.id)}
           >
-            Remove
+            <IconClose title='Remove from List' />
           </Button>
         </ControlsContainer>
         
