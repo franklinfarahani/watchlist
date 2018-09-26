@@ -7,7 +7,7 @@ import * as actions from '../../actions';
 
 const WatchlistContainer = styled.div`
   /* TODO: get rid of space between search bar and watchlist */
-  margin: 110px 0;
+  margin: 110px 0 0;
   width: 100%;
 `
 
@@ -32,7 +32,7 @@ class Watchlist extends Component {
     }
     
     const list = map(data.list, (value, key) => {
-      return <ListItem key={key} itemId={value.id} item={value} />;
+      return <ListItem key={key} item={value} />;
     });
     
     if (!isEmpty(list)) {
