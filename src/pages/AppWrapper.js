@@ -4,6 +4,7 @@ import { withRouter, Route, Redirect, Switch } from 'react-router-dom';
 
 import styled from 'styled-components';
 import GlobalStyles from '../config/GlobalStyles'
+import { colors } from '../config/styleVariables';
 
 import Nav from '../components/Nav';
 import Search from '../components/Search';
@@ -22,6 +23,7 @@ const AppFooter = styled.div`
 `
 const AppTitle = styled.div`
   font-size: .8em;
+  color: ${colors.subtitle.MEDIUM};
 `
 
 const Wrapper = styled.div`
