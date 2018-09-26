@@ -7,23 +7,31 @@ function get(url, endpoint) {
       if (response.ok) {
         return response.json();
       } else {
-        throw new Error('Something went wrong ...');
+        console.log(response)
+        throw new Error(response);
       }
     });
 }
 
 export const search = (query) => get(tmdb.url,`/search/multi?api_key=${tmdb.key}&query=${query}`);
 
-export const getImdbId = (tmdbId) => get(tmdb.url,`/movie/${tmdbId}/external_ids?api_key=${tmdb.key}`).then(res => res.imdb_id);
+export const getImdbId = async (tmdbId, type) => {
+  const response = await fetch(`${tmdb.url}/${type}/${tmdbId}/external_ids?api_key=${tmdb.key}`)
+    if (response.ok) {
+      const json = await response.json();
+      const imdbId = await json.imdb_id;
+      return imdbId;
+    } else {
+      throw new Error('An error occured: ' + response);
+    }
+}
 
-export const getTitle = (imdbId) => get(omdb.url,`/?apikey=${omdb.key}&i=${imdbId}`)
-
-// export function getImdbId(tmdbId){
-//   get(tmdb.url,`/movie/${tmdbId}/external_ids?api_key=${tmdb.key}`)
-//   .then(
-//     function(res) {
-//       console.log(res.imdb_id)
-//       return res.imdb_id;
-//     }
-//   )
-// }
+export const getTitle = async (imdbId) => {
+  const response = await fetch(`${omdb.url}/?apikey=${omdb.key}&i=${imdbId}`)
+    if (response.ok) {
+      const json = await response.json();
+      return json;
+    } else {
+      throw new Error('An error occured: ' + response);
+    }
+}

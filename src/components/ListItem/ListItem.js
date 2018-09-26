@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { removeFromList } from '../../actions';
 import { getGenreName, formatDate } from '../../utils'
-import { getImdbId } from '../../utils/api';
+import { getImdbId, getTitle } from '../../utils/api';
 
 import styled from 'styled-components';
 import {Image as faImage} from 'styled-icons/fa-regular/Image';
+import ImdbIcon from '../../components/ImdbIcon';
 import { colors, shadows } from '../../config/styleVariables';
 import Button from '../../components/Button';
 
@@ -58,7 +59,7 @@ const YearSpan = styled.span`
 
 const MetaSpan = styled.span`
   color: ${colors.subtitle.LIGHT};
-  font-size: 13px;
+  font-size: 12px;
   padding-bottom: 8px;
   
   & span:first-child {
@@ -83,6 +84,13 @@ const Ratings = styled.div`
   align-items: center;
   font-size: 20px;
   color: ${colors.subtitle.MEDIUM};
+  img {
+    padding-right: 8px;
+  }
+`
+
+const NoRatings = styled.span`
+  font-size: 12px;
 `
 
 const ControlsContainer = styled.div`
@@ -94,12 +102,33 @@ class ListItem extends Component {
     super(props)
 
     this.state = {
-      imdbId: ''
+      imdbId: 'Unknown',
+      imdbScore: 'N/A',
+      rtScore: 'N/A',
+      loading: true,
+      error: null
     }
   }
 
-  componentDidMount(){
-    getImdbId(this.props.item.id).then(res => this.setState({ imdbId: res}));
+  componentDidMount() {
+    const {id, media_type} = this.props.item;
+    getImdbId(id, media_type).then(res => this.setState({ imdbId: res }))
+  }
+  
+  componentDidUpdate(prevProps,prevState){
+    const {id, media_type} = this.props.item;
+    const { imdbId } = this.state;
+    if (id !== prevProps.item.id){
+      getImdbId(id, media_type).then(res => this.setState({ imdbId: res }))
+    }
+    if (imdbId !== prevState.imdbId){
+      getTitle(imdbId).then(res => {
+        this.setState({
+          imdbScore: res.imdbRating,
+          loading: false
+        })
+      })
+    }
   }
 
   handleRemoveClick = removeFromListId => {
@@ -108,7 +137,8 @@ class ListItem extends Component {
   };
 
   render() {
-    const { itemId, item } = this.props;
+    const { item } = this.props;
+    const {imdbScore} = this.state;
     const convertedDate = formatDate(item.year);
     
 
@@ -154,13 +184,19 @@ class ListItem extends Component {
             {item.synopsis.length > 160 ? `${item.synopsis.substring(0, 160)}...` : item.synopsis}
           </Synopsis>
           <Ratings>
-            {`IMDB: ${this.state.imdbId}`}
+            {            
+              imdbScore && imdbScore !=='N/A' ?
+              <Fragment>
+                <ImdbIcon size={20} />{this.state.imdbScore}
+              </Fragment> :
+              <NoRatings>Ratings Not Available</NoRatings>
+            }
           </Ratings>
         </InformationContainer>
         <ControlsContainer>
           <Button
             category='pill'
-            onClick={() => this.handleRemoveClick(itemId)}
+            onClick={() => this.handleRemoveClick(item.id)}
           >
             Remove
           </Button>
