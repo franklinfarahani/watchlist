@@ -63,7 +63,7 @@ const YearSpan = styled.span`
 `
 
 const MetaSpan = styled.span`
-  color: ${colors.subtitle.LIGHT};
+  color: ${colors.subtitle.MEDIUM};
   font-size: 12px;
   padding-bottom: 8px;
   
