@@ -51,6 +51,10 @@ class AddToList extends Component {
   handleClick(e, itemSelected) {
     const { addToList, removeFromList, auth } = this.props;
     e.preventDefault();
+    if (!auth.authenticated) {
+      //TODO: redirect to sign in page if not authenticated
+      return;
+    }
     if (!this.state.duplicate) {
       addToList(itemSelected, auth.user.uid);
       this.setState({duplicate: true})
@@ -59,7 +63,7 @@ class AddToList extends Component {
       removeFromList(itemSelected.id, auth.user.uid);
       this.setState({duplicate: false})
     }
-    this.props.callback();    
+    this.props.callback();
   }
 
   render() {
