@@ -109,7 +109,7 @@ body {
     right: 0;
     width: 100%;
     height: 4px;
-    background: linear-gradient(to right, ${colors.SECONDARY} 0%, ${colors.PRIMARY} 100%);
+    background: ${colors.PRIMARY} 100%;
   }
 }
 
