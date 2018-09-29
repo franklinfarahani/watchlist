@@ -59,7 +59,7 @@ class AppWrapper extends Component{
   
   render(){
     return (
-      // styled-components uses Pure Components which means location needs to be explicitly passed to avoid blocking router updates
+      // Location needs to be explicitly passed to avoid blocking router updates
       <Wrapper location={this.props.location}>
         <Nav />
           <Search />
