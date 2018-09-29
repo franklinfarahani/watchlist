@@ -1,10 +1,9 @@
 import React from 'react';
+import Discover from '../../components/Discover'
 
 const TV = () => {
   return (
-    <div>
-      Popular TV Shows
-    </div>
+    <Discover type='TV show' />
   )
 }
 
