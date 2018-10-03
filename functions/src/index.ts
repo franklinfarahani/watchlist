@@ -2,47 +2,101 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as express from 'express';
 import * as fetch from 'node-fetch';
+import * as compression from 'compression';
 
 admin.initializeApp(functions.config().firebase);
 
 const databaseRef = admin.database().ref();
-const wldbRef = databaseRef.child('wldb');
+const listRef = databaseRef.child('lists');
 
 const app = express();
-const tmdbApiKey = functions.config().tmdbapi.key;
+
+app.use(compression());
+
+/*
+|--------------------------------------------------------------------------
+| Middleware
+|--------------------------------------------------------------------------
+|
+| Description
+|
+*/
+
+const authenticate = async (req, res, next) => {
+  if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
+    res.status(403).send('Unauthorized');
+    return;
+  }
+  const idToken = req.headers.authorization.split('Bearer ')[1];
+  try {
+    const decodedIdToken = await admin.auth().verifyIdToken(idToken);
+    req.user = decodedIdToken;
+    next();
+    return;
+  } catch(e) {
+    res.status(403).send('Unauthorized');
+    return;
+  }
+};
+
+app.use("/list", authenticate);
+
+/*
+|--------------------------------------------------------------------------
+| Routes
+|--------------------------------------------------------------------------
+|
+| Description
+|
+*/
 
 app.get("/media", (req, resp) => {
   let mediaId = req.query.id;
   let mediaType = req.query.type;
+  fetch(`https://apis.justwatch.com/content/titles/${mediaType}/${mediaId}/locale/en_CA`)
+    .then(res => res.json())
+    .then(json => {
+      interface Media {
+        id: number,
+        media_type: string,
+        title: string,
+        poster: string,
+        year: number,
+        release_date: string,
+        genres: Array<number>,
+        synopsis?: string,
+        ratings?: Array<object>,
+        runtime?: number,
+        viewing_options?: Array<object>
+      }
+      const item: Media = {
+        id: json.id,
+        media_type: mediaType,
+        title: json.title,
+        poster: json.poster.split("{")[0],
+        year: json.original_release_year,
+        release_date: json.localized_release_date,
+        genres: json.genre_ids,
+        synopsis: json.short_description,
+        ratings: json.scoring,
+        viewing_options: json.offers
+      };
+      mediaType === 'movie' ? item.runtime = json.runtime : null;
+      resp.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+      resp.status(200).send(item);
+    })
+    .catch(err => {
+      console.error(err);
+      resp.send(202);
+    });
+});
 
-  wldbRef.child(mediaId).once("value", snapshot => {
-    if (snapshot.exists()) {
-      resp.send(snapshot.val());
-    }
-    else {
-      fetch(`https://api.themoviedb.org/3/${mediaType}/${mediaId}?api_key=${tmdbApiKey}&append_to_response=external_ids`)
-      .then(res => res.json())
-      .then(json => {
-        const item = {
-          id: json.id,
-          imdb_id: json.external_ids.imdb_id,
-          media_type: mediaType,
-          title: mediaType === 'movie' ? json.title : json.name,
-          poster: json.poster_path,
-          year: mediaType === 'movie' ? json.release_date : json.first_air_date,
-          runtime: mediaType === 'movie' ? json.runtime : json.episode_run_time[0],
-          genres: json.genres,
-          synopsis: json.overview
-        };
-        wldbRef.child(mediaId).update(item);
-        resp.send(item);
-      })
-      .catch(err => {
-        console.error(err);
-        resp.send(202);
-      });
-    }
-  });
+interface IGetUserAuthInfoRequest extends express.Request {
+  user: any 
+}
+
+app.get("/list", (req: IGetUserAuthInfoRequest, resp) => {
+  listRef.child(req.user.uid).once("value", snapshot => resp.status(200).send(snapshot.val()));
 });
 
 export const api = functions.https.onRequest(app);
