@@ -4,6 +4,20 @@ import * as express from 'express';
 import * as fetch from 'node-fetch';
 import * as compression from 'compression';
 
+
+/*
+|--------------------------------------------------------------------------
+| Initializations
+|--------------------------------------------------------------------------
+|
+| includes:
+|   
+|   * Firebase Admin
+|   * Express
+|   * Return objects' templates
+|       
+*/
+
 admin.initializeApp(functions.config().firebase);
 
 const databaseRef = admin.database().ref();
@@ -18,8 +32,15 @@ app.use(compression());
 | Middleware
 |--------------------------------------------------------------------------
 |
-| Description
+| includes:
 |
+|   * Authentication: 
+|       For routes that use it, checks to see whether the request's
+|       user is authenticated.
+|
+|   * Compression:
+|       Compresses result JSON via gzip
+|       
 */
 
 const authenticate = async (req, res, next) => {
@@ -46,7 +67,11 @@ app.use("/list", authenticate);
 | Routes
 |--------------------------------------------------------------------------
 |
-| Description
+|   * /search?=query
+|   * /media/:type/:id
+|   * /list
+|   * /CHANGE
+|   * /CHANGE
 |
 */
 
