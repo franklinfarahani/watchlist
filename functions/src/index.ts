@@ -200,4 +200,22 @@ app.get("/list", async (req: AuthRequest, resp) => {
   }
 });
 
+app.post("/list", async (req: AuthRequest, resp) => {
+  const itemToAdd = req.body.item;
+  try {
+    await listRef.child(req.user.id)
+      .child(itemToAdd.id)
+      .update(itemToAdd)
+    
+    resp.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+    // 200 : OK
+    resp.sendStatus(200);      
+  }
+  catch(err) {
+    console.error(err);
+    // 400: Bad request
+    resp.sendStatus(400);
+  }
+});
+
 export const api = functions.https.onRequest(app);
