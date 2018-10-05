@@ -89,7 +89,7 @@ async function getTitle(id: number, type: "movie" | "show") {
       id: json.id,
       media_type: type,
       title: json.title,
-      poster: json.poster.split("{")[0],
+      poster: json.poster ? json.poster.split("{")[0] : "",
       year: json.original_release_year,
       release_date: json.localized_release_date,
       genres: json.genre_ids,
@@ -136,18 +136,19 @@ app.get("/search", async (req, resp) => {
       total_results: json.total_results,
       items: []
     }
-    json.items.map(item => searchResults.items.push(
+    json.items.map(item => {
+      searchResults.items.push(
       {
         id: item.id,
         media_type: item.object_type,
         title: item.title,
-        poster: item.poster.split("{")[0],
+        poster: item.poster ? item.poster.split("{")[0] : "",
         year: item.original_release_year,
         release_date: item.localized_release_date,
         genres: item.genre_ids,
         synopsis: item.short_description,
         ratings: item.scoring
-      })
+      })}
     )
     
     resp.set('Cache-Control', 'public, max-age=300, s-maxage=600');
