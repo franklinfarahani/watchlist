@@ -36,7 +36,8 @@ interface Media {
   synopsis?: string,
   ratings?: Array<object>,
   runtime?: number,
-  viewing_options?: Array<object>
+  viewing_options?: Array<object>,
+  clips?: Array<object>
 }
 
 interface AuthRequest extends express.Request {
@@ -92,7 +93,8 @@ async function getTitle(id: number, type: "movie" | "show") {
       genres: json.genre_ids,
       synopsis: json.short_description,
       ratings: json.scoring,
-      viewing_options: json.offers
+      viewing_options: json.offers,
+      clips: json.clips
     };
     type === 'movie' ? item.runtime = json.runtime : null;
     return {item, error: null};
