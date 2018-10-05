@@ -201,11 +201,30 @@ app.get("/list", async (req: AuthRequest, resp) => {
 });
 
 app.post("/list", async (req: AuthRequest, resp) => {
-  const itemToAdd = req.body.item;
+  const itemToAdd = req.body;
   try {
+    // await listRef.child('testuser')
     await listRef.child(req.user.id)
       .child(itemToAdd.id)
       .update(itemToAdd)
+    
+    resp.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+    // 200 : OK
+    resp.sendStatus(200);      
+  }
+  catch(err) {
+    console.error(err);
+    // 400: Bad request
+    resp.sendStatus(400);
+  }
+});
+
+app.delete("/list", async (req: AuthRequest, resp) => {
+  const itemToDelete = req.body;
+  try {
+    await listRef.child(req.user.id)
+      .child(itemToDelete.id)
+      .remove();
     
     resp.set('Cache-Control', 'public, max-age=300, s-maxage=600');
     // 200 : OK
