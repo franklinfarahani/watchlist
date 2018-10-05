@@ -47,7 +47,7 @@ const InformationContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   flex: 1;
-  padding: 30px;
+  padding: 28px 30px;
 `
 
 const Title = styled.h3`
@@ -78,16 +78,16 @@ const MetaSpan = styled.span`
 
 const Synopsis = styled.p`
   color: ${colors.BLACK};
-  font-size: 15px;
+  font-size: 14px;
   line-height: 20px;
   flex: 1;
-  margin-top: 8px;
+  margin-top: 5px;
 `
 
 const Ratings = styled.div`
   display: flex;
   align-items: center;
-  font-size: 20px;
+  font-size: 16px;
   color: ${colors.subtitle.MEDIUM};
   img {
     padding-right: 8px;
@@ -186,13 +186,13 @@ class ListItem extends Component {
             </span>
           </MetaSpan>
           <Synopsis>
-            {item.synopsis.length > 160 ? `${item.synopsis.substring(0, 160)}...` : item.synopsis}
+            {item.synopsis.length > 160 ? `${item.synopsis.substring(0, 185)}—` : item.synopsis}
           </Synopsis>
           <Ratings>
             {            
               imdbScore && imdbScore !=='N/A' ?
               <Fragment>
-                <ImdbIcon size={20} />{this.state.imdbScore}
+                <ImdbIcon size={15} />{this.state.imdbScore}
               </Fragment> :
               <NoRatings>Ratings Not Available</NoRatings>
             }
