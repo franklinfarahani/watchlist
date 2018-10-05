@@ -28,5 +28,6 @@ export const fonts = {
 }
 
 export const shadows = {
-  VERYLOW: `0 2px 6px 0 hsla(0, 0%, 0%, 0.2)`
+  VERYLOW: `0 2px 6px 0 hsla(0, 0%, 0%, 0.2)`,
+  VERYHIGH: `0 10px 30px 2px hsla(0, 0%, 0%, 0.15)`
 }
