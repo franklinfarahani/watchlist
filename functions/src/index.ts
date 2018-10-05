@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin';
 import * as express from 'express';
 import * as fetch from 'node-fetch';
 import * as compression from 'compression';
-
+import * as cors from 'cors';
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +22,8 @@ admin.initializeApp(functions.config().firebase);
 
 const databaseRef = admin.database().ref();
 const listRef = databaseRef.child('lists');
+
+const corsHandler = cors({origin: true});
 
 const app = express();
 
@@ -105,6 +107,7 @@ async function getTitle(id: number, type: "movie" | "show") {
 }
 
 app.use(compression());
+app.use(corsHandler);
 app.use("/list", authenticate);
 
 /*
