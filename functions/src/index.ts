@@ -121,7 +121,7 @@ app.use("/list", authenticate);
 */
 
 app.get("/search", async (req, resp) => {
-  let query = req.query.query;
+  const query = req.query.query;
   try {
     const res = await fetch(`https://apis.justwatch.com/content/titles/en_CA/popular?body={"content_types":["show","movie"],"page":1,"page_size":8,"query":"${query}"}`);
     const json = await res.json();
@@ -158,8 +158,8 @@ app.get("/search", async (req, resp) => {
 });
 
 app.get("/media/:type/:id", async (req, resp) => {
-  let mediaId = req.params.id;
-  let mediaType = req.params.type;
+  const mediaId = req.params.id;
+  const mediaType = req.params.type;
   const result = await getTitle(mediaId, mediaType);
   if (!result.error){
     resp.set('Cache-Control', 'public, max-age=300, s-maxage=600');
