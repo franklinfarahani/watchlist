@@ -210,7 +210,7 @@ app.post("/list", async (req: AuthRequest, resp) => {
     
     resp.set('Cache-Control', 'public, max-age=300, s-maxage=600');
     // 200 : OK
-    resp.sendStatus(200);      
+    resp.status(200).send('Item added successfully.');
   }
   catch(err) {
     console.error(err);
@@ -228,7 +228,7 @@ app.delete("/list", async (req: AuthRequest, resp) => {
     
     resp.set('Cache-Control', 'public, max-age=300, s-maxage=600');
     // 200 : OK
-    resp.sendStatus(200);      
+    resp.status(200).send('Item removed successfully.');
   }
   catch(err) {
     console.error(err);
