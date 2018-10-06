@@ -46,7 +46,7 @@ class AddToList extends Component {
       this.setState({duplicate: true})
     }
     else {
-      removeFromList(itemSelected.id, auth.user.uid);
+      removeFromList(itemSelected);
       this.setState({duplicate: false})
     }
     this.props.callback();

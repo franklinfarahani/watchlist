@@ -7,6 +7,9 @@ import {
   ADD_ITEM_REQUEST,
   ADD_ITEM_SUCCESS,
   ADD_ITEM_FAIL,
+  REMOVE_ITEM_REQUEST,
+  REMOVE_ITEM_SUCCESS,
+  REMOVE_ITEM_FAIL,
   CLEAR_RESULTS,
   GET_IMDB_ID,
   GET_TITLE,
@@ -76,8 +79,7 @@ export const addToList = (newItem) => async dispatch => {
   dispatch({ type: ADD_ITEM_REQUEST})
   try {
     let response = await authFetch('POST', `${baseURL}/api/list`, newItem)
-    let result = await response.json();
-        
+    let result = await response.json();        
     dispatch({
       type: ADD_ITEM_SUCCESS,
       status: result
@@ -91,26 +93,23 @@ export const addToList = (newItem) => async dispatch => {
   };
 }
 
-// export const addToList = (newItem, uid) => async dispatch => {
-//   listRef
-//     .child(uid)
-//     .child(newItem.id)
-//     .update(newItem);
-// };
-
-export const changeItemStatus = (existingItemId, uid) => async dispatch => {
-  listRef
-    .child(uid)
-    .child(existingItemId)
-    .update({ watched: true });
-};
-
-export const removeFromList = (removeItemId, uid) => async dispatch => {
-  listRef
-    .child(uid)
-    .child(removeItemId)
-    .remove();
-};
+export const removeFromList = (removeItem) => async dispatch => {
+  dispatch({ type: REMOVE_ITEM_REQUEST})
+  try {
+    let response = await authFetch('DELETE', `${baseURL}/api/list`, removeItem)
+    let result = await response.json();        
+    dispatch({
+      type: REMOVE_ITEM_SUCCESS,
+      status: result
+    });
+  }
+  catch(error) {
+    dispatch({
+      type: REMOVE_ITEM_FAIL,
+      error
+    });
+  };
+}
 
 export const fetchList = uid => async dispatch => {
   listRef.child(uid).on("value", snapshot => {
