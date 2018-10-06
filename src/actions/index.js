@@ -1,26 +1,44 @@
 import { listRef, authRef, provider } from '../firebase';
 import {tmdb, omdb} from '../config/keys';
-import { SEARCH_TITLES, GET_IMDB_ID, GET_TITLE, FETCH_LIST, AUTH_USER, AUTH_ERROR, SIGN_OUT_USER } from '../actions/types';
+import { 
+  SEARCH_TITLES_REQUEST,
+  SEARCH_TITLES_SUCCESS,
+  SEARCH_TITLES_FAIL,
+  CLEAR_RESULTS,
+  GET_IMDB_ID,
+  GET_TITLE,
+  FETCH_LIST,
+  AUTH_USER,
+  AUTH_ERROR,
+  SIGN_OUT_USER
+} from '../actions/types';
 
+const baseURL = process.env.REACT_APP_BASE_URL;
 // let nextPosition = 0;
 
-export const searchTitles = (query) => dispatch => {
-  fetch(`${tmdb.url}/search/multi?api_key=${tmdb.key}&query=${query}`)
-    .then(response => response.json())
-    .then(result => {
-      dispatch({
-        type: SEARCH_TITLES,
-        payload: result
-      });
-    })
-    .catch(error => {
-      dispatch({
-        type: SEARCH_TITLES,
-        error
-      });
+export const searchTitles = (query) => async dispatch => {
+  dispatch({ type: SEARCH_TITLES_REQUEST})
+  try {
+    let response = await fetch(`${baseURL}/api/search?query=${query}`)
+    let results = await response.json();    
+    dispatch({
+      type: SEARCH_TITLES_SUCCESS,
+      payload: results.items
     });
+  }
+  catch(error) {
+    dispatch({
+      type: SEARCH_TITLES_FAIL,
+      error
+    });
+  };
 }
 
+export const clearResults = () => {
+  return {
+    type: CLEAR_RESULTS
+  }
+}
 
 export function getImdbId(tmdbId){
   return function(dispatch) {

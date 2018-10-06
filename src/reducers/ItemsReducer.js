@@ -1,31 +1,40 @@
-import { SEARCH_TITLES, FETCH_LIST } from '../actions/types';
+import { 
+  SEARCH_TITLES_REQUEST,
+  SEARCH_TITLES_SUCCESS,
+  SEARCH_TITLES_FAIL,
+  CLEAR_RESULTS,
+  FETCH_LIST
+} from '../actions/types';
 
 const initialState = {
   results: [],
   list: [],
-  isLoading: true,
+  isLoading: false,
   error: null
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SEARCH_TITLES:
-      action.payload.then((data) => {
-        const filteredResults = data.results.filter(item => item.media_type !== "person");
-        return {
-          ...state,
-          results: filteredResults,
-          isLoading: false
-        };
-      })
-      .catch(error => (
-        {
-          ...state,
-          isLoading: false,
-          error
-        }
-      ));
-      break;
+    case CLEAR_RESULTS:
+      return {
+        ...state,
+        results: [],
+        isLoading: false
+      };
+    case SEARCH_TITLES_REQUEST:
+      return { ...state, isLoading: true }
+    case SEARCH_TITLES_SUCCESS:
+      return {
+        ...state,
+        results: action.payload,
+        isLoading: false
+      };
+    case SEARCH_TITLES_FAIL:
+    return {
+        ...state,
+        isLoading: false,
+        error: action.error
+      }
     case FETCH_LIST:
       let arr = [];
       if (action.payload){

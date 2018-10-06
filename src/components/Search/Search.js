@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 import styled from 'styled-components';
 import {Search as faSearch} from 'styled-icons/fa-solid/Search';
 import {Close as mdClose} from 'styled-icons/material/Close';
 import Suggestions from './Suggestions';
 import SearchBackdrop from './SearchBackdrop'
-import * as api from '../../utils/api';
 import MDSpinner from 'react-md-spinner';
-import { colors } from '../../config/styleVariables';
+import { colors, shadows } from '../../config/styleVariables';
 
 
 const FormContainer = styled.form`
@@ -22,7 +23,7 @@ const SearchBarContainer = styled.div`
   background: ${colors.WHITE};
   border: solid 3px transparent;
   border-radius: 4px;
-  box-shadow: 0 10px 30px 2px hsla(0, 0%, 0%, 0.15);
+  box-shadow: ${shadows.VERYHIGH};
 
   /* &:focus-within {
     border: solid 3px ${colors.PRIMARY};
@@ -72,29 +73,16 @@ class Search extends Component {
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur= this.handleBlur.bind(this);
     this.handleOpen= this.handleOpen.bind(this);
-    this.searchTitles = this.searchTitles.bind(this);
     this.clearInput = this.clearInput.bind(this);
     
     this.typingTimeout = null;
 
     this.state = {
       query: '',
-      results: [],
-      isLoading: false,
-      isFocused:false,
-      error: null
+      isBuffering: false,
+      isFocused:false
     }
 
-  }
-
-  // Searches theMovieDB and filters out actors
-  searchTitles(query) {
-    api.search(query)
-      .then((data) => {
-        const filteredResults = data.results.filter(item => item.media_type !== "person");
-        this.setState({ results: filteredResults, isLoading: false })
-      })
-      .catch(error => this.setState({ error, isLoading: false }))
   }
 
   handleChange(e) {
@@ -102,45 +90,47 @@ class Search extends Component {
 
     this.setState({
       query: e.target.value,
-      isLoading: true
+      isBuffering: true
     });
 
     // setTimeout requires arrow function
     if (e.target.value && e.target.value.length > 1) {
-      this.typingTimeout = setTimeout(()=>this.searchTitles(this.state.query), 600)
+      this.typingTimeout = setTimeout(()=>{
+        this.props.searchTitles(this.state.query)
+        this.setState({isBuffering: false})
+      }, 200)
     }
-    else this.setState({
-      results: [], isLoading: false
-    })
+    else this.setState({isBuffering: false})
   }
 
   handleKeyDown(e) {
     // Pressing Enter
     if (e.keyCode === 13) {
       e.preventDefault();
-      this.searchTitles(this.state.query)
+      this.props.searchTitles(this.state.query)
+      this.setState({isBuffering: false})
     }
   }
 
   handleFocus() {
-    this.setState({ isFocused : true});
+    this.setState({isFocused : true});
   }
 
   handleBlur() {
-    this.setState({ isFocused : false});
+    this.setState({isFocused : false});
   }
 
   handleOpen(e) {
     e && this.search.focus();
-    this.setState({ isFocused : e});
+    this.setState({isFocused : e});
   }
 
   clearInput(e) {
     e.preventDefault();
     this.search.value = '';
+    this.props.clearResults();
     this.setState({
       query: '',
-      results: [],
       isFocused: true
     })
     this.search.focus();
@@ -166,7 +156,7 @@ class Search extends Component {
               onKeyDown = {this.handleKeyDown}
             />
             <IconContainer>
-              {this.state.isLoading && 
+              {(this.state.isBuffering || this.props.isLoading) && 
                 <MDSpinner singleColor={colors.PRIMARY} />
               }
             </IconContainer>
@@ -180,10 +170,10 @@ class Search extends Component {
           </SearchBarContainer>
 
             <Suggestions
-              results={this.state.results}
-              error={this.state.error}
+              results={this.props.results}
+              error={this.props.error}
               query={this.state.query}
-              isLoading={this.state.isLoading}
+              isLoading={this.state.isBuffering || this.props.isLoading}
               isOpen={this.handleOpen}
               isFocused={this.state.isFocused}
             />
@@ -195,7 +185,15 @@ class Search extends Component {
 
 }
 
-export default Search;
+const mapStateToProps = ({ data }) => {
+  return {
+    results: data.results,
+    isLoading: data.isLoading,
+    error: data.error
+  };
+};
+
+export default connect(mapStateToProps, actions)(Search);
 
 
 

@@ -126,22 +126,13 @@ class Suggestions extends Component {
 
   render() {
     const options = this.props.results.map(row => {
-      const item = {
-        id: row.id,
-        media_type: row.media_type,
-        title: row.media_type === 'movie' ? row.title : row.name,
-        poster: row.poster_path,
-        year: row.media_type === "movie" ? row.release_date : row.first_air_date,
-        genre_ids: row.genre_ids,
-        synopsis: row.overview
-      };
       return (
         row.vote_count !== 0 &&
-        <ResultRow key={item.id}>
-          {item.poster ? 
+        <ResultRow key={row.id}>
+          {row.poster ? 
             <img
-              src = {`http://image.tmdb.org/t/p/w92${item.poster}`}
-              alt = {`poster preview for ${item.title}`}
+              src = {`https://images.justwatch.com${row.poster}s166`}
+              alt = {`poster preview for ${row.title}`}
             />
             :
             <EmptyImage>
@@ -150,21 +141,21 @@ class Suggestions extends Component {
           }
           <RowTextContainer>
             <h4>
-              {item.title}
+              {row.title}
               <YearSpan>
-                {item.year ? '(' + item.year.substring(0,4) + ')' : '(TBA)'}
+                {row.year ? `(${row.year})` : '(TBA)'}
               </YearSpan>
             </h4>
             <CategorySpan>
               {
-                item.media_type === "movie" ?
+                row.media_type === "movie" ?
                 <Fragment><IconMovie /> movie</Fragment> :
                 <Fragment><IconTV /> tv show</Fragment>
               }
             </CategorySpan>
           </RowTextContainer>
           <AddToList
-            item={ item }
+            item={{ id: row.id, media_type: row.media_type }}
             callback={ () => {this.setState({ display: false }); this.props.isOpen(false);}  }
           />
         </ResultRow>
