@@ -56,7 +56,7 @@ class AddToList extends Component {
       return;
     }
     if (!this.state.duplicate) {
-      addToList(itemSelected, auth.user.uid);
+      addToList(itemSelected);
       this.setState({duplicate: true})
     }
     else {
@@ -88,10 +88,10 @@ class AddToList extends Component {
   }
 }
 
-const mapStateToProps = ({ auth, data }) => {
+const mapStateToProps = ({ auth, watchlist }) => {
   return {
     auth,
-    watchlist: data.list
+    watchlist: watchlist.list
   };
 };
 

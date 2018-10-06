@@ -1,9 +1,12 @@
-import { listRef, authRef, provider } from '../firebase';
+import { listRef, authRef, provider, authFetch } from '../firebase';
 import {tmdb, omdb} from '../config/keys';
 import { 
   SEARCH_TITLES_REQUEST,
   SEARCH_TITLES_SUCCESS,
   SEARCH_TITLES_FAIL,
+  ADD_ITEM_REQUEST,
+  ADD_ITEM_SUCCESS,
+  ADD_ITEM_FAIL,
   CLEAR_RESULTS,
   GET_IMDB_ID,
   GET_TITLE,
@@ -69,12 +72,31 @@ export const getTitle = (imdbId) => dispatch => {
     });
 }
 
-export const addToList = (newItem, uid) => async dispatch => {
-  listRef
-    .child(uid)
-    .child(newItem.id)
-    .update(newItem);
-};
+export const addToList = (newItem) => async dispatch => {
+  dispatch({ type: ADD_ITEM_REQUEST})
+  try {
+    let response = await authFetch('POST', `${baseURL}/api/list`, newItem)
+    let result = await response.json();
+        
+    dispatch({
+      type: ADD_ITEM_SUCCESS,
+      status: result
+    });
+  }
+  catch(error) {
+    dispatch({
+      type: ADD_ITEM_FAIL,
+      error
+    });
+  };
+}
+
+// export const addToList = (newItem, uid) => async dispatch => {
+//   listRef
+//     .child(uid)
+//     .child(newItem.id)
+//     .update(newItem);
+// };
 
 export const changeItemStatus = (existingItemId, uid) => async dispatch => {
   listRef
