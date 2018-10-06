@@ -185,11 +185,11 @@ class Search extends Component {
 
 }
 
-const mapStateToProps = ({ data }) => {
+const mapStateToProps = ({ search }) => {
   return {
-    results: data.results,
-    isLoading: data.isLoading,
-    error: data.error
+    results: search.results,
+    isLoading: search.isLoading,
+    error: search.error
   };
 };
 

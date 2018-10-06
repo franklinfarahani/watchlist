@@ -23,15 +23,15 @@ class Watchlist extends Component {
   }
 
   render() {
-    const { data } = this.props;
+    const { watchlist } = this.props;
     
-    if (data.isLoading) {
+    if (watchlist.isLoading) {
       return (
         <h3>Getting List...</h3>
       );
     }
     
-    const list = map(data.list, (value, key) => {
+    const list = map(watchlist.list, (value, key) => {
       return <ListItem key={key} item={value} />;
     });
     
@@ -53,9 +53,9 @@ class Watchlist extends Component {
   }
 }
 
-const mapStateToProps = ({ data, auth }) => {
+const mapStateToProps = ({ watchlist, auth }) => {
   return {
-    data,
+    watchlist,
     user: auth.user
   };
 };

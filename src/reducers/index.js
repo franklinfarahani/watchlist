@@ -1,10 +1,12 @@
 import {combineReducers} from 'redux';
-import data from './ItemsReducer';
+import search from './SearchReducer';
+import watchlist from './ListReducer';
 import imdb from './RatingsReducer';
 import auth from './AuthReducer';
 
 export default combineReducers({
-  data,
+  search,
+  watchlist,
   imdb,
   auth
 })

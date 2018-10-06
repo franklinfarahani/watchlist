@@ -164,8 +164,6 @@ function mapStateToProps({ auth }) {
   return {
     authenticated: auth.authenticated,
     user: auth.user,
-    // username: auth.user.displayName,
-    // avatar: auth.user.photoURL,
     loading: auth.loading
   };
 }
