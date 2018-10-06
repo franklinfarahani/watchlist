@@ -34,20 +34,6 @@ class AddToList extends Component {
         this.setState({duplicate: true}))
   }
 
-  handleAddClick (e, addToListItem){
-    const { addToList, auth } = this.props;
-    e.preventDefault();
-    addToList(addToListItem, auth.user.uid);
-    this.setState({duplicate: true})
-  };
-
-  handleRemoveClick (e, removeFromListId){
-    const { removeFromList, auth } = this.props;
-    e.preventDefault();
-    removeFromList(removeFromListId, auth.user.uid);
-    this.setState({duplicate: false})
-  };
-
   handleClick(e, itemSelected) {
     const { addToList, removeFromList, auth } = this.props;
     e.preventDefault();
