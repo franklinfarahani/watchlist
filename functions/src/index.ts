@@ -182,7 +182,7 @@ app.get("/list", async (req: AuthRequest, resp) => {
   let watchlist = [];
   try {
     // Fetch given user's list from firebase database and assign it to listObj for operations
-    await listRef.child(req.user.id)
+    await listRef.child(req.user.uid)
     // await listRef.child('testuser') //Uncomment to test without user authentication
       .once("value", snapshot => listObj = snapshot.val());
     
@@ -230,7 +230,7 @@ app.post("/list", async (req: AuthRequest, resp) => {
 app.delete("/list", async (req: AuthRequest, resp) => {
   const itemToDelete = req.body;
   try {
-    await listRef.child(req.user.id)
+    await listRef.child(req.user.uid)
       .child(itemToDelete.id)
       .remove();
     
