@@ -64,19 +64,21 @@ interface AuthRequest extends express.Request {
 
 const authenticate = async (req, res, next) => {
   if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
-    res.status(403).send('Unauthorized');
+    res.status(403).send('Token Missing or formatted incorrectly');
     return;
   }
   const idToken = req.headers.authorization.split('Bearer ')[1];
+  
   try {
     const decodedIdToken = await admin.auth().verifyIdToken(idToken);
     req.user = decodedIdToken;
+    
     next();
     return;
   } 
   catch(e) {
     // 403: Forbidden
-    res.status(403).send('Unauthorized');
+    res.status(403).send('Unauthorized: ' + e);
     return;
   }
 };
@@ -171,7 +173,7 @@ app.get("/media/:type/:id", async (req, resp) => {
   } else {
     console.error(result.error);
     // 400: Bad Request
-    resp.sendStatus(400);  
+    resp.status(400).send(result.error);  
   }   
 });
 
@@ -210,7 +212,7 @@ app.post("/list", async (req: AuthRequest, resp) => {
   const itemToAdd = req.body;
   try {
     // await listRef.child('testuser')
-    await listRef.child(req.user.id)
+    await listRef.child(req.user.uid)
       .child(itemToAdd.id)
       .update(itemToAdd)
     
@@ -221,7 +223,7 @@ app.post("/list", async (req: AuthRequest, resp) => {
   catch(err) {
     console.error(err);
     // 400: Bad request
-    resp.sendStatus(400);
+    resp.status(400).send(err);
   }
 });
 
