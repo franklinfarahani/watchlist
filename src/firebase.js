@@ -22,14 +22,13 @@ export function authFetch(url, method, data) {
         "Authorization": "Bearer " + token
       } 
     }
-    console.log(request);    
 
     if (method === 'POST') {
       request.headers["Content-Type"] = "application/json";
       request.body = JSON.stringify(data);
     }
 
-    console.log('Making authenticated request:', method, url);
+    console.log('Making authenticated request:', request.method, url);
     return fetch(url, request)
   });
 };
