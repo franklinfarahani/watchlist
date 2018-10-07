@@ -6,7 +6,9 @@ import { getGenreName, formatRuntime } from '../../utils'
 import styled from 'styled-components';
 import {Image as faImage} from 'styled-icons/fa-regular/Image';
 import {Close as mdClose} from 'styled-icons/material/Close';
-import ImdbIcon from '../../components/ImdbIcon';
+import ImdbIcon from '../../components/BrandIcon/ImdbIcon';
+import RtFreshIcon from '../../components/BrandIcon/RtFreshIcon';
+import RtRottenIcon from '../../components/BrandIcon/RtRottenIcon';
 import { colors, shadows } from '../../config/styleVariables';
 import Button from '../../components/Button';
 
@@ -174,8 +176,12 @@ class ListItem extends Component {
                     </div>
                   }
                   {rtScore &&
+                    rtScore >= 60 ?
                     <div>
-                      <ImdbIcon size={15} />{rtScore}{'%'}
+                      <RtFreshIcon size={15} />{rtScore}{'%'}
+                    </div> :
+                    <div>
+                      <RtRottenIcon size={15} />{rtScore}{'%'}
                     </div>
                   }
                 </Fragment> :
