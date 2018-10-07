@@ -1,6 +1,7 @@
-import { listRef, authRef, provider, authFetch } from '../firebase';
+import { authRef, provider, authFetch } from '../firebase';
 import {tmdb, omdb} from '../config/keys';
 import { 
+  API,
   SEARCH_TITLES_REQUEST,
   SEARCH_TITLES_SUCCESS,
   SEARCH_TITLES_FAIL,
@@ -16,7 +17,8 @@ import {
   FETCH_LIST,
   AUTH_USER,
   AUTH_ERROR,
-  SIGN_OUT_USER
+  SIGN_OUT_USER,
+  REQUEST_FAIL
 } from '../actions/types';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
@@ -78,7 +80,7 @@ export const getTitle = (imdbId) => dispatch => {
 export const addToList = (newItem) => async dispatch => {
   dispatch({ type: ADD_ITEM_REQUEST})
   try {
-    let response = await authFetch('POST', `${baseURL}/api/list`, newItem)
+    let response = await authFetch(`${baseURL}/api/list`, 'POST', newItem)
     let result = await response.json();        
     dispatch({
       type: ADD_ITEM_SUCCESS,
@@ -96,7 +98,7 @@ export const addToList = (newItem) => async dispatch => {
 export const removeFromList = (removeItem) => async dispatch => {
   dispatch({ type: REMOVE_ITEM_REQUEST})
   try {
-    let response = await authFetch('DELETE', `${baseURL}/api/list`, removeItem)
+    let response = await authFetch(`${baseURL}/api/list`, 'DELETE', removeItem)
     let result = await response.json();        
     dispatch({
       type: REMOVE_ITEM_SUCCESS,
@@ -111,14 +113,15 @@ export const removeFromList = (removeItem) => async dispatch => {
   };
 }
 
-export const fetchList = uid => async dispatch => {
-  listRef.child(uid).on("value", snapshot => {
-    dispatch({
-      type: FETCH_LIST,
-      payload: snapshot.val()
-    });
-  });
-};
+export const fetchList = () => ({
+  type: API,
+  payload: {
+    url: `${baseURL}/api/list`,
+    authed: true,
+    success: (list) => setList(list),
+    label: 'watchlist'
+  }
+});
 
 export const verifyAuth = () => dispatch => {
   authRef.onAuthStateChanged(user => {
@@ -164,3 +167,13 @@ export const signOut = () => dispatch => {
       })
     });
 };
+
+export const fail = (payload = 'global') => ({
+  type: REQUEST_FAIL,
+  payload
+});
+
+export const setList = (payload) => ({
+  type: FETCH_LIST,
+  payload
+});
