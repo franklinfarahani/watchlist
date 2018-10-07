@@ -10,14 +10,14 @@ export const listRef = databaseRef.child('lists');
 export const authRef = firebase.auth();
 export const provider = new firebase.auth.GoogleAuthProvider();
 
-export function authFetch(method, url, data) {
+export function authFetch(url, method, data) {
   if (!authRef.currentUser) {
     throw new Error('Not authenticated. Make sure you\'re signed in!');
   }
   // Get the Firebase auth token to authenticate the request
   return authRef.currentUser.getIdToken(true).then(token => {
     let request = {
-      method: method,
+      method: method ? method : 'GET',
       headers: {
         "Authorization": "Bearer " + token
       } 
