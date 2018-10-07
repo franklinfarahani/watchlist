@@ -11,10 +11,15 @@ export function imagesLoaded(parentNode) {
   return true;
 }
 
-export function getGenreName(id, type){
-  return type === 'movie' ? 
-    genres.movies[genres.movies.findIndex(genre => genre.id === id)].name :
-    genres.tv[genres.tv.findIndex(genre => genre.id === id)].name;
+export function getGenreName(id){
+  return genres[genres.findIndex(genre => genre.id === id)].name
+}
+
+export function formatRuntime(runtime){
+  return {
+    hours: Math.floor(runtime / 60),
+    minutes: runtime % 60
+  }
 }
 
 export function formatDate (date){
