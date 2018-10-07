@@ -251,7 +251,7 @@ app.delete("/list", async (req: AuthRequest, resp) => {
   catch(err) {
     console.error(err);
     // 400: Bad request
-    resp.sendStatus(400);
+    resp.status(400).send(err);
   }
 });
 
