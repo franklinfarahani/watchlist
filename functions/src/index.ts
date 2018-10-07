@@ -111,7 +111,7 @@ async function getTitle(id: number, type: "movie" | "show") {
           }, {})
         )
         // Remove all the duplicate option objects
-        .filter((item, index, self) => self.findIndex(t => t.provider_id === item.provider_id) === index),
+        .filter((value, index, self) => self.findIndex(t => t.provider_id === value.provider_id) === index),
     };
     type === 'movie' ? item.runtime = json.runtime : null;
     return {item, error: null};
