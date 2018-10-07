@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { removeFromList } from '../../actions';
-import { getGenreName, formatDate } from '../../utils'
-import { getImdbId, getTitle } from '../../utils/api';
+import { getGenreName, formatRuntime } from '../../utils'
 
 import styled from 'styled-components';
 import {Image as faImage} from 'styled-icons/fa-regular/Image';
@@ -85,12 +84,17 @@ const Synopsis = styled.p`
 `
 
 const Ratings = styled.div`
+  font-size: 16px;
   display: flex;
   align-items: center;
-  font-size: 16px;
   color: ${colors.subtitle.MEDIUM};
+  div {
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+  }
   img {
-    padding-right: 8px;
+    padding-right: 6px;
   }
 `
 
@@ -107,32 +111,8 @@ class ListItem extends Component {
     super(props)
 
     this.state = {
-      imdbId: 'Unknown',
-      imdbScore: 'N/A',
-      rtScore: 'N/A',
       loading: true,
       error: null
-    }
-  }
-
-  componentDidMount() {
-    const {id, media_type} = this.props.item;
-    getImdbId(id, media_type).then(res => this.setState({ imdbId: res }))
-  }
-  
-  componentDidUpdate(prevProps,prevState){
-    const {id, media_type} = this.props.item;
-    const { imdbId } = this.state;
-    if (id !== prevProps.item.id){
-      getImdbId(id, media_type).then(res => this.setState({ imdbId: res }))
-    }
-    if (imdbId !== prevState.imdbId){
-      getTitle(imdbId).then(res => {
-        this.setState({
-          imdbScore: res.imdbRating,
-          loading: false
-        })
-      })
     }
   }
 
@@ -143,16 +123,16 @@ class ListItem extends Component {
 
   render() {
     const { item } = this.props;
-    const {imdbScore} = this.state;
-    const convertedDate = formatDate(item.year);
+    const convertedRuntime = item.runtime ? formatRuntime(item.runtime) : null;
+    const imdbScore = item.ratings[item.ratings.findIndex(rating => rating.provider_type === 'imdb:score')].value;
+    const rtScore = item.ratings[item.ratings.findIndex(rating => rating.provider_type === 'tomato:meter')].value;
     
-
 
     return (
       <ListItemWrapper>
         {item.poster ? 
           <img
-            src = {`http://image.tmdb.org/t/p/w154${item.poster}`}
+            src = {`https://images.justwatch.com${item.poster}s166`}
             alt = {`poster preview for ${item.title}`}
           />
           :
@@ -164,25 +144,21 @@ class ListItem extends Component {
           <Title>
             {item.title}
             <YearSpan>
-              {item.year ? '(' + convertedDate.year + ')' : '(TBA)'}
+              {item.year ? `(${item.year})` : '(TBA)'}
             </YearSpan>
           </Title>
           <MetaSpan>
             <span>
               {/* Slice the array into only 3 genres for better Ui, put a comma after every genre except the last on the list */}
-              {item.genre_ids.slice(0, 3).map((genre, index, genre_ids) => 
-                (index !== genre_ids.slice(0, 3).length - 1) ?
+              {item.genres.slice(0, 3).map((genre, index, genres) => 
+                (index !== genres.slice(0, 3).length - 1) ?
                 `${getGenreName(genre, item.media_type)}, ` :
                 getGenreName(genre, item.media_type)
               )}
             </span>
             {`|`}
             <span>
-              {
-                item.year ?
-                `${convertedDate.day} ${convertedDate.month} ${convertedDate.year}` :
-                'Unknown Date'
-              }
+              {convertedRuntime && `${convertedRuntime.hours}h ${convertedRuntime.minutes}mins`}
             </span>
           </MetaSpan>
           <Synopsis>
@@ -190,11 +166,20 @@ class ListItem extends Component {
           </Synopsis>
           <Ratings>
             {            
-              imdbScore && imdbScore !=='N/A' ?
-              <Fragment>
-                <ImdbIcon size={15} />{this.state.imdbScore}
-              </Fragment> :
-              <NoRatings>Ratings Not Available</NoRatings>
+              imdbScore || rtScore ?
+                <Fragment>
+                  {imdbScore &&
+                    <div>
+                      <ImdbIcon size={15} />{imdbScore}
+                    </div>
+                  }
+                  {rtScore &&
+                    <div>
+                      <ImdbIcon size={15} />{rtScore}{'%'}
+                    </div>
+                  }
+                </Fragment> :
+                <NoRatings>Ratings Not Available</NoRatings>
             }
           </Ratings>
         </InformationContainer>
