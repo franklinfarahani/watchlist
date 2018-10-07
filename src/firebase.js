@@ -23,7 +23,7 @@ export function authFetch(url, method, data) {
       } 
     }
 
-    if (method === 'POST') {
+    if (method === 'POST' || method === 'DELETE') {
       request.headers["Content-Type"] = "application/json";
       request.body = JSON.stringify(data);
     }
