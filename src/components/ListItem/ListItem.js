@@ -118,9 +118,9 @@ class ListItem extends Component {
     }
   }
 
-  handleRemoveClick = removeFromListId => {
+  handleRemoveClick = removeFromListItem => {
     const { removeFromList, auth } = this.props;
-    removeFromList(removeFromListId, auth.user.uid);
+    removeFromList(removeFromListItem);
   };
 
   render() {
@@ -193,7 +193,7 @@ class ListItem extends Component {
           <Button
             category='icon'
             danger
-            onClick={() => this.handleRemoveClick(item.id)}
+            onClick={() => this.handleRemoveClick(item)}
           >
             <IconClose title='Remove from List' />
           </Button>
