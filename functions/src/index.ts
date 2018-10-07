@@ -210,7 +210,6 @@ app.get("/list", async (req: AuthRequest, resp) => {
       })
     )
 
-    resp.set('Cache-Control', 'public, max-age=300, s-maxage=600');
     resp.status(200).send(watchlist);
       
   }
@@ -229,7 +228,6 @@ app.post("/list", async (req: AuthRequest, resp) => {
       .child(itemToAdd.id)
       .update(itemToAdd)
     
-    resp.set('Cache-Control', 'public, max-age=300, s-maxage=600');
     // 200 : OK
     resp.status(200).send('Item added successfully.');
   }
@@ -247,7 +245,6 @@ app.delete("/list", async (req: AuthRequest, resp) => {
       .child(itemToDelete.id)
       .remove();
     
-    resp.set('Cache-Control', 'public, max-age=300, s-maxage=600');
     // 200 : OK
     resp.status(200).send('Item removed successfully.');
   }
