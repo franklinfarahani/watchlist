@@ -22,9 +22,6 @@ class AddToList extends Component {
     this.state = {
       duplicate: false
     }
-
-    this.handleAddClick = this.handleAddClick.bind(this);
-    this.handleRemoveClick = this.handleRemoveClick.bind(this);
   }
 
   componentDidMount(){
