@@ -197,7 +197,7 @@ app.get("/list", async (req: AuthRequest, resp) => {
     // Fetch given user's list from firebase database and assign it to listObj for operations
     await listRef.child(req.user.uid)
     // await listRef.child('testuser') //Uncomment to test without user authentication
-      .once("value", snapshot => listObj = snapshot.val());
+      .once("value", snapshot => snapshot.exists() ? listObj = snapshot.val() : listObj);
     
     // convert json object of media objects to array of objects
     const list = Object.keys(listObj).map(index => listObj[index])
