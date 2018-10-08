@@ -98,7 +98,7 @@ class Search extends Component {
       this.typingTimeout = setTimeout(()=>{
         this.props.searchTitles(this.state.query)
         this.setState({isBuffering: false})
-      }, 200)
+      }, 500)
     }
     else this.setState({isBuffering: false})
   }
