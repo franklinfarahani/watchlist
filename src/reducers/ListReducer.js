@@ -1,11 +1,8 @@
 import { 
-  ADD_ITEM_REQUEST,
-  ADD_ITEM_SUCCESS,
-  ADD_ITEM_FAIL,
-  REMOVE_ITEM_REQUEST,
-  REMOVE_ITEM_SUCCESS,
-  REMOVE_ITEM_FAIL,
-  FETCH_LIST
+  FETCH_LIST,
+  REQUEST_INIT,
+  REQUEST_SUCCESS,
+  REQUEST_FAIL
 } from '../actions/types';
 
 const initialState = {
@@ -17,18 +14,15 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ADD_ITEM_REQUEST:
-    case REMOVE_ITEM_REQUEST:
+    case REQUEST_INIT:
       return { ...state, isLoading: true, hasUpdated: false }
-    case ADD_ITEM_SUCCESS:
-    case REMOVE_ITEM_SUCCESS:
+    case REQUEST_SUCCESS:
       return {
         ...state,
         hasUpdated: true,
         isLoading: false
       };
-    case ADD_ITEM_FAIL:
-    case REMOVE_ITEM_FAIL:
+    case REQUEST_FAIL:
     return {
         ...state,
         hasUpdated: false,

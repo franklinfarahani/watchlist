@@ -1,7 +1,7 @@
 import { 
-  SEARCH_TITLES_REQUEST,
-  SEARCH_TITLES_SUCCESS,
-  SEARCH_TITLES_FAIL,
+  SEARCH_INIT,
+  SEARCH_SUCCESS,
+  SEARCH_FAIL,
   CLEAR_RESULTS
 } from '../actions/types';
 
@@ -19,15 +19,15 @@ export default (state = initialState, action) => {
         results: [],
         isLoading: false
       };
-    case SEARCH_TITLES_REQUEST:
+    case SEARCH_INIT:
       return { ...state, isLoading: true }
-    case SEARCH_TITLES_SUCCESS:
+    case SEARCH_SUCCESS:
       return {
         ...state,
         results: action.payload,
         isLoading: false
       };
-    case SEARCH_TITLES_FAIL:
+    case SEARCH_FAIL:
     return {
         ...state,
         isLoading: false,

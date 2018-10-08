@@ -1,46 +1,43 @@
-import { authRef, provider, authFetch } from '../firebase';
-import {tmdb, omdb} from '../config/keys';
+import { authRef, provider } from '../firebase';
 import { 
   API,
-  SEARCH_TITLES_REQUEST,
-  SEARCH_TITLES_SUCCESS,
-  SEARCH_TITLES_FAIL,
-  ADD_ITEM_REQUEST,
-  ADD_ITEM_SUCCESS,
-  ADD_ITEM_FAIL,
-  REMOVE_ITEM_REQUEST,
-  REMOVE_ITEM_SUCCESS,
-  REMOVE_ITEM_FAIL,
+  SEARCH_INIT,
+  SEARCH_SUCCESS,
+  SEARCH_FAIL,
   CLEAR_RESULTS,
-  GET_IMDB_ID,
-  GET_TITLE,
   FETCH_LIST,
   AUTH_USER,
   AUTH_ERROR,
   SIGN_OUT_USER,
+  REQUEST_INIT,
+  REQUEST_SUCCESS,
   REQUEST_FAIL
 } from '../actions/types';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 // let nextPosition = 0;
 
-export const searchTitles = (query) => async dispatch => {
-  dispatch({ type: SEARCH_TITLES_REQUEST})
-  try {
-    let response = await fetch(`${baseURL}/api/search?query=${query}`)
-    let results = await response.json();    
-    dispatch({
-      type: SEARCH_TITLES_SUCCESS,
-      payload: results.items
-    });
+// Action creator generator helper function
+const makeActionCreator = (type, ...argNames) => {
+  return function(...args){
+    const action = { type }
+    argNames.forEach((arg, index) => {
+      action[argNames[index]] = args[index]
+    })
+    return action
   }
-  catch(error) {
-    dispatch({
-      type: SEARCH_TITLES_FAIL,
-      error
-    });
-  };
 }
+
+export const searchTitles = (query) => ({
+  type: API,
+  payload: {
+    url: `${baseURL}/api/search?query=${query}`,
+    init: label => searchInit(label),
+    success: results => searchSuccess(results.items),
+    fail: label => searchFail(label),
+    label: 'search'
+  }
+});
 
 export const clearResults = () => {
   return {
@@ -48,76 +45,43 @@ export const clearResults = () => {
   }
 }
 
-export function getImdbId(tmdbId){
-  return function(dispatch) {
-  fetch(`${tmdb.url}/movie/${tmdbId}/external_ids?api_key=${tmdb.key}`)
-    .then(response => response.json())
-    .then(result => {
-      dispatch({
-        type: GET_IMDB_ID,
-        payload: result.imdb_id
-      });
-    })
-    .catch(error => {
-      dispatch({
-        type: GET_IMDB_ID,
-        error
-      });
-    });
-  }
-}
-
-export const getTitle = (imdbId) => dispatch => {
-  fetch(`${omdb.url}/?apikey=${omdb.key}&i=${imdbId}`)
-    .then(response => {
-      dispatch({
-        type: GET_TITLE,
-        payload: response.json()
-      });
-    });
-}
-
-export const addToList = (newItem) => async dispatch => {
-  dispatch({ type: ADD_ITEM_REQUEST})
-  try {
-    let response = await authFetch(`${baseURL}/api/list`, 'POST', newItem)        
-    dispatch({
-      type: ADD_ITEM_SUCCESS,
-      status: response
-    });
-  }
-  catch(error) {
-    dispatch({
-      type: ADD_ITEM_FAIL,
-      error
-    });
-  };
-}
-
-export const removeFromList = (removeItem) => async dispatch => {
-  dispatch({ type: REMOVE_ITEM_REQUEST})
-  try {
-    let response = await authFetch(`${baseURL}/api/list`, 'DELETE', removeItem)        
-    dispatch({
-      type: REMOVE_ITEM_SUCCESS,
-      status: response
-    });
-  }
-  catch(error) {
-    dispatch({
-      type: REMOVE_ITEM_FAIL,
-      error
-    });
-  };
-}
-
 export const fetchList = () => ({
   type: API,
   payload: {
     url: `${baseURL}/api/list`,
     authed: true,
+    init: label => requestInit(label),
     success: (list) => setList(list),
+    fail: label => requestFail(label),
     label: 'watchlist'
+  }
+});
+
+export const addToList = (newItem) => ({
+  type: API,
+  payload: {
+    url: `${baseURL}/api/list`,
+    method: 'POST',
+    authed: true,
+    body: newItem,
+    init: label => requestInit(label),
+    success: (label) => requestSuccess(label),
+    fail: label => requestFail(label),
+    label: 'add'
+  }
+});
+
+export const removeFromList = (removeItem) => ({
+  type: API,
+  payload: {
+    url: `${baseURL}/api/list`,
+    method: 'DELETE',
+    authed: true,
+    body: removeItem,
+    init: label => requestInit(label),
+    success: (label) => requestSuccess(label),
+    fail: label => requestFail(label),
+    label: 'remove'
   }
 });
 
@@ -166,12 +130,10 @@ export const signOut = () => dispatch => {
     });
 };
 
-export const fail = (payload = 'global') => ({
-  type: REQUEST_FAIL,
-  payload
-});
-
-export const setList = (payload) => ({
-  type: FETCH_LIST,
-  payload
-});
+export const searchInit = makeActionCreator(SEARCH_INIT, 'payload');
+export const searchSuccess = makeActionCreator(SEARCH_SUCCESS, 'payload');
+export const searchFail = makeActionCreator(SEARCH_FAIL, 'payload');
+export const requestInit = makeActionCreator(REQUEST_INIT, 'payload');
+export const requestSuccess = makeActionCreator(REQUEST_SUCCESS, 'payload');
+export const requestFail = makeActionCreator(REQUEST_FAIL, 'payload');
+export const setList = makeActionCreator(FETCH_LIST, 'payload');
