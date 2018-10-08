@@ -119,7 +119,7 @@ class ListItem extends Component {
   }
 
   handleRemoveClick = removeFromListItem => {
-    const { removeFromList, auth } = this.props;
+    const { removeFromList } = this.props;
     removeFromList(removeFromListItem);
   };
 
