@@ -80,11 +80,10 @@ export const getTitle = (imdbId) => dispatch => {
 export const addToList = (newItem) => async dispatch => {
   dispatch({ type: ADD_ITEM_REQUEST})
   try {
-    let response = await authFetch(`${baseURL}/api/list`, 'POST', newItem)
-    let result = await response.json();        
+    let response = await authFetch(`${baseURL}/api/list`, 'POST', newItem)        
     dispatch({
       type: ADD_ITEM_SUCCESS,
-      status: result
+      status: response
     });
   }
   catch(error) {
@@ -98,11 +97,10 @@ export const addToList = (newItem) => async dispatch => {
 export const removeFromList = (removeItem) => async dispatch => {
   dispatch({ type: REMOVE_ITEM_REQUEST})
   try {
-    let response = await authFetch(`${baseURL}/api/list`, 'DELETE', removeItem)
-    let result = await response.json();        
+    let response = await authFetch(`${baseURL}/api/list`, 'DELETE', removeItem)        
     dispatch({
       type: REMOVE_ITEM_SUCCESS,
-      status: result
+      status: response
     });
   }
   catch(error) {
