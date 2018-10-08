@@ -10,7 +10,7 @@ import {
 
 const initialState = {
   list: [],
-  isSuccessful: false,
+  hasUpdated: false,
   isLoading: false,
   error: null
 }
@@ -19,19 +19,19 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_ITEM_REQUEST:
     case REMOVE_ITEM_REQUEST:
-      return { ...state, isLoading: true }
+      return { ...state, isLoading: true, hasUpdated: false }
     case ADD_ITEM_SUCCESS:
     case REMOVE_ITEM_SUCCESS:
       return {
         ...state,
-        isSuccessful: true,
+        hasUpdated: true,
         isLoading: false
       };
     case ADD_ITEM_FAIL:
     case REMOVE_ITEM_FAIL:
     return {
         ...state,
-        isSuccessful: false,
+        hasUpdated: false,
         isLoading: false,
         error: action.error
       }

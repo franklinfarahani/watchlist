@@ -22,6 +22,17 @@ class Watchlist extends Component {
     user && fetchList(user.uid);
   }
 
+  componentDidUpdate(prevProps) {
+    console.group('Comparison')
+      console.log(prevProps.watchlist);
+      console.log(this.props.watchlist);
+      console.groupEnd();
+    if (this.props.watchlist.hasUpdated && prevProps.watchlist.hasUpdated !== this.props.watchlist.hasUpdated) {
+      const { user, fetchList } = this.props;
+      user && fetchList(user.uid);
+    }
+  }
+
   render() {
     const { watchlist } = this.props;
     
@@ -35,20 +46,19 @@ class Watchlist extends Component {
       return <ListItem key={key} item={value} />;
     });
     
-    if (!isEmpty(list)) {
-      return (
-      <WatchlistContainer>
-        <WatchlistWrapper>
-          {list}
-        </WatchlistWrapper>        
-      </WatchlistContainer>
-      );
-    }
     return (
-      <div>
-        <h4>List is empty.</h4>
-        <p>Start by searching for titles and adding them to the list.</p>
-      </div>
+      <WatchlistContainer>
+        {
+          !isEmpty(list) ? 
+          <WatchlistWrapper>
+            {list}
+          </WatchlistWrapper> : 
+          <div>
+            <h4>List is empty.</h4>
+            <p>Start by searching for titles and adding them to the list.</p>
+          </div>
+        }        
+      </WatchlistContainer>
     );
   }
 }
