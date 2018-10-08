@@ -1,6 +1,5 @@
 import { authFetch } from '../firebase';
 import { API } from '../actions/types';
-import { fail } from '../actions';
 
 const api = ({ dispatch }) => next => async action => {
 
@@ -8,14 +7,17 @@ const api = ({ dispatch }) => next => async action => {
     return next(action);
   }
 
-  const { url, method, body, authed, success, label } = action.payload;
-  
+  const { url, method, body, authed, init, success, fail, label } = action.payload;
+  dispatch(init(label))
   try {
     const response = authed ?
       await authFetch(url, method, body) :
       await fetch(url);
-    const list = await response.json();    
-    dispatch(success(list))
+    const contentType = response.headers.get("content-type");
+    const data = contentType && contentType.indexOf("application/json") !== -1 ? 
+      await response.json() :
+      await response.text();    
+    dispatch(success(data))
   }
   catch(error) {
     console.error(error);
