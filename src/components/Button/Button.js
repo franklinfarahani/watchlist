@@ -4,7 +4,7 @@ import { colors } from '../../config/styleVariables';
 const height = ({ category }) => {
   switch(category){
     case 'pill':
-      return '18px';
+      return '19px';
     case 'icon':
       return 'initial';
     default:
@@ -15,7 +15,7 @@ const height = ({ category }) => {
 const padding = ({ category }) => {
   switch(category){
     case 'pill':
-      return '0 5px 0 2px';
+      return '1px 5px 0 2px';
     case 'icon':
       return '4px';
     default:
