@@ -126,8 +126,12 @@ class ListItem extends Component {
   render() {
     const { item } = this.props;
     const convertedRuntime = item.runtime ? formatRuntime(item.runtime) : null;
-    const imdbScore = item.ratings[item.ratings.findIndex(rating => rating.provider_type === 'imdb:score')].value;
-    const rtScore = item.ratings[item.ratings.findIndex(rating => rating.provider_type === 'tomato:meter')].value;
+    
+    // Check to see whether score provider object exists and get the index
+    const imdbScoreObj = item.ratings[item.ratings.findIndex(rating => rating.provider_type === 'imdb:score')];
+    const rtScoreObj = item.ratings[item.ratings.findIndex(rating => rating.provider_type === 'tomato:meter')];
+    const imdbScore = imdbScoreObj && imdbScoreObj.value;
+    const rtScore = rtScoreObj && rtScoreObj.value;
     
 
     return (
@@ -158,13 +162,13 @@ class ListItem extends Component {
                 getGenreName(genre, item.media_type)
               )}
             </span>
-            {`|`}
+            {convertedRuntime && `|`}
             <span>
               {convertedRuntime && `${convertedRuntime.hours}h ${convertedRuntime.minutes}mins`}
             </span>
           </MetaSpan>
           <Synopsis>
-            {item.synopsis.length > 160 ? `${item.synopsis.substring(0, 185)}—` : item.synopsis}
+            {item.synopsis.length > 160 ? `${item.synopsis.substring(0, 175)}—` : item.synopsis}
           </Synopsis>
           <Ratings>
             {            
@@ -176,13 +180,14 @@ class ListItem extends Component {
                     </div>
                   }
                   {rtScore &&
-                    rtScore >= 60 ?
-                    <div>
-                      <RtFreshIcon size={15} />{rtScore}{'%'}
-                    </div> :
-                    <div>
-                      <RtRottenIcon size={15} />{rtScore}{'%'}
-                    </div>
+                    (rtScore >= 60 ?
+                      <div>
+                        <RtFreshIcon size={15} />{rtScore}{'%'}
+                      </div> :
+                      <div>
+                        <RtRottenIcon size={15} />{rtScore}{'%'}
+                      </div>
+                    )
                   }
                 </Fragment> :
                 <NoRatings>Ratings Not Available</NoRatings>
