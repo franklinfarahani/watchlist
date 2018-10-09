@@ -100,17 +100,7 @@ table {
 
 body {
   background-color: ${colors.bg.LIGHT};
-  font-family: ${fonts.MAIN}, ${fonts.SYSTEM};
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 4px;
-    background: ${colors.PRIMARY} 100%;
-  }
+  font-family: ${fonts.MAIN}, ${fonts.SYSTEM};  
 }
 
 input {

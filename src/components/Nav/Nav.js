@@ -32,6 +32,16 @@ const NavContainer = styled.div`
   display: flex;
   height: 100px;
   justify-content: space-between;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 4px;
+    background: ${colors.PRIMARY} 100%;
+  }
 
 `
 const LogoContainerLink = styled(Link)`
