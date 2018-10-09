@@ -23,10 +23,6 @@ class Watchlist extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.group('Comparison')
-      console.log(prevProps.watchlist);
-      console.log(this.props.watchlist);
-      console.groupEnd();
     if (this.props.watchlist.hasUpdated && prevProps.watchlist.hasUpdated !== this.props.watchlist.hasUpdated) {
       const { user, fetchList } = this.props;
       user && fetchList(user.uid);

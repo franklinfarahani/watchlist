@@ -28,7 +28,6 @@ export function authFetch(url, method, data) {
       request.body = JSON.stringify(data);
     }
 
-    console.log('Making authenticated request:', request.method, url);
     return fetch(url, request)
   });
 };
