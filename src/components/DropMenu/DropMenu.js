@@ -62,11 +62,13 @@ class DropMenu extends Component {
   handleShow(e) {
     e.preventDefault();
     this.setState({ display: true });
+    this.props.isOpen(true);
     document.addEventListener("click", this.handleHide);
   }
 
   handleHide() {
     this.setState({ display: false });
+    this.props.isOpen(false);
     document.removeEventListener("click", this.handleHide);
   }
 
