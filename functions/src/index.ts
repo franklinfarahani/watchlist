@@ -97,7 +97,6 @@ async function getTitle(id: number, type: "movie" | "show") {
       genres: json.genre_ids,
       synopsis: json.short_description,
       ratings: json.scoring,
-      clips: json.clips.slice(0,3),
       viewing_options: json.offers.map(option => 
         // Create array of viewing option keys
         Object.keys(option)
@@ -114,6 +113,7 @@ async function getTitle(id: number, type: "movie" | "show") {
         .filter((value, index, self) => self.findIndex(t => t.provider_id === value.provider_id) === index),
     };
     type === 'movie' ? item.runtime = json.runtime : null;
+    json.clips ? item.clips = json.clips.slice(0,3) : null;
     return {item, error: null};
   }
   catch(err) {
