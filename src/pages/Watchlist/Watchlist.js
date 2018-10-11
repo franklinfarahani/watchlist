@@ -4,12 +4,18 @@ import styled from 'styled-components';
 import ListItem from '../../components/ListItem/ListItem';
 import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
 import * as actions from '../../actions';
-import Tab from '../../components/Tab';
+import Tab, {TabGroup} from '../../components/Tab';
 
 const WatchlistContainer = styled.div`
   /* TODO: get rid of space between search bar and watchlist */
-  margin: 114px 0 0;
+  margin: 0;
   width: 100%;
+`
+
+const Controls = styled.div`
+  display: flex;
+  align-items:center;
+  padding: 29px;
 `
 
 const WatchlistWrapper = styled.ul`
@@ -63,9 +69,14 @@ class Watchlist extends Component {
     
     return (
       <WatchlistContainer>
-        <Tab label="All" tabGroup="mediaTypes" defaultChecked onChange={() => this.handleCategoryChange('All')}/>
-        <Tab label="Movies" tabGroup="mediaTypes" onChange={() => this.handleCategoryChange('Movies')} />
-        <Tab label="TV Shows" tabGroup="mediaTypes" onChange={() => this.handleCategoryChange('TV Shows')} />
+        <Controls>
+          <TabGroup>
+            <Tab label="All" tabGroup="mediaTypes" defaultChecked onChange={() => this.handleCategoryChange('All')}/>
+            <Tab label="Movies" tabGroup="mediaTypes" onChange={() => this.handleCategoryChange('Movies')} />
+            <Tab label="TV" tabGroup="mediaTypes" onChange={() => this.handleCategoryChange('TV')} />
+          </TabGroup>
+        </Controls>
+                
         {
           watchlist.isLoading ? 
           <Fragment>

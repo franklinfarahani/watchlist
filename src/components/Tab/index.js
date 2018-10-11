@@ -1,1 +1,1 @@
-export {default} from './Tab';
+export {default, TabGroup} from './Tab';
