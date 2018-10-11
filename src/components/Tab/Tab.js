@@ -2,9 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import { colors } from '../../config/styleVariables';
 
-export const TabGroup = styled.div`
+const TabGroupWrapper = styled.div`
   display: flex;
 `
+
+export const TabGroup  = (props) => {
+  const childrenWithProps = React.Children.map(props.children, child =>
+    React.cloneElement(child, { name: props.name }));
+  return (
+    <TabGroupWrapper>
+      {childrenWithProps}
+    </TabGroupWrapper>
+  )
+}
 
 const TabWrapper = styled.label`
   display: flex;
@@ -40,10 +50,10 @@ const TabWrapper = styled.label`
   }
 `
 
-const Tab = ({label, tabGroup, ...rest}) => {
+const Tab = ({label, ...rest}) => {
   return (
     <TabWrapper>
-      <input type="radio" name={tabGroup} {...rest}/>
+      <input type="radio" {...rest}/>
       <span>{label}</span>
     </TabWrapper>
   )

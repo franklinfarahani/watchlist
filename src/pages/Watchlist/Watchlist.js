@@ -70,10 +70,10 @@ class Watchlist extends Component {
     return (
       <WatchlistContainer>
         <Controls>
-          <TabGroup>
-            <Tab label="All" tabGroup="mediaTypes" defaultChecked onChange={() => this.handleCategoryChange('All')}/>
-            <Tab label="Movies" tabGroup="mediaTypes" onChange={() => this.handleCategoryChange('Movies')} />
-            <Tab label="TV" tabGroup="mediaTypes" onChange={() => this.handleCategoryChange('TV')} />
+          <TabGroup name="mediaTypes">
+            <Tab label="All" defaultChecked onChange={() => this.handleCategoryChange('All')}/>
+            <Tab label="Movies" onChange={() => this.handleCategoryChange('Movies')} />
+            <Tab label="TV" onChange={() => this.handleCategoryChange('TV')} />
           </TabGroup>
         </Controls>
                 
