@@ -30,6 +30,11 @@ class Watchlist extends Component {
     }
   }
 
+  renderSkeleton = (number) => {
+    let loaders = [...Array(number).keys()]
+    return loaders.map((key) => <ListItemSkeleton key={key}/>)
+  }
+
   render() {
     const { watchlist } = this.props;
     
@@ -42,14 +47,7 @@ class Watchlist extends Component {
         {
           watchlist.isLoading ? 
           <Fragment>
-            <ListItemSkeleton />
-            <ListItemSkeleton />
-            <ListItemSkeleton />
-            <ListItemSkeleton />
-            <ListItemSkeleton />
-            <ListItemSkeleton />
-            <ListItemSkeleton />
-            <ListItemSkeleton />
+            {this.renderSkeleton(8)}
           </Fragment> :
           !isEmpty(list) ? 
             <WatchlistWrapper>
