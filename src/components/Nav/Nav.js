@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { Play as faPlay } from 'styled-icons/fa-solid/Play';
 import { ChevronDown as faChevronDown } from 'styled-icons/fa-solid/ChevronDown';
 import { ChevronUp as faChevronUp } from 'styled-icons/fa-solid/ChevronUp';
+import UserMenuSkeleton from '../Skeleton/UserMenuSkeleton';
 import Button from '../Button';
 import DropMenu from '../DropMenu';
 import {colors} from '../../config/styleVariables';
@@ -125,7 +126,7 @@ class Nav extends Component {
   };
 
   render(){
-    const { authenticated, signIn, signOut, user } = this.props;
+    const { authenticated, loading, signIn, signOut, user } = this.props;
 
     return (
       <NavContainer>
@@ -139,29 +140,31 @@ class Nav extends Component {
             <li><Link to='/tv'>TV Shows</Link></li>
           </NavLinksPages>
           <NavLinksCTA>
-            {authenticated ? 
-              <DropMenu
-                button={
-                  <UserMenu>
-                    <img src={user.photoURL} alt='avatar'/>
-                    <span>{user.displayName.split(" ")[0]}</span>
-                    {!this.state.isOpen ?
-                    <IconDown title='Menu Open Arrow Button' /> :
-                    <IconUp title='Menu Close Arrow Button' />
-                    }
-                  </UserMenu>                  
-                }
-                isOpen={this.updateChevron}
-              >
-                
-                <Link to='/app'>My List</Link>
-                <a role='menuitem' onClick={signOut}>Log Out</a>
-              </DropMenu>
-              :
-              <Fragment>
-                <Button onClick={signIn}>Log In</Button>
-                <Button onClick={signIn} category='primary'>Register</Button>
-              </Fragment>
+            {loading ? 
+              <UserMenuSkeleton /> :
+              authenticated ? 
+                <DropMenu
+                  button={
+                    <UserMenu>
+                      <img src={user.photoURL} alt='avatar'/>
+                      <span>{user.displayName.split(" ")[0]}</span>
+                      {!this.state.isOpen ?
+                      <IconDown title='Menu Open Arrow Button' /> :
+                      <IconUp title='Menu Close Arrow Button' />
+                      }
+                    </UserMenu>                  
+                  }
+                  isOpen={this.updateChevron}
+                >
+                  
+                  <Link to='/app'>My List</Link>
+                  <a role='menuitem' onClick={signOut}>Log Out</a>
+                </DropMenu>
+                :
+                <Fragment>
+                  <Button onClick={signIn}>Log In</Button>
+                  <Button onClick={signIn} category='primary'>Register</Button>
+                </Fragment>
             }
           </NavLinksCTA>
         </NavLinks>

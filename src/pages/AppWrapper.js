@@ -62,24 +62,24 @@ class AppWrapper extends Component{
       // Location needs to be explicitly passed to avoid blocking router updates
       <Wrapper location={this.props.location}>
         <Nav />
-          <Search />
-           
-            <Switch>
-            
-              <PublicRoute authed={this.props.authenticated} exact path='/' component={Movies} />
-              {this.props.loading ? <Route render={() => <h3>Logging in...</h3>} /> : 
-              <PublicRoute authed={this.props.authenticated} path='/signin' component={SignIn} />
-              }
-              <PrivateRoute authed={this.props.authenticated} path='/app' component={Watchlist} />
-              <Route path='/movies' component={Movies} />
-              <Route path='/tv' component={TV} />
-              <Route render={() => <h3>404: Not Found</h3>} />
-            </Switch>
-          
-          <AppFooter>
-            <AppTitle>&copy; Copyright Franklin Farahani 2018</AppTitle>
-          </AppFooter>
-          <GlobalStyles />
+        <Search />
+        {this.props.loading ? 
+          <div>
+            <h1>Authenticating...</h1>
+          </div> :
+          <Switch>
+            <PublicRoute authed={this.props.authenticated} exact path='/' component={Movies} />
+            <PublicRoute authed={this.props.authenticated} path='/signin' component={SignIn} />
+            <PrivateRoute authed={this.props.authenticated} path='/app' component={Watchlist} />
+            <Route path='/movies' component={Movies} />
+            <Route path='/tv' component={TV} />
+            <Route render={() => <h3>404: Not Found</h3>} />
+          </Switch>
+        }
+        <AppFooter>
+          <AppTitle>&copy; Copyright Franklin Farahani 2018</AppTitle>
+        </AppFooter>
+        <GlobalStyles />
       </Wrapper>
     )
   }
