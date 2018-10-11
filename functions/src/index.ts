@@ -130,11 +130,11 @@ app.use("/list", authenticate);
 | Routes
 |--------------------------------------------------------------------------
 |
-|   * /search?=query
-|   * /media/:type/:id
-|   * /list
-|   * /CHANGE
-|   * /CHANGE
+|   * GET     /search?=query
+|   * GET     /media/:type/:id
+|   * GET     /list
+|   * POST    /list
+|   * DELETE  /list
 |
 */
 

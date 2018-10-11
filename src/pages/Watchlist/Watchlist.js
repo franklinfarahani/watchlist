@@ -7,7 +7,6 @@ import * as actions from '../../actions';
 import Tab, {TabGroup} from '../../components/Tab';
 
 const WatchlistContainer = styled.div`
-  /* TODO: get rid of space between search bar and watchlist */
   display: flex;
   flex-direction: column;
   flex: 1;
