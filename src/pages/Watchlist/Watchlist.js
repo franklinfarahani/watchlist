@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import ListItem from '../../components/ListItem/ListItem';
 import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
-import { map, isEmpty } from 'lodash';
 import * as actions from '../../actions';
+import Tab from '../../components/Tab';
 
 const WatchlistContainer = styled.div`
   /* TODO: get rid of space between search bar and watchlist */
@@ -17,6 +17,16 @@ const WatchlistWrapper = styled.ul`
 `
 
 class Watchlist extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selectedMedia: 'All',
+    }
+
+    this.renderSkeleton = this.renderSkeleton.bind(this);
+    this.handleCategoryChange = this.handleCategoryChange.bind(this);
+  }
 
   componentDidMount() {
     const { user, fetchList } = this.props;
@@ -30,26 +40,38 @@ class Watchlist extends Component {
     }
   }
 
-  renderSkeleton = (number) => {
+  handleCategoryChange(category){
+    this.setState({selectedMedia: category})   
+  }
+
+  renderSkeleton(number){
     let loaders = [...Array(number).keys()]
     return loaders.map((key) => <ListItemSkeleton key={key}/>)
   }
 
   render() {
     const { watchlist } = this.props;
+    const { selectedMedia } = this.state;
     
-    const list = map(watchlist.list, (value, key) => {
-      return <ListItem key={key} item={value} />;
-    });
+    const filteredList = selectedMedia === 'All' ?
+      watchlist.list :
+        selectedMedia === 'Movies' ?
+        watchlist.list.filter(item => item.media_type === 'movie') :
+        watchlist.list.filter(item => item.media_type === 'show');
+      
+    const list = filteredList.map((value, key) => <ListItem key={key} item={value} />);
     
     return (
       <WatchlistContainer>
+        <Tab label="All" tabGroup="mediaTypes" defaultChecked onChange={() => this.handleCategoryChange('All')}/>
+        <Tab label="Movies" tabGroup="mediaTypes" onChange={() => this.handleCategoryChange('Movies')} />
+        <Tab label="TV Shows" tabGroup="mediaTypes" onChange={() => this.handleCategoryChange('TV Shows')} />
         {
           watchlist.isLoading ? 
           <Fragment>
             {this.renderSkeleton(8)}
           </Fragment> :
-          !isEmpty(list) ? 
+          (list.length !== 0) ? 
             <WatchlistWrapper>
               {list}
             </WatchlistWrapper> : 
