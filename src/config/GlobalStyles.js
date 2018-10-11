@@ -97,6 +97,9 @@ table {
   font-style: normal;
 }
 
+html {
+  overflow-y: scroll;
+}
 
 body {
   background-color: ${colors.bg.LIGHT};
