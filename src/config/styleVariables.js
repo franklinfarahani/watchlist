@@ -1,6 +1,7 @@
 export const colors = {
   PRIMARY: '#7301cc', //Purple
   SECONDARY: '#4776E6', //Blue
+  MID_POINT: '#5C3DD9', //Mid point between primary and secondary
   DANGER_TOP: '#ff0066', //Pink-Red
   DANGER_BOT: '#c30303', //Brick-Red
   WHITE: '#fff',
