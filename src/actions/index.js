@@ -113,7 +113,7 @@ export const signIn = () => dispatch => {
   authRef
     .signInWithPopup(provider)
     .then(response => {
-      dispatch(authUser());
+      dispatch(authUser(response.user));
     })
     .catch(error => {
         dispatch(authError(error));

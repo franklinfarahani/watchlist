@@ -140,7 +140,7 @@ class Nav extends Component {
             <li><Link to='/tv'>TV Shows</Link></li>
           </NavLinksPages>
           <NavLinksCTA>
-            {loading ? 
+            {loading || !user ? 
               <UserMenuSkeleton /> :
               authenticated ? 
                 <DropMenu
