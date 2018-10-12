@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addToList, removeFromList } from '../../actions';
+import { addToList, removeFromList, signIn } from '../../actions';
 import Button from '../Button';
 import styled from 'styled-components';
 import { Add as mdAdd } from 'styled-icons/material/Add';
@@ -35,12 +35,12 @@ class AddToList extends Component {
   }
 
   handleClick(e, itemSelected) {
-    const { addToList, removeFromList, auth } = this.props;
+    const { addToList, removeFromList, signIn, auth } = this.props;
     e.preventDefault();
     if (!auth.authenticated) {
-      //TODO: redirect to sign in page if not authenticated
-      this.setState({redirect: true})
-      return;
+      signIn();
+      // this.setState({redirect: true})
+      // return;
     }
     else {
       if (!this.state.duplicate) {
@@ -89,4 +89,4 @@ const mapStateToProps = ({ auth, watchlist }) => {
   };
 };
 
-export default connect(mapStateToProps, { addToList, removeFromList })(AddToList);
+export default connect(mapStateToProps, { addToList, removeFromList, signIn })(AddToList);
