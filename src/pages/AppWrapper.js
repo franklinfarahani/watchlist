@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Route, Redirect, Switch } from 'react-router-dom';
+import MDSpinner from 'react-md-spinner';
 
 import styled from 'styled-components';
 import GlobalStyles from '../config/GlobalStyles'
@@ -34,6 +35,26 @@ const Wrapper = styled.div`
   min-height: 100vh;
 `
 
+const LoaderWrapper = styled.div`
+  display: flex;
+  flex: 1;
+  align-items: center;
+  margin: 0 auto;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h4 {    
+      margin-top:20px;
+      padding-left: 12px;
+      font-size: 14px;
+      color: ${colors.subtitle.MEDIUM}
+    }
+  }
+`
+
 function PrivateRoute ({component: Component, authed, ...rest}) {
   return (
     <Route
@@ -65,9 +86,19 @@ class AppWrapper extends Component{
         <Nav />
         <Search />
         {this.props.loading ? 
-          <div>
-            <h1>Authenticating...</h1>
-          </div> :
+          <LoaderWrapper>
+            <div>            
+              <MDSpinner
+                size={50}
+                borderSize={3}
+                color1={colors.PRIMARY}
+                color2={colors.MID_POINT}
+                color3={colors.SECONDARY}
+                color4={colors.MID_POINT}
+              />
+              <h4>Logging in...</h4> 
+            </div>           
+          </LoaderWrapper> :
           <Switch>
             <PublicRoute authed={this.props.authenticated} exact path='/' component={Movies} />
             <PublicRoute authed={this.props.authenticated} path='/signin' component={SignIn} />
