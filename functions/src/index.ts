@@ -96,22 +96,23 @@ async function getTitle(id: number, type: "movie" | "show") {
       release_date: json.localized_release_date,
       genres: json.genre_ids,
       synopsis: json.short_description,
-      ratings: json.scoring,
-      viewing_options: json.offers.map(option => 
-        // Create array of viewing option keys
-        Object.keys(option)
-        // Keep only the provider_id and urls fields
-          .filter(key => key === 'provider_id' || key === 'urls')
-          .reduce((obj, key) => {
-            return {
-              ...obj,
-              [key]: option[key]
-            };
-          }, {})
-        )
-        // Remove all the duplicate option objects
-        .filter((value, index, self) => self.findIndex(t => t.provider_id === value.provider_id) === index),
+      ratings: json.scoring
     };
+    json.offers ? item.viewing_options = json.offers.map(option => 
+      // Create array of viewing option keys
+      Object.keys(option)
+      // Keep only the provider_id and urls fields
+        .filter(key => key === 'provider_id' || key === 'urls')
+        .reduce((obj, key) => {
+          return {
+            ...obj,
+            [key]: option[key]
+          };
+        }, {})
+      )
+      // Remove all the duplicate option objects
+      .filter((value, index, self) => self.findIndex(t => t.provider_id === value.provider_id) === index) :
+      null;
     type === 'movie' ? item.runtime = json.runtime : null;
     json.clips ? item.clips = json.clips.slice(0,3) : null;
     return {item, error: null};
