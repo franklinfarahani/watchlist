@@ -95,20 +95,6 @@ export const verifyAuth = () => dispatch => {
   });
 };
 
-export function authUser(user) {
-  return {
-      type: AUTH_USER,
-      payload: user
-  }
-}
-
-export function authError(error) {
-  return {
-      type: AUTH_ERROR,
-      payload: error
-  }
-}
-
 export const signIn = () => dispatch => {
   authRef
     .signInWithPopup(provider)
@@ -137,3 +123,5 @@ export const requestInit = makeActionCreator(REQUEST_INIT, 'payload');
 export const requestSuccess = makeActionCreator(REQUEST_SUCCESS, 'payload');
 export const requestFail = makeActionCreator(REQUEST_FAIL, 'payload');
 export const setList = makeActionCreator(FETCH_LIST, 'payload');
+export const authUser = makeActionCreator(AUTH_USER, 'payload');
+export const authError = makeActionCreator(AUTH_ERROR, 'payload');
