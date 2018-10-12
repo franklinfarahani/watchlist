@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addToList, removeFromList } from '../../actions';
 import Button from '../Button';
@@ -20,7 +21,8 @@ class AddToList extends Component {
   constructor(props){
     super(props);
     this.state = {
-      duplicate: false
+      duplicate: false,
+      redirect: false
     }
   }
 
@@ -28,7 +30,8 @@ class AddToList extends Component {
     // Array.prototype.some is similar to .map but will break as soon as the condition is met
     this.props.watchlist.some(
       listItem => this.props.item.id === listItem.id &&
-        this.setState({duplicate: true}))
+        this.setState({duplicate: true})
+    )
   }
 
   handleClick(e, itemSelected) {
@@ -36,21 +39,29 @@ class AddToList extends Component {
     e.preventDefault();
     if (!auth.authenticated) {
       //TODO: redirect to sign in page if not authenticated
+      this.setState({redirect: true})
       return;
     }
-    if (!this.state.duplicate) {
-      addToList(itemSelected);
-      this.setState({duplicate: true})
-    }
     else {
-      removeFromList(itemSelected);
-      this.setState({duplicate: false})
-    }
+      if (!this.state.duplicate) {
+        addToList(itemSelected);
+        this.setState({duplicate: true})
+      }
+      else {
+        removeFromList(itemSelected);
+        this.setState({duplicate: false})
+      }
+    }    
     this.props.callback();
   }
 
   render() {
-    const { item } = this.props;
+    const { item, callback } = this.props;
+    const { redirect } = this.state;
+    if (redirect) {
+      callback();
+      return <Redirect to={'/signin'} />
+    }
     return (
       <Button
         category='pill'
