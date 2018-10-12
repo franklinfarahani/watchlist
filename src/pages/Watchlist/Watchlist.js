@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import ListItem from '../../components/ListItem/ListItem';
+import { colors } from '../../config/styleVariables';
 import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
 import * as actions from '../../actions';
 import Tab, {TabGroup} from '../../components/Tab';
@@ -14,6 +15,31 @@ const WatchlistContainer = styled.div`
   width: 100%;
 `
 
+const EmptyList = styled.div`
+  display: flex;
+  flex: 1;
+  align-items: center;
+  margin: 0 auto;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h4 {    
+      font-size: 20px;
+      line-height: 40px;
+      color: ${colors.subtitle.MEDIUM}
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 40px;
+      color: ${colors.subtitle.MEDIUM}
+    }
+  }
+`
+
 const Controls = styled.div`
   display: flex;
   align-items:center;
@@ -22,6 +48,10 @@ const Controls = styled.div`
 
 const WatchlistWrapper = styled.ul`
   background: transparent;
+`
+
+const SkeletonWrapper = styled.div`
+  padding-top: 114px;
 `
 
 class Watchlist extends Component {
@@ -70,28 +100,32 @@ class Watchlist extends Component {
     const list = filteredList.map((value, key) => <ListItem key={key} item={value} />);
     
     return (
-      <WatchlistContainer>
-        <Controls>
-          <TabGroup name="mediaTypes">
-            <Tab label="All" defaultChecked onChange={() => this.handleCategoryChange('All')}/>
-            <Tab label="Movies" onChange={() => this.handleCategoryChange('Movies')} />
-            <Tab label="TV" onChange={() => this.handleCategoryChange('TV')} />
-          </TabGroup>
-        </Controls>
-                
+      <WatchlistContainer>                
         {
           watchlist.isLoading ? 
-          <Fragment>
+          <SkeletonWrapper>  
             {this.renderSkeleton(8)}
-          </Fragment> :
-          (list.length !== 0) ? 
+          </SkeletonWrapper> :
+          (list.length !== 0) ?
+          <Fragment>
+            <Controls>
+              <TabGroup name="mediaTypes">
+                <Tab label="All" defaultChecked onChange={() => this.handleCategoryChange('All')}/>
+                <Tab label="Movies" onChange={() => this.handleCategoryChange('Movies')} />
+                <Tab label="TV" onChange={() => this.handleCategoryChange('TV')} />
+              </TabGroup>
+            </Controls> 
             <WatchlistWrapper>
               {list}
-            </WatchlistWrapper> : 
-            <div>
-              <h4>List is empty.</h4>
-              <p>Start by searching for titles and adding them to the list.</p>
-            </div>
+            </WatchlistWrapper>
+          </Fragment>
+           : 
+            <EmptyList>
+              <div>
+                <h4>List is empty.</h4>
+                <p>Start by searching for titles and adding them to the list.</p>
+              </div>              
+            </EmptyList>
         }        
       </WatchlistContainer>
     );
