@@ -24,10 +24,6 @@ const SearchBarContainer = styled.div`
   border: solid 3px transparent;
   border-radius: 4px;
   box-shadow: ${shadows.VERYHIGH};
-
-  /* &:focus-within {
-    border: solid 3px ${colors.PRIMARY};
-  } */
 `
 const IconContainer = styled.div`
   display: flex;
