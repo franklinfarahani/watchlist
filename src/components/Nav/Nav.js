@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { signIn, signOut } from '../../actions';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Play as faPlay } from 'styled-icons/fa-solid/Play';
+import watchlistLogo from '../../assets/icons/watchlist.svg';
 import { ChevronDown as faChevronDown } from 'styled-icons/fa-solid/ChevronDown';
 import { ChevronUp as faChevronUp } from 'styled-icons/fa-solid/ChevronUp';
 import UserMenuSkeleton from '../Skeleton/UserMenuSkeleton';
@@ -22,11 +22,6 @@ const IconUp = styled(faChevronUp)`
   color: ${colors.PRIMARY};
   width: 10px;
   margin-bottom: -1px;
-`
-
-const IconPlay = styled(faPlay)`
-  color: ${colors.PRIMARY};
-  width: 20px;
 `
 
 const NavContainer = styled.div`
@@ -131,7 +126,7 @@ class Nav extends Component {
     return (
       <NavContainer>
           <LogoContainerLink to='/'>
-            <IconPlay title='Logo Play Icon'/>
+            <img src={watchlistLogo} height="24" alt="Watchlist" />
             Watchlist
           </LogoContainerLink>
         <NavLinks>
