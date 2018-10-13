@@ -73,3 +73,9 @@ export function formatDate (date){
     day: date.split("-")[2]
   }
 }
+
+export function truncateText (text, length){
+  const roughTruncate = text.substring(0, length);
+  const brokenWord = roughTruncate.split(' ')[roughTruncate.split(' ').length - 1];
+  return roughTruncate.substring(0, length - brokenWord.length)
+}
