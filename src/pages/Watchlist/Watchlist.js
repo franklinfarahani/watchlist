@@ -6,6 +6,12 @@ import { colors } from '../../config/styleVariables';
 import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
 import * as actions from '../../actions';
 import Tab, {TabGroup} from '../../components/Tab';
+import {Info as mdInfo} from 'styled-icons/material/Info';
+
+const IconInfo = styled(mdInfo)`
+  color: ${colors.subtitle.MEDIUM};
+  width: 60px;
+`
 
 const WatchlistContainer = styled.div`
   display: flex;
@@ -17,25 +23,35 @@ const WatchlistContainer = styled.div`
 
 const EmptyList = styled.div`
   display: flex;
-  flex: 1;
-  align-items: center;
-  margin: 0 auto;
+  height: 236px;
+  border-radius: 4px;
+  border: dashed 3px ${colors.subtitle.MEDIUM};
+  margin-top: 114px;
 
   div {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    flex: 1;
+    
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-    h4 {    
-      font-size: 20px;
-      line-height: 40px;
-      color: ${colors.subtitle.MEDIUM}
-    }
+      h4 {    
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 36px;
+        color: ${colors.subtitle.MEDIUM}
+      }
 
-    p {
-      font-size: 14px;
-      line-height: 40px;
-      color: ${colors.subtitle.MEDIUM}
+      p {
+        font-size: 14px;
+        line-height: 22px;
+        color: ${colors.subtitle.MEDIUM}
+        width: 200px;
+        text-align: center;
+      }
     }
   }
 `
@@ -122,8 +138,11 @@ class Watchlist extends Component {
            : 
             <EmptyList>
               <div>
-                <h4>List is empty.</h4>
-                <p>Start by searching for titles and adding them to the list.</p>
+                <div>
+                  <IconInfo title='Info Icon' />
+                  <h4>List is empty.</h4>
+                  <p>Start by searching for titles and adding them to your list!</p>
+                </div>
               </div>              
             </EmptyList>
         }        
