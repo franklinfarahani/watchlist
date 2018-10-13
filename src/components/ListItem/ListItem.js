@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
+import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
 import { removeFromList } from '../../actions';
-import { getGenreName, formatRuntime } from '../../utils'
+import { getGenreName, formatRuntime, truncateText } from '../../utils'
 
 import styled from 'styled-components';
 import {Image as faImage} from 'styled-icons/fa-regular/Image';
@@ -11,6 +12,12 @@ import RtFreshIcon from '../../components/BrandIcon/RtFreshIcon';
 import RtRottenIcon from '../../components/BrandIcon/RtRottenIcon';
 import { colors, shadows } from '../../config/styleVariables';
 import Button from '../../components/Button';
+import {Clock as faClock} from 'styled-icons/fa-regular/Clock';
+
+const IconClock = styled(faClock)`
+  width: 12px;
+  margin-right: 2px;
+`
 
 const ListItemWrapper = styled.li`
   background: ${colors.WHITE};
@@ -52,7 +59,7 @@ const InformationContainer = styled.div`
 `
 
 const Title = styled.h3`
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 600;
   padding-bottom: 8px;
 `
@@ -63,18 +70,23 @@ const YearSpan = styled.span`
   color: ${colors.subtitle.MEDIUM};
 `
 
-const MetaSpan = styled.span`
+const GenresContainer = styled.span`
   color: ${colors.subtitle.MEDIUM};
   font-size: 12px;
+  padding-top: 6px;
   padding-bottom: 8px;
-  
-  & span:first-child {
-    padding-right: 10px;
-  }
+`
 
-  & span:last-child {
-    padding-left: 10px;
-  }
+const Genre = styled.span`
+  color: ${colors.WHITE};
+  border-radius: 4px;
+  padding: 2px 5px;
+  margin-right: 6px;
+  background: linear-gradient(to bottom, ${colors.SECONDARY} 0%, ${colors.PRIMARY} 100%);
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: .5px;
 `
 
 const Synopsis = styled.p`
@@ -85,23 +97,37 @@ const Synopsis = styled.p`
   margin-top: 5px;
 `
 
-const Ratings = styled.div`
+const MetaContainer = styled.div`
   font-size: 16px;
   display: flex;
   align-items: center;
   color: ${colors.subtitle.MEDIUM};
-  div {
-    display: flex;
-    align-items: center;
-    margin-right: 16px;
-  }
+`
+
+const Rating = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+  
   img {
     padding-right: 6px;
   }
 `
 
-const NoRatings = styled.span`
+const Meta = styled.span`
+  color: ${colors.subtitle.MEDIUM};
   font-size: 12px;
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 2px 4px;
+  font-weight: 400;
+  margin-left: 6px;
+`
+
+const NoRatings = styled.span`
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
 `
 
 const ControlsContainer = styled.div`
@@ -114,17 +140,25 @@ class ListItem extends Component {
 
     this.state = {
       loading: true,
-      error: null
+      error: null,
+      isTitleOverflowing: false
     }
+
+    this.handleRemoveClick = this.handleRemoveClick.bind(this);
   }
 
-  handleRemoveClick = removeFromListItem => {
+  componentDidMount(){
+    this.setState({ isTitleOverflowing: findDOMNode(this.titleNode).getBoundingClientRect().height > 32});
+  }
+
+  handleRemoveClick(removeFromListItem) {
     const { removeFromList } = this.props;
     removeFromList(removeFromListItem);
   };
 
   render() {
     const { item } = this.props;
+    const { isTitleOverflowing } = this.state;
     const convertedRuntime = item.runtime ? formatRuntime(item.runtime) : null;
     
     // Check to see whether score provider object exists and get the index
@@ -148,51 +182,52 @@ class ListItem extends Component {
         }
         <InformationContainer>
           <Title>
-            {item.title}
+            <span ref={el => this.titleNode = el}>{item.title}</span>
             <YearSpan>
               {item.year ? `(${item.year})` : '(TBA)'}
             </YearSpan>
           </Title>
-          <MetaSpan>
-            <span>
-              {/* Slice the array into only 3 genres for better Ui, put a comma after every genre except the last on the list */}
-              {item.genres.slice(0, 3).map((genre, index, genres) => 
-                (index !== genres.slice(0, 3).length - 1) ?
-                `${getGenreName(genre, item.media_type)}, ` :
-                getGenreName(genre, item.media_type)
+          <GenresContainer>            
+              {/* Slice the array into only 3 genres for better UI */}
+              {item.genres.slice(0, 3).map(genre =>
+                <Genre key={genre}>
+                  {getGenreName(genre, item.media_type)}
+                </Genre>
               )}
-            </span>
-            {convertedRuntime && `|`}
-            <span>
-              {convertedRuntime && `${convertedRuntime.hours}h ${convertedRuntime.minutes}mins`}
-            </span>
-          </MetaSpan>
+          </GenresContainer>
           <Synopsis>
-            {item.synopsis.length > 160 ? `${item.synopsis.substring(0, 175)}—` : item.synopsis}
+            {isTitleOverflowing ? truncateText(item.synopsis, 175) : truncateText(item.synopsis, 230)}
+            {item.synopsis.length > 175 && '...'}
           </Synopsis>
-          <Ratings>
+          <MetaContainer>
             {            
               imdbScore || rtScore ?
                 <Fragment>
                   {imdbScore &&
-                    <div>
-                      <ImdbIcon size={15} />{imdbScore}
-                    </div>
+                    <Rating>
+                      <ImdbIcon size={15} />{imdbScore.toFixed(1)}
+                    </Rating>
                   }
                   {rtScore &&
                     (rtScore >= 60 ?
-                      <div>
+                      <Rating>
                         <RtFreshIcon size={15} />{rtScore}{'%'}
-                      </div> :
-                      <div>
+                      </Rating> :
+                      <Rating>
                         <RtRottenIcon size={15} />{rtScore}{'%'}
-                      </div>
+                      </Rating>
                     )
                   }
                 </Fragment> :
                 <NoRatings>Ratings Not Available</NoRatings>
             }
-          </Ratings>
+            {convertedRuntime &&
+              <Meta>
+                <IconClock title="Runtime"/>
+                {`${convertedRuntime.hours}h ${convertedRuntime.minutes}mins`}
+              </Meta>
+            }
+          </MetaContainer>
         </InformationContainer>
         <ControlsContainer>
           <Button
