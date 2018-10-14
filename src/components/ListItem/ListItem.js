@@ -16,6 +16,7 @@ import RtRottenIcon from '../../components/BrandIcon/RtRottenIcon';
 
 // TODO: Add viewing options
 // TODO: Add responsive styles
+// TODO: fix bug that prevents truncation (componentDidMount)
 
 const IconClock = styled(faClock)`
   width: 12px;
@@ -151,7 +152,7 @@ class ListItem extends Component {
   }
 
   componentDidMount(){
-    this.setState({ isTitleOverflowing: findDOMNode(this.titleNode).getBoundingClientRect().height > 32});
+    this.setState({ isTitleOverflowing: findDOMNode(this.titleNode).getBoundingClientRect().height > 30});
   }
 
   handleRemoveClick(removeFromListItem) {
