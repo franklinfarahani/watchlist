@@ -140,9 +140,24 @@ app.use("/list", authenticate);
 */
 
 app.get("/search", async (req, resp) => {
-  const query = req.query.query;
+  const query = req.query.query || null;
+  const mediaType = req.query.media_type || "[\"show\",\"movie\"]";
+  const genre = req.query.genre || null;
+  const ageRating = req.query.age_rating || null;
+  const provider = req.query.provider || null;
+  const page = req.query.page || 1;
+  const pageSize = req.query.page_size || 8;
+  const url = 'https://apis.justwatch.com/content/titles/en_CA/popular?body={' +
+    `"query":"${query}",` +
+    `"content_types":${mediaType},` +
+    `"genres":${genre},` +
+    `"age_certifications":${ageRating},` +
+    `"providers":${provider},` +
+    `"page":${page},` +
+    `"page_size":${pageSize}}`
+
   try {
-    const res = await fetch(`https://apis.justwatch.com/content/titles/en_CA/popular?body={"content_types":["show","movie"],"page":1,"page_size":8,"query":"${query}"}`);
+    const res = await fetch(url);
     const json = await res.json();
     
     const searchResults = {
