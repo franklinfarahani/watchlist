@@ -143,8 +143,6 @@ class ListItem extends Component {
     super(props)
 
     this.state = {
-      loading: true,
-      error: null,
       isTitleOverflowing: false
     }
 
