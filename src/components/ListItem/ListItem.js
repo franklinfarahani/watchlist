@@ -89,7 +89,7 @@ const Genre = styled.span`
   background: linear-gradient(to bottom, ${colors.SECONDARY} 0%, ${colors.PRIMARY} 100%);
   text-transform: uppercase;
   font-weight: 600;
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: .5px;
 `
 
