@@ -2,17 +2,17 @@ import React, { Component, Fragment } from 'react';
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
 import { removeFromList } from '../../actions';
+import Button from '../../components/Button';
 import { getGenreName, formatRuntime, truncateText } from '../../utils'
 
 import styled from 'styled-components';
+import { colors, shadows } from '../../config/styleVariables';
 import {Image as faImage} from 'styled-icons/fa-regular/Image';
 import {Close as mdClose} from 'styled-icons/material/Close';
+import {Clock as faClock} from 'styled-icons/fa-regular/Clock';
 import ImdbIcon from '../../components/BrandIcon/ImdbIcon';
 import RtFreshIcon from '../../components/BrandIcon/RtFreshIcon';
 import RtRottenIcon from '../../components/BrandIcon/RtRottenIcon';
-import { colors, shadows } from '../../config/styleVariables';
-import Button from '../../components/Button';
-import {Clock as faClock} from 'styled-icons/fa-regular/Clock';
 
 const IconClock = styled(faClock)`
   width: 12px;
