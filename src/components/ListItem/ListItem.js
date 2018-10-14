@@ -198,7 +198,7 @@ class ListItem extends Component {
               )}
           </GenresContainer>
           <Synopsis>
-            {isTitleOverflowing ? truncateText(item.synopsis, 175) : truncateText(item.synopsis, 230)}
+            {isTitleOverflowing ? truncateText(item.synopsis, 170) : truncateText(item.synopsis, 230)}
             {item.synopsis.length > 175 && '...'}
           </Synopsis>
           <MetaContainer>
