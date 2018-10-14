@@ -8,6 +8,9 @@ import * as actions from '../../actions';
 import Tab, {TabGroup} from '../../components/Tab';
 import {Info as mdInfo} from 'styled-icons/material/Info';
 
+// TODO: build filtering system using react-select
+// TODO: build dropbox for sorting by Name, Date Added, Release date, Aggregate Rating
+
 const IconInfo = styled(mdInfo)`
   color: ${colors.subtitle.MEDIUM};
   width: 60px;

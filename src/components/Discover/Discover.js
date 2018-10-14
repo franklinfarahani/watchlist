@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { colors } from '../../config/styleVariables';
 import {Warning as mdWarning} from 'styled-icons/material/Warning';
 
+// TODO: Build Discover component using search action
+
 const IconWarning = styled(mdWarning)`
   color: ${colors.subtitle.MEDIUM};
   width: 80px;

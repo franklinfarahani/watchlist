@@ -14,6 +14,9 @@ import ImdbIcon from '../../components/BrandIcon/ImdbIcon';
 import RtFreshIcon from '../../components/BrandIcon/RtFreshIcon';
 import RtRottenIcon from '../../components/BrandIcon/RtRottenIcon';
 
+// TODO: Add viewing options
+// TODO: Add responsive styles
+
 const IconClock = styled(faClock)`
   width: 12px;
   margin-right: 2px;
