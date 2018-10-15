@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
 import { removeFromList } from '../../actions';
 import Button from '../../components/Button';
@@ -63,12 +62,13 @@ const InformationContainer = styled.div`
 `
 
 const Title = styled.h3`
-  font-size: 24px;
+  font-size: 21px;
   font-weight: 600;
   padding-bottom: 8px;
 `
 
 const YearSpan = styled.span`
+  font-size: 16px;
   font-weight: 400;
   padding: 0 10px;
   color: ${colors.subtitle.MEDIUM};
@@ -149,8 +149,21 @@ class ListItem extends Component {
     this.handleRemoveClick = this.handleRemoveClick.bind(this);
   }
 
+  //TODO: isTitleOverflowing based on title length, to be optimized later
   componentDidMount(){
-    this.setState({ isTitleOverflowing: findDOMNode(this.titleNode).getBoundingClientRect().height > 30});
+    // styles are not applied yet so this the default font-size is h3 default size
+    const height = this.titleNode.offsetHeight;
+    const { title } = this.props.item;
+    if (height > 27 || title.length > 36){
+      this.setState({ isTitleOverflowing: true});
+    }    
+  }
+
+  componentDidUpdate(prevProps){
+    const { title } = this.props.item;
+    if (title !== prevProps.item.title){
+      this.setState({ isTitleOverflowing: this.titleNode.offsetHeight > 27});
+    }
   }
 
   handleRemoveClick(removeFromListItem) {
