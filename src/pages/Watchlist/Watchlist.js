@@ -5,6 +5,7 @@ import ListItem from '../../components/ListItem/ListItem';
 import { colors } from '../../config/styleVariables';
 import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
 import * as actions from '../../actions';
+import Container from '../../components/Container';
 import Tab, {TabGroup} from '../../components/Tab';
 import {Info as mdInfo} from 'styled-icons/material/Info';
 
@@ -14,14 +15,6 @@ import {Info as mdInfo} from 'styled-icons/material/Info';
 const IconInfo = styled(mdInfo)`
   color: ${colors.subtitle.MEDIUM};
   width: 60px;
-`
-
-const WatchlistContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  margin: 0;
-  width: 100%;
 `
 
 const EmptyList = styled.div`
@@ -119,7 +112,7 @@ class Watchlist extends Component {
     const list = filteredList.map((value, key) => <ListItem key={key} item={value} />);
     
     return (
-      <WatchlistContainer>                
+      <Container>                
         {
           watchlist.isLoading ? 
           <SkeletonWrapper>  
@@ -149,7 +142,7 @@ class Watchlist extends Component {
               </div>              
             </EmptyList>
         }        
-      </WatchlistContainer>
+      </Container>
     );
   }
 }

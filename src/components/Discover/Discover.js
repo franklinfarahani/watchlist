@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import Container from '../../components/Container';
 import { colors } from '../../config/styleVariables';
 import {Warning as mdWarning} from 'styled-icons/material/Warning';
 
@@ -10,12 +11,10 @@ const IconWarning = styled(mdWarning)`
   width: 80px;
 `
 
-const DiscoverContainer = styled.div`
+const Controls = styled.div`
   display: flex;
-  flex-direction: column;
-  flex: 1;
-  margin: 0;
-  width: 100%;
+  align-items:center;
+  padding: 29px;
 `
 
 const EmptyList = styled.div`
@@ -49,7 +48,7 @@ const EmptyList = styled.div`
 class Discover extends Component {
   render() {
     return (
-      <DiscoverContainer>
+      <Container>
         <EmptyList>
           <div>
             <IconWarning title='Warning Icon' />
@@ -57,7 +56,7 @@ class Discover extends Component {
             <p>{`Soon you'll be able to discover new ${this.props.type.toLowerCase()}s right here!`}</p>
           </div>              
         </EmptyList>
-      </DiscoverContainer>
+      </Container>
     )
   }
 }

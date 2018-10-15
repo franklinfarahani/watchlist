@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import Container from '../../components/Container';
 import { colors } from '../../config/styleVariables';
 import {Warning as mdWarning} from 'styled-icons/material/Warning';
 
 const IconWarning = styled(mdWarning)`
   color: ${colors.subtitle.MEDIUM};
   width: 80px;
-`
-
-const MessageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  margin: 0;
-  width: 100%;
 `
 
 const EmptyList = styled.div`
@@ -47,7 +40,7 @@ const EmptyList = styled.div`
 class NotFound extends Component {
   render() {
     return (
-      <MessageContainer>
+      <Container>
         <EmptyList>
           <div>
             <IconWarning title='Warning Icon' />
@@ -55,7 +48,7 @@ class NotFound extends Component {
             <p>The page you were looking for was not found.</p>
           </div>              
         </EmptyList>
-      </MessageContainer>
+      </Container>
     )
   }
 }
