@@ -148,7 +148,7 @@ app.get("/search", async (req, resp) => {
   const page = req.query.page || 1;
   const pageSize = req.query.page_size || 8;
   const url = 'https://apis.justwatch.com/content/titles/en_CA/popular?body={' +
-    `"query":"${query}",` +
+    `"query":${query},` +
     `"content_types":${mediaType},` +
     `"genres":${genre},` +
     `"age_certifications":${ageRating},` +
