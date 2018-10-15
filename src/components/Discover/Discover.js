@@ -1,14 +1,55 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+import * as actions from '../../actions';
+
+import { colors, shadows } from '../../config/styleVariables';
+import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
 import Container from '../../components/Container';
-import { colors } from '../../config/styleVariables';
-import {Warning as mdWarning} from 'styled-icons/material/Warning';
+import Tab, {TabGroup} from '../../components/Tab';
+import {Info as mdInfo} from 'styled-icons/material/Info';
 
-// TODO: Build Discover component using search action
+// TODO: build filtering system using react-select
+// TODO: build dropdown for sorting by Release date, Aggregate Rating
 
-const IconWarning = styled(mdWarning)`
+const IconInfo = styled(mdInfo)`
   color: ${colors.subtitle.MEDIUM};
-  width: 80px;
+  width: 60px;
+`
+
+const EmptyList = styled.div`
+  display: flex;
+  height: 236px;
+  border-radius: 4px;
+  border: dashed 3px ${colors.subtitle.MEDIUM};
+  margin-top: 114px;
+
+  div {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      h4 {    
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 36px;
+        color: ${colors.subtitle.MEDIUM}
+      }
+
+      p {
+        font-size: 14px;
+        line-height: 22px;
+        color: ${colors.subtitle.MEDIUM}
+        width: 200px;
+        text-align: center;
+      }
+    }
+  }
 `
 
 const Controls = styled.div`
@@ -17,48 +58,155 @@ const Controls = styled.div`
   padding: 29px;
 `
 
-const EmptyList = styled.div`
+const DiscoverWrapper = styled.ul`
+  background: transparent;
+  width: 100%;
   display: flex;
-  flex: 1;
-  align-items: center;
-  margin: 0 auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`
 
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+const DiscoverItem = styled.li`
+  display: flex;
+  flex-direction: column;
+  width: 166px;
+  background-color: ${colors.WHITE};
+  margin-bottom: 16px;
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: ${shadows.VERYLOW};
 
-    h4 {    
-      font-size: 18px;
-      font-weight: 700;
-      line-height: 36px;
-      color: ${colors.subtitle.MEDIUM}
-    }
+  h3 {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.2;
+    padding: 12px;
+    color: ${colors.BLACK};
 
-    p {
-      font-size: 14px;
-      line-height: 22px;
-      color: ${colors.subtitle.MEDIUM}
-      width: 200px;
-      text-align: center;
+    span {
+      color: ${colors.subtitle.MEDIUM};
     }
   }
 `
 
+const SkeletonWrapper = styled.div`
+  padding-top: 114px;
+`
+
 class Discover extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selectedGenres: [],
+      selectedProviders: [],
+      sortBy: 'release_date',
+      page: 1,
+      pageSize: 16
+    }
+
+    this.renderSkeleton = this.renderSkeleton.bind(this);
+    this.handleGenreChange = this.handleGenreChange.bind(this);
+  }
+
+  componentDidMount() {
+    const { mediaType, discoverTitles } = this.props;
+    const { selectedGenres, selectedProviders, page, pageSize } = this.state;
+    const options = {
+      mediaType,
+      genres: selectedGenres.length !== 0 ? JSON.stringify(selectedGenres) : null,
+      providers: selectedProviders.length !== 0 ? JSON.stringify(selectedProviders) : null,
+      page,
+      pageSize
+    }
+    discoverTitles(options);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { mediaType, discoverTitles } = this.props;
+    const { selectedGenres, selectedProviders, page, pageSize } = this.state;
+    if (selectedGenres !== prevState.selectedGenres || selectedProviders !== prevState.selectedProviders) {
+      const options = {
+        mediaType,
+        genres: selectedGenres.length !== 0 ? JSON.stringify(selectedGenres) : null,
+        providers: selectedProviders.length !== 0 ? JSON.stringify(selectedProviders) : null,
+        page,
+        pageSize
+      }
+      discoverTitles(options);
+    }
+  }
+
+  handleGenreChange(){
+    console.log('Do a thing');
+    // this.setState({selectedMedia: category})   
+  }
+
+  renderSkeleton(number){
+    let loaders = [...Array(number).keys()]
+    return loaders.map((key) => <ListItemSkeleton key={key}/>)
+  }
+
   render() {
+    const { results, isLoading } = this.props;
+
+    const list = results.map((value, key) => 
+      <DiscoverItem key={key}>
+        <img
+          src = {`https://images.justwatch.com${value.poster}s166`}
+          alt = {`poster preview for ${value.title}`}
+        />
+        <h3>
+          {value.title} 
+          <span>
+            {` (${value.year})`}
+          </span>
+        </h3>
+      </DiscoverItem>);
+    
     return (
-      <Container>
-        <EmptyList>
-          <div>
-            <IconWarning title='Warning Icon' />
-            <h4>UNDER CONSTRUCTION</h4>
-            <p>{`Soon you'll be able to discover new ${this.props.type.toLowerCase()}s right here!`}</p>
-          </div>              
-        </EmptyList>
+      <Container>                
+        {
+          isLoading ? 
+          <SkeletonWrapper>  
+            {this.renderSkeleton(8)}
+          </SkeletonWrapper> :
+          (results.length !== 0) ?
+          <Fragment>
+            <Controls>
+              <TabGroup name="mediaTypes">
+                <Tab label="All" defaultChecked onChange={() => this.handleCategoryChange('All')}/>
+                <Tab label="Movies" onChange={() => this.handleCategoryChange('Movies')} />
+                <Tab label="TV" onChange={() => this.handleCategoryChange('TV')} />
+              </TabGroup>
+            </Controls> 
+            <DiscoverWrapper>
+              {list}
+            </DiscoverWrapper>
+          </Fragment>
+           : 
+            <EmptyList>
+              <div>
+                <div>
+                  <IconInfo title='Info Icon' />
+                  <h4>List is empty.</h4>
+                  <p>Start by searching for titles and adding them to your list!</p>
+                </div>
+              </div>              
+            </EmptyList>
+        }        
       </Container>
-    )
+    );
   }
 }
 
-export default Discover;
+const mapStateToProps = ({ discover }) => {
+  return {
+    results: discover.results,
+    isLoading: discover.isLoading,
+    error: discover.error
+  };
+};
+
+export default connect(mapStateToProps, actions)(Discover);
