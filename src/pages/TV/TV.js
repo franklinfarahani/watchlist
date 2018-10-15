@@ -3,7 +3,7 @@ import Discover from '../../components/Discover'
 
 const TV = () => {
   return (
-    <Discover type='TV show' />
+    <Discover mediaType='show' />
   )
 }
 

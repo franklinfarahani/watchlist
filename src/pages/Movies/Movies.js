@@ -3,7 +3,7 @@ import Discover from '../../components/Discover'
 
 const Movies = () => {
   return (
-    <Discover type='Movie' />
+    <Discover mediaType='movie' />
   )
 }
 
