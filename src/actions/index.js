@@ -4,6 +4,9 @@ import {
   SEARCH_INIT,
   SEARCH_SUCCESS,
   SEARCH_FAIL,
+  DISCOVER_INIT,
+  DISCOVER_SUCCESS,
+  DISCOVER_FAIL,
   CLEAR_RESULTS,
   FETCH_LIST,
   AUTH_USER,
@@ -44,6 +47,22 @@ export const clearResults = () => {
     type: CLEAR_RESULTS
   }
 }
+
+export const discoverTitles = (mediaType, genres, providers, page) => ({
+  type: API,
+  payload: {
+    url: `${baseURL}/api/search?` + 
+      `media_type=["${mediaType}"]` +
+      `&genre=${JSON.stringify(genres)}` +
+      `&provider=${JSON.stringify(providers)}` +
+      `&page=${page}` +
+      `&page_size=16`,
+    init: label => discoverInit(label),
+    success: results => discoverSuccess(results.items),
+    fail: label => discoverFail(label),
+    label: 'discover'
+  }
+});
 
 export const fetchList = () => ({
   type: API,
@@ -119,6 +138,9 @@ export const signOut = () => dispatch => {
 export const searchInit = makeActionCreator(SEARCH_INIT, 'payload');
 export const searchSuccess = makeActionCreator(SEARCH_SUCCESS, 'payload');
 export const searchFail = makeActionCreator(SEARCH_FAIL, 'payload');
+export const discoverInit = makeActionCreator(DISCOVER_INIT, 'payload');
+export const discoverSuccess = makeActionCreator(DISCOVER_SUCCESS, 'payload');
+export const discoverFail = makeActionCreator(DISCOVER_FAIL, 'payload');
 export const requestInit = makeActionCreator(REQUEST_INIT, 'payload');
 export const requestSuccess = makeActionCreator(REQUEST_SUCCESS, 'payload');
 export const requestFail = makeActionCreator(REQUEST_FAIL, 'payload');
