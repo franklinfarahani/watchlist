@@ -14,6 +14,7 @@ import SignIn from '../pages/SignIn/SignIn';
 import Watchlist from '../pages/Watchlist/Watchlist';
 import Movies from '../pages/Movies/Movies';
 import TV from '../pages/TV/TV';
+import NotFound from '../pages/404/NotFound';
 
 // Styles
 
@@ -105,7 +106,7 @@ class AppWrapper extends Component{
             <PrivateRoute authed={this.props.authenticated} path='/app' component={Watchlist} />
             <Route path='/movies' component={Movies} />
             <Route path='/tv' component={TV} />
-            <Route render={() => <h3>404: Not Found</h3>} />
+            <Route component={NotFound} />
           </Switch>
         }
         <AppFooter>
