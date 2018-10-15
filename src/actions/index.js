@@ -34,7 +34,7 @@ const makeActionCreator = (type, ...argNames) => {
 export const searchTitles = (query) => ({
   type: API,
   payload: {
-    url: `${baseURL}/api/search?query=${query}`,
+    url: `${baseURL}/api/search?query="${query}"`,
     init: label => searchInit(label),
     success: results => searchSuccess(results.items),
     fail: label => searchFail(label),
@@ -48,15 +48,15 @@ export const clearResults = () => {
   }
 }
 
-export const discoverTitles = (mediaType, genres, providers, page) => ({
+export const discoverTitles = (options) => ({
   type: API,
   payload: {
     url: `${baseURL}/api/search?` + 
-      `media_type=["${mediaType}"]` +
-      `&genre=${JSON.stringify(genres)}` +
-      `&provider=${JSON.stringify(providers)}` +
-      `&page=${page}` +
-      `&page_size=16`,
+      `media_type=["${options.mediaType}"]` +
+      `&genre=${options.genres}` +
+      `&provider=${options.providers}` +
+      `&page=${options.page}` +
+      `&page_size=${options.pageSize}`,
     init: label => discoverInit(label),
     success: results => discoverSuccess(results.items),
     fail: label => discoverFail(label),
