@@ -6,7 +6,8 @@ import * as actions from '../../actions';
 import { colors, shadows } from '../../config/styleVariables';
 import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
 import Container from '../../components/Container';
-import Tab, {TabGroup} from '../../components/Tab';
+import GenreSelect from '../../components/GenreSelect'
+import genres from '../../config/genreIds.json';
 import {Info as mdInfo} from 'styled-icons/material/Info';
 
 // TODO: build filtering system using react-select
@@ -54,8 +55,20 @@ const EmptyList = styled.div`
 
 const Controls = styled.div`
   display: flex;
-  align-items:center;
+  flex-direction: column;
+  align-items: flex-start;
   padding: 29px;
+
+  & > h4 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  & > div {
+    width: 100%;
+    flex-direction: row;
+  }
 `
 
 const DiscoverWrapper = styled.ul`
@@ -81,7 +94,7 @@ const DiscoverItem = styled.li`
     font-size: 13px;
     font-weight: 500;
     line-height: 1.2;
-    padding: 12px;
+    padding: 11px 12px;
     color: ${colors.BLACK};
 
     span {
@@ -175,11 +188,17 @@ class Discover extends Component {
           (results.length !== 0) ?
           <Fragment>
             <Controls>
-              <TabGroup name="mediaTypes">
-                <Tab label="All" defaultChecked onChange={() => this.handleCategoryChange('All')}/>
-                <Tab label="Movies" onChange={() => this.handleCategoryChange('Movies')} />
-                <Tab label="TV" onChange={() => this.handleCategoryChange('TV')} />
-              </TabGroup>
+              <h4>Filter Results</h4>
+              <div>
+                <GenreSelect
+                  isMulti
+                  closeMenuOnSelect={false}              
+                  options={genres}
+                  placeholder={'Select genre...'}
+                  className='select-container'
+                  classNamePrefix="select"
+                />
+              </div>
             </Controls> 
             <DiscoverWrapper>
               {list}
@@ -190,8 +209,8 @@ class Discover extends Component {
               <div>
                 <div>
                   <IconInfo title='Info Icon' />
-                  <h4>List is empty.</h4>
-                  <p>Start by searching for titles and adding them to your list!</p>
+                  <h4>No Results Found.</h4>
+                  <p>Please re-adjust your filter values.</p>
                 </div>
               </div>              
             </EmptyList>
