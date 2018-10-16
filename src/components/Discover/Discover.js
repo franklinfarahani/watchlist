@@ -55,7 +55,7 @@ class Discover extends Component {
     return (
       <Container>
         <Controls>
-          <h4>Filter Results</h4>
+          <h4>Explore {mediaType === 'movie' ? 'Movies' : 'TV Shows'}</h4>
           <div>
             <GenreSelect
               isMulti
