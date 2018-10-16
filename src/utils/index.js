@@ -2,13 +2,7 @@ import genres from '../config/genreIds.json'
 
 export function imagesLoaded(parentNode) {
   const imgElements = [...parentNode.querySelectorAll("img")];
-  for (let i = 0; i < imgElements.length; i += 1) {
-    const img = imgElements[i];
-    if (!img.complete) {
-      return false;
-    }
-  }
-  return true;
+  imgElements.map(img => !img.complete ? false : true)
 }
 
 export function getGenreName(id){
