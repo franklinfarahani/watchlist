@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import MDSpinner from 'react-md-spinner';
 import { addToList, removeFromList, signIn } from '../../actions';
 import Button from '../Button';
 import styled from 'styled-components';
+import { colors } from '../../config/styleVariables'
 import { Add as mdAdd } from 'styled-icons/material/Add';
 import { Remove as mdRemove } from 'styled-icons/material/Remove';
 
@@ -15,6 +17,10 @@ const IconAdd = styled(mdAdd)`
 const IconRemove = styled(mdRemove)`
   width: 15px;
   margin-bottom: 1px;
+`
+
+const IconLoading = styled(MDSpinner)`
+  margin: 0 4px 2px;
 `
 
 class AddToList extends Component {
@@ -56,36 +62,50 @@ class AddToList extends Component {
   }
 
   render() {
-    const { item, callback } = this.props;
+    const { item, callback, isLoading } = this.props;
     const { redirect } = this.state;
     if (redirect) {
       callback();
       return <Redirect to={'/signin'} />
     }
-    return (
-      <Button
-        category='pill'
-        danger={!this.state.duplicate ? false : true}
-        onClick={(e) => this.handleClick(e, item)}
-      >
-      {!this.state.duplicate ?
-        <Fragment>
-          <IconAdd />
-          {' Add'}
-        </Fragment> : 
-        <Fragment>
-          <IconRemove />
-          {' Remove'}
-        </Fragment>}
-      </Button>
-    );
+      return (isLoading ? 
+        <Button
+          category='pill'
+          disabled
+        >
+          <Fragment>
+            <IconLoading
+              size={10}
+              borderSize={2}
+              singleColor={colors.subtitle.MEDIUM}
+            />
+            {' Loading'}
+          </Fragment>
+        </Button> :
+        <Button
+          category='pill'
+          danger={!this.state.duplicate ? false : true}
+          onClick={(e) => this.handleClick(e, item)}
+        >
+        {!this.state.duplicate ?
+          <Fragment>
+            <IconAdd />
+            {' Add'}
+          </Fragment> : 
+          <Fragment>
+            <IconRemove />
+            {' Remove'}
+          </Fragment>}
+        </Button>
+      );
   }
 }
 
 const mapStateToProps = ({ auth, watchlist }) => {
   return {
     auth,
-    watchlist: watchlist.list
+    watchlist: watchlist.list,
+    isLoading: watchlist.isLoading
   };
 };
 
