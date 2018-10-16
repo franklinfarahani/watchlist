@@ -35,7 +35,7 @@ class AddToList extends Component {
   }
 
   handleClick(e, itemSelected) {
-    const { addToList, removeFromList, signIn, auth } = this.props;
+    const { addToList, removeFromList, signIn, auth, callback } = this.props;
     e.preventDefault();
     if (!auth.authenticated) {
       signIn();
@@ -52,7 +52,7 @@ class AddToList extends Component {
         this.setState({duplicate: false})
       }
     }    
-    this.props.callback();
+    callback && callback();
   }
 
   render() {
