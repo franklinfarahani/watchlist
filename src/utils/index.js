@@ -12,7 +12,7 @@ export function imagesLoaded(parentNode) {
 }
 
 export function getGenreName(id){
-  return genres[genres.findIndex(genre => genre.id === id)].name
+  return genres[genres.findIndex(genre => genre.id === id)].label
 }
 
 export function formatRuntime(runtime){

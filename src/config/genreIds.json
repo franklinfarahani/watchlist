@@ -1,70 +1,104 @@
 [
   {
     "id": 1,
-    "name": "Action \u0026 Adventure" 
+    "label": "Action \u0026 Adventure",
+    "value": "act",
+    "slug": "action-and-adventure"
   },
   {
     "id": 2,
-    "name": "Animation" 
+    "label": "Animation",
+    "value": "ani",
+    "slug": "animation"
   },
   {
     "id": 3,
-    "name": "Comedy" 
+    "label": "Comedy",
+    "value": "cmy",
+    "slug": "comedy"
   },
   {
     "id": 4,
-    "name": "Crime"
+    "label": "Crime",
+    "value": "crm",
+    "slug": "crime"
   },
   {
     "id": 5,
-    "name": "Documentary" 
+    "label": "Documentary",
+    "value": "doc",
+    "slug": "documentary"
   },
   {
     "id": 6,
-    "name": "Drama" 
+    "label": "Drama",
+    "value": "drm",
+    "slug": "drama"
   },
   {
     "id": 7,
-    "name": "Fantasy" 
+    "label": "Fantasy",
+    "value": "fnt",
+    "slug": "fantasy"
   },
   {
     "id": 8,
-    "name": "History" 
+    "label": "History",
+    "value": "hst",
+    "slug": "history"
   },
   {
     "id": 9,
-    "name": "Horror" 
+    "label": "Horror",
+    "value": "hrr",
+    "slug": "horror"
   },
   {
     "id": 10,
-    "name": "Kids \u0026 Family" 
+    "label": "Kids \u0026 Family",
+    "value": "fml",
+    "slug": "kids-and-family"
   },
   {
     "id": 11,
-    "name": "Music \u0026 Musical" 
+    "label": "Music \u0026 Musical",
+    "value": "msc",
+    "slug": "music-and-musical"
   },
   {
     "id": 12,
-    "name": "Mystery \u0026 Thriller" 
+    "label": "Mystery \u0026 Thriller",
+    "value": "trl",
+    "slug": "mystery-and-thriller"
   },
   {
     "id": 13,
-    "name": "Romance" 
+    "label": "Romance",
+    "value": "rma",
+    "slug": "romance"
   },
   {
     "id": 14,
-    "name": "Science-Fiction" 
+    "label": "Science-Fiction",
+    "value": "scf",
+    "slug": "science-fiction"
   },
   {
     "id": 15,
-    "name": "Sport \u0026 Fitness" 
+    "label": "Sport \u0026 Fitness",
+    "value": "spt",
+    "slug": "sport-and-fitness"
   },
   {
     "id": 16,
-    "name": "War \u0026 Military" 
+    "label": "War \u0026 Military",
+    "value": "war",
+    "slug": "war-and-military"
   },
   {
     "id": 17,
-    "name": "Western" 
+    "label": "Western",
+    "value": "wsn",
+    "slug": "western"
   }
 ]
