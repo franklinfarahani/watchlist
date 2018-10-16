@@ -139,9 +139,9 @@ class DiscoverResults extends Component {
           <span>
             {` (${value.year})`}
           </span>
-          {<AddToList
+          <AddToList
             item={{ id: value.id, media_type: value.media_type }}
-          />}
+          />
           
         </h3>
         
