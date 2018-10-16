@@ -4,21 +4,22 @@ export const colors = {
   MID_POINT: '#5C3DD9', //Mid point between primary and secondary
   DANGER_TOP: '#ff0066', //Pink-Red
   DANGER_BOT: '#c30303', //Brick-Red
-  WHITE: '#fff',
-  BLACK: '#222',
+  WHITE: '#ffffff',
+  BLACK: '#222222',
   BACKDROP: 'rgba(48,48,48,.8)',
-  NAV : '#777',
+  NAV : '#777777',
   subtitle :
     {
-      LIGHT: '#ccc',
-      MEDIUM: '#aaa',
+      LIGHT: '#cccccc',
+      MEDIUM_LIGHT: '#bbbbbb',
+      MEDIUM: '#aaaaaa',
       PINK: '#cea5c1'
     },
   bg :
     {
-      LIGHT: '#eee',
+      LIGHT: '#eeeeee',
       MEDIUM: '#d3d3d3',
-      DARK: '#333'
+      DARK: '#333333'
     }
 
 };
