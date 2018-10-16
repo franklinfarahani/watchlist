@@ -1,9 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import * as actions from '../../actions';
 import { colors, shadows } from '../../config/styleVariables';
 import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
+import AddToList from '../AddToList';
 import {Info as mdInfo} from 'styled-icons/material/Info';
 
 const IconInfo = styled(mdInfo)`
@@ -90,7 +91,8 @@ class DiscoverResults extends Component {
   }
   
   componentDidMount() {
-    const { mediaType, discoverTitles, selectedGenres, selectedProviders, page, pageSize } = this.props;
+    const { mediaType, discoverTitles, selectedGenres, selectedProviders, page, pageSize, user, fetchList } = this.props;
+    user && fetchList(user.uid);
     const options = {
       mediaType,
       genres: selectedGenres.length !== 0 ? JSON.stringify(selectedGenres) : null,
@@ -102,9 +104,11 @@ class DiscoverResults extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { mediaType, discoverTitles, selectedGenres, selectedProviders, page, pageSize } = this.props;
-    console.log(selectedGenres);
-    console.log(prevProps.selectedGenres);
+    const { mediaType, discoverTitles, selectedGenres, selectedProviders, page, pageSize, watchlist } = this.props;
+    if (watchlist.hasUpdated && prevProps.watchlist.hasUpdated !== watchlist.hasUpdated) {
+      const { user, fetchList } = this.props;
+      user && fetchList(user.uid);
+    }
     if (selectedGenres !== prevProps.selectedGenres || selectedProviders !== prevProps.selectedProviders) {
       const options = {
         mediaType,
@@ -135,7 +139,12 @@ class DiscoverResults extends Component {
           <span>
             {` (${value.year})`}
           </span>
+          {<AddToList
+            item={{ id: value.id, media_type: value.media_type }}
+          />}
+          
         </h3>
+        
       </DiscoverItem>);
 
       return (
@@ -144,11 +153,9 @@ class DiscoverResults extends Component {
             {this.renderSkeleton(8)}
           </SkeletonWrapper> :
           (results.length !== 0) ?
-            <Fragment>
-              <ListWrapper>
-                {list}
-              </ListWrapper>
-            </Fragment> : 
+            <ListWrapper>
+              {list}
+            </ListWrapper> : 
             <EmptyList>
               <div>
                 <div>
@@ -164,11 +171,13 @@ class DiscoverResults extends Component {
   
 }
 
-const mapStateToProps = ({ discover }) => {
+const mapStateToProps = ({ discover, auth, watchlist }) => {
   return {
     results: discover.results,
     isLoading: discover.isLoading,
-    error: discover.error
+    error: discover.error,
+    user: auth.user,
+    watchlist
   };
 };
 
