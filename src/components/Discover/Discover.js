@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import * as actions from '../../actions';
 
-import { colors, shadows } from '../../config/styleVariables';
+import { colors, shadows, select } from '../../config/styleVariables';
 import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
 import Container from '../../components/Container';
 import GenreSelect from '../../components/GenreSelect'
@@ -196,7 +196,7 @@ class Discover extends Component {
                   options={genres}
                   placeholder={'Select genre...'}
                   className='select-container'
-                  classNamePrefix="select"
+                  classNamePrefix={select}
                 />
               </div>
             </Controls> 
