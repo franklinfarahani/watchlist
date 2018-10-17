@@ -1,5 +1,12 @@
 import genres from '../config/genreIds.json'
 
+export function isEmpty(obj){
+  for(let name in obj){
+    return false
+  }
+  return true;
+}
+
 export function imagesLoaded(parentNode) {
   const imgElements = [...parentNode.querySelectorAll("img")];
   imgElements.map(img => !img.complete ? false : true)
