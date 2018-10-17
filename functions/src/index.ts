@@ -173,6 +173,7 @@ app.get("/search", async (req, resp) => {
         id: item.id,
         media_type: item.object_type,
         title: item.title,
+        slug: item.full_path ? item.full_path.split("/")[3] : "untitled",
         poster: item.poster ? item.poster.split("{")[0] : "",
         year: item.original_release_year,
         release_date: item.localized_release_date,
