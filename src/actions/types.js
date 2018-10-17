@@ -1,4 +1,7 @@
 export const API = 'API';
+export const GET_TITLE_INIT = 'GET_TITLE_INIT';
+export const GET_TITLE_SUCCESS = 'GET_TITLE_SUCCESS';
+export const GET_TITLE_FAIL = 'GET_TITLE_FAIL';
 export const REQUEST_INIT = 'REQUEST_INIT';
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';
 export const REQUEST_FAIL = 'REQUEST_FAIL';

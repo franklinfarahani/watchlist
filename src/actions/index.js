@@ -1,6 +1,9 @@
 import { authRef, provider } from '../firebase';
 import { 
   API,
+  GET_TITLE_INIT,
+  GET_TITLE_SUCCESS,
+  GET_TITLE_FAIL,
   SEARCH_INIT,
   SEARCH_SUCCESS,
   SEARCH_FAIL,
@@ -47,6 +50,17 @@ export const clearResults = () => {
     type: CLEAR_RESULTS
   }
 }
+
+export const getTitle = (id, mediaType) => ({
+  type: API,
+  payload: {
+    url: `${baseURL}/api/media/${mediaType}/${id}`,
+    init: label => getTitleInit(label),
+    success: label => getTitleSuccess(label),
+    fail: label => getTitleFail(label),
+    label: 'getTitle'
+  }
+});
 
 export const discoverTitles = (options) => ({
   type: API,
@@ -135,6 +149,9 @@ export const signOut = () => dispatch => {
     });
 };
 
+export const getTitleInit = makeActionCreator(GET_TITLE_INIT, 'payload');
+export const getTitleSuccess = makeActionCreator(GET_TITLE_SUCCESS, 'payload');
+export const getTitleFail = makeActionCreator(GET_TITLE_FAIL, 'payload');
 export const searchInit = makeActionCreator(SEARCH_INIT, 'payload');
 export const searchSuccess = makeActionCreator(SEARCH_SUCCESS, 'payload');
 export const searchFail = makeActionCreator(SEARCH_FAIL, 'payload');
