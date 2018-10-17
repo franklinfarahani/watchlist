@@ -14,6 +14,7 @@ import SignIn from '../pages/SignIn/SignIn';
 import Watchlist from '../pages/Watchlist/Watchlist';
 import Movies from '../pages/Movies/Movies';
 import TV from '../pages/TV/TV';
+import Single from '../pages/Single/Single'
 import NotFound from '../pages/404/NotFound';
 
 // Styles
@@ -104,8 +105,9 @@ class AppWrapper extends Component{
             <PublicRoute authed={this.props.authenticated} exact path='/' component={Movies} />
             <PublicRoute authed={this.props.authenticated} path='/signin' component={SignIn} />
             <PrivateRoute authed={this.props.authenticated} path='/app' component={Watchlist} />
-            <Route path='/movies' component={Movies} />
-            <Route path='/tv' component={TV} />
+            <Route path='/:mediaType/:id-:slug' component={Single} />
+            <Route exact path='/movies' component={Movies} />
+            <Route exact path='/tv' component={TV} />
             <Route component={NotFound} />
           </Switch>
         }
