@@ -75,7 +75,6 @@ const YearSpan = styled.span`
 
 const GenresContainer = styled.span`
   color: ${colors.subtitle.MEDIUM};
-  font-size: 12px;
   padding-top: 6px;
   padding-bottom: 8px;
 `
@@ -88,7 +87,7 @@ const Genre = styled.span`
   background: linear-gradient(to bottom, ${colors.SECONDARY} 0%, ${colors.PRIMARY} 100%);
   text-transform: uppercase;
   font-weight: 600;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: .5px;
 `
 
