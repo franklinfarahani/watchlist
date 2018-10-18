@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { getTitle } from '../../actions';
-import Button from '../../components/Button';
 import { getGenreName, formatRuntime, isEmpty } from '../../utils'
+import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
 
 import styled from 'styled-components';
 import { colors, shadows } from '../../config/styleVariables';
@@ -95,6 +95,7 @@ const InfoUnit = styled.div`
   flex-wrap: wrap;
   flex: 1;
   align-content: flex-start;
+  margin-right: 4px;
 `
 
 const Label = styled.span`
@@ -145,6 +146,11 @@ const Runtime = styled.span`
   font-weight: 400;
 `
 
+const Seasons = styled.p`
+  color: ${colors.BLACK};
+  font-size: 14px;
+`
+
 const Synopsis = styled.p`
   color: ${colors.BLACK};
   font-size: 14px;
@@ -188,8 +194,9 @@ class Single extends Component {
 
   render() {
     const { item } = this.props.single;
+    const { history } = this.props;
     if(isEmpty(item)) {
-      return <div>loading</div>
+      return <ListItemSkeleton />
     }
 
     const convertedRuntime = item.runtime ? formatRuntime(item.runtime) : null;
@@ -199,12 +206,11 @@ class Single extends Component {
     const rtScoreObj = item.ratings[item.ratings.findIndex(rating => rating.provider_type === 'tomato:meter')];
     const imdbScore = imdbScoreObj && imdbScoreObj.value;
     const rtScore = rtScoreObj && rtScoreObj.value;
-    
 
     return (
       <Fragment>
         <Header>
-          <BackButton onClick={this.props.history.goBack} >
+          <BackButton onClick={history.goBack} >
             <IconBack title="Back to previous page"/>
             Back
           </BackButton>
@@ -239,15 +245,24 @@ class Single extends Component {
                     )}
                 </GenresContainer>
               </InfoUnit>
-              <InfoUnit>
-                <Label>Runtime</Label>
-                {convertedRuntime &&
+              {convertedRuntime ?
+                <InfoUnit>
+                  <Label>Runtime</Label>                
                   <Runtime>
                     <IconClock title="Runtime"/>
                     {`${convertedRuntime.hours}h ${convertedRuntime.minutes}mins`}
-                  </Runtime>
-                }
-              </InfoUnit>
+                  </Runtime>                
+                </InfoUnit> :
+                <Fragment>
+                  {item.seasons && 
+                    <InfoUnit>
+                      <Label>Seasons</Label>                
+                      <Seasons>{item.seasons}</Seasons>                
+                    </InfoUnit>
+                  }
+                </Fragment>
+                                
+              }
             </InfoSection>
             <InfoSection>
               <InfoUnit>
@@ -288,9 +303,8 @@ class Single extends Component {
         </SingleWrapper>
       </Fragment>
     );
-    }
-    
   }
+}
 
 const mapStateToProps = ({ auth, single }) => {
   return {
