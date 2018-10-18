@@ -47,11 +47,10 @@ const BackButton = styled.button`
   }
 `
 
-const SingleWrapper = styled.li`
+const SingleWrapper = styled.section`
   background: ${colors.WHITE};
-  list-style-type: none;
   display: flex;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
   overflow: hidden;
   border-radius: 4px;
   box-shadow: ${shadows.VERYLOW};
