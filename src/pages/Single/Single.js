@@ -66,8 +66,8 @@ const EmptyImage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 231px;
-  width: 154px;
+  height: 340.92px;
+  width: 240.05px;
   background: ${colors.bg.MEDIUM};
 `
 
