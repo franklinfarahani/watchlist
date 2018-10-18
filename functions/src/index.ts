@@ -31,6 +31,7 @@ interface Media {
   id: number,
   media_type: string,
   title: string,
+  slug: string,
   poster: string,
   year: number,
   release_date: string,
@@ -38,6 +39,7 @@ interface Media {
   synopsis?: string,
   ratings?: Array<object>,
   runtime?: number,
+  seasons?: number,
   viewing_options?: Array<object>,
   clips?: Array<object>
 }
@@ -91,6 +93,7 @@ async function getTitle(id: number, type: "movie" | "show") {
       id: json.id,
       media_type: type,
       title: json.title,
+      slug: json.full_path ? json.full_path.split("/")[3] : "untitled",
       poster: json.poster ? json.poster.split("{")[0] : "",
       year: json.original_release_year,
       release_date: json.localized_release_date,
@@ -113,7 +116,9 @@ async function getTitle(id: number, type: "movie" | "show") {
       // Remove all the duplicate option objects
       .filter((value, index, self) => self.findIndex(t => t.provider_id === value.provider_id) === index) :
       null;
-    type === 'movie' ? item.runtime = json.runtime : null;
+    type === 'movie' ?
+      item.runtime = json.runtime :
+      item.seasons = json.max_season_number;
     json.clips ? item.clips = json.clips.slice(0,3) : null;
     return {item, error: null};
   }
