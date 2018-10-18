@@ -47,7 +47,7 @@ const LogoContainerLink = styled(Link)`
   padding-left: 5px;
   width: 135px;
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 400;
   text-decoration:none;
   color: ${colors.BLACK};
 `
