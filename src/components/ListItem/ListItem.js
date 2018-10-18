@@ -82,12 +82,12 @@ const GenresContainer = styled.span`
 const Genre = styled.span`
   color: ${colors.WHITE};
   border-radius: 4px;
-  padding: 2px 5px;
+  padding: 2.5px 5px;
   margin-right: 6px;
   background: linear-gradient(to bottom, ${colors.SECONDARY} 0%, ${colors.PRIMARY} 100%);
   text-transform: uppercase;
   font-weight: 600;
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .5px;
 `
 
