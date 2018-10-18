@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { colors, shadows } from '../../config/styleVariables';
 import {Image as faImage} from 'styled-icons/fa-regular/Image';
 import {Clock as faClock} from 'styled-icons/fa-regular/Clock';
+import {KeyboardBackspace as mdBack} from 'styled-icons/material/KeyboardBackspace';
 import ImdbIcon from '../../components/BrandIcon/ImdbIcon';
 import RtFreshIcon from '../../components/BrandIcon/RtFreshIcon';
 import RtRottenIcon from '../../components/BrandIcon/RtRottenIcon';
@@ -15,9 +16,35 @@ import RtRottenIcon from '../../components/BrandIcon/RtRottenIcon';
 // TODO: Add viewing options
 // TODO: Add responsive styles
 
+const IconBack = styled(mdBack)`
+  color: ${colors.PRIMARY};
+  width: 30px;
+  margin-right: 4px;
+`
+
 const IconClock = styled(faClock)`
   width: 12px;
   margin-right: 2px;
+`
+
+const Header = styled.header`
+  padding: 24px;
+`
+
+const BackButton = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: ${colors.subtitle.MEDIUM};
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  transition: .2s color;
+
+  &:hover {
+    color: ${colors.PRIMARY};
+  }
 `
 
 const SingleWrapper = styled.li`
@@ -161,6 +188,10 @@ class Single extends Component {
     return (
       <Fragment>
         <Header>
+          <BackButton onClick={this.props.history.goBack} >
+            <IconBack title="Back to previous page"/>
+            Back
+          </BackButton>
           <Title>
             <span>{item.title}</span>
             <YearSpan>
