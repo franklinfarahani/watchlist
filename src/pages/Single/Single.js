@@ -30,7 +30,8 @@ const SingleWrapper = styled.li`
   box-shadow: ${shadows.VERYLOW};
   & > img {
     max-height: 100%;
-    flex: 1 1;
+    height: 33.34%;
+    width: 33.34%;
   }
 `
 
@@ -50,7 +51,6 @@ const IconImage = styled(faImage)`
 
 const InformationContainer = styled.div`
   display:flex;
-  flex: 2 2;
   flex-direction: column;
   justify-content: space-between;
   padding: 28px 30px;
@@ -83,13 +83,13 @@ const Genre = styled.span`
   background: linear-gradient(to bottom, ${colors.SECONDARY} 0%, ${colors.PRIMARY} 100%);
   text-transform: uppercase;
   font-weight: 600;
-  font-size: 11px;
+  font-size: 9.5px;
   letter-spacing: .5px;
 `
 
 const Synopsis = styled.p`
   color: ${colors.BLACK};
-  font-size: 14px;
+  font-size: 12px;
   line-height: 20px;
   flex: 1;
   margin-top: 5px;
@@ -128,7 +128,7 @@ const NoRatings = styled.span`
   text-transform: uppercase;
 `
 
-const ControlsContainer = styled.div`
+const Header = styled.header`
   padding: 24px;
 `
 
@@ -159,66 +159,70 @@ class Single extends Component {
     
 
     return (
-      <SingleWrapper>
-        {item.poster ? 
-          <img
-            src = {`https://images.justwatch.com${item.poster}s276`}
-            alt = {`poster preview for ${item.title}`}
-          />
-          :
-          <EmptyImage>
-            <IconImage title='No Image Icon' />
-          </EmptyImage>
-        }
-        <InformationContainer>
+      <Fragment>
+        <Header>
           <Title>
             <span>{item.title}</span>
             <YearSpan>
               {item.year ? `(${item.year})` : '(TBA)'}
             </YearSpan>
           </Title>
-          <GenresContainer>            
-              {/* Slice the array into only 3 genres for better UI */}
-              {item.genres.map(genre =>
-                <Genre key={genre}>
-                  {getGenreName(genre, item.media_type)}
-                </Genre>
-              )}
-          </GenresContainer>
-          <Synopsis>
-            {item.synopsis}
-          </Synopsis>
-          <MetaContainer>
-            {            
-              imdbScore || rtScore ?
-                <Fragment>
-                  {imdbScore &&
-                    <Rating>
-                      <ImdbIcon size={15} />{imdbScore.toFixed(1)}
-                    </Rating>
-                  }
-                  {rtScore &&
-                    (rtScore >= 60 ?
+        </Header>
+        <SingleWrapper>
+          {item.poster ? 
+            <img
+              src = {`https://images.justwatch.com${item.poster}s276`}
+              alt = {`poster preview for ${item.title}`}
+            />
+            :
+            <EmptyImage>
+              <IconImage title='No Image Icon' />
+            </EmptyImage>
+          }
+          <InformationContainer>
+            <GenresContainer>            
+                {/* Slice the array into only 3 genres for better UI */}
+                {item.genres.map(genre =>
+                  <Genre key={genre}>
+                    {getGenreName(genre, item.media_type)}
+                  </Genre>
+                )}
+            </GenresContainer>
+            <Synopsis>
+              {item.synopsis}
+            </Synopsis>
+            <MetaContainer>
+              {            
+                imdbScore || rtScore ?
+                  <Fragment>
+                    {imdbScore &&
                       <Rating>
-                        <RtFreshIcon size={15} />{rtScore}{'%'}
-                      </Rating> :
-                      <Rating>
-                        <RtRottenIcon size={15} />{rtScore}{'%'}
+                        <ImdbIcon size={15} />{imdbScore.toFixed(1)}
                       </Rating>
-                    )
-                  }
-                </Fragment> :
-                <NoRatings>Ratings Not Available</NoRatings>
-            }
-            {convertedRuntime &&
-              <Meta>
-                <IconClock title="Runtime"/>
-                {`${convertedRuntime.hours}h ${convertedRuntime.minutes}mins`}
-              </Meta>
-            }
-          </MetaContainer>
-        </InformationContainer>        
-      </SingleWrapper>
+                    }
+                    {rtScore &&
+                      (rtScore >= 60 ?
+                        <Rating>
+                          <RtFreshIcon size={15} />{rtScore}{'%'}
+                        </Rating> :
+                        <Rating>
+                          <RtRottenIcon size={15} />{rtScore}{'%'}
+                        </Rating>
+                      )
+                    }
+                  </Fragment> :
+                  <NoRatings>Ratings Not Available</NoRatings>
+              }
+              {convertedRuntime &&
+                <Meta>
+                  <IconClock title="Runtime"/>
+                  {`${convertedRuntime.hours}h ${convertedRuntime.minutes}mins`}
+                </Meta>
+              }
+            </MetaContainer>
+          </InformationContainer>        
+        </SingleWrapper>
+      </Fragment>
     );
     }
     
