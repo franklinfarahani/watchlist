@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { removeFromList } from '../../actions';
 import Button from '../../components/Button';
 import { getGenreName, formatRuntime, truncateText } from '../../utils'
@@ -31,6 +32,11 @@ const ListItemWrapper = styled.li`
   box-shadow: ${shadows.VERYLOW};
   img {
     max-height: 100%;
+  }
+
+  a:first-of-type {
+    text-decoration: none;
+    color: inherit;
   }
 `
 
@@ -194,12 +200,14 @@ class ListItem extends Component {
           </EmptyImage>
         }
         <InformationContainer>
-          <Title>
-            <span ref={el => this.titleNode = el}>{item.title}</span>
-            <YearSpan>
-              {item.year ? `(${item.year})` : '(TBA)'}
-            </YearSpan>
-          </Title>
+          <Link to={`/${item.media_type}/${item.id}-${item.slug}`}>
+            <Title>
+              <span ref={el => this.titleNode = el}>{item.title}</span>
+              <YearSpan>
+                {item.year ? `(${item.year})` : '(TBA)'}
+              </YearSpan>
+            </Title>
+          </Link>
           <GenresContainer>            
               {/* Slice the array into only 3 genres for better UI */}
               {item.genres.slice(0, 3).map(genre =>
