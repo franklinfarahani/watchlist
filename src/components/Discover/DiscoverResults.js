@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import * as actions from '../../actions';
 import { colors, shadows } from '../../config/styleVariables';
@@ -130,21 +131,22 @@ class DiscoverResults extends Component {
     const { results, isLoading } = this.props;
     const list = results.map((value, key) => 
       <DiscoverItem key={key}>
-        <img
-          src = {`https://images.justwatch.com${value.poster}s166`}
-          alt = {`poster preview for ${value.title}`}
-        />
-        <h3>
-          {value.title} 
-          <span>
-            {` (${value.year})`}
-          </span>
-          <AddToList
-            item={{ id: value.id, media_type: value.media_type }}
+        <Link to={`/${value.media_type}/${value.id}-${value.slug}`}>
+          <img
+            src = {`https://images.justwatch.com${value.poster}s166`}
+            alt = {`poster preview for ${value.title}`}
           />
-          
-        </h3>
-        
+        </Link>
+          <h3>
+            {value.title} 
+            <span>
+              {` (${value.year})`}
+            </span>
+            <AddToList
+              item={{ id: value.id, media_type: value.media_type }}
+            />
+            
+          </h3>        
       </DiscoverItem>);
 
       return (
