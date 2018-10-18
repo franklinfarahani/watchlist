@@ -196,7 +196,20 @@ class Single extends Component {
     const { item } = this.props.single;
     const { history } = this.props;
     if(isEmpty(item)) {
-      return <ListItemSkeleton />
+      return (
+      <Fragment>
+        <Header>
+          <BackButton onClick={history.goBack} >
+            <IconBack title="Back to previous page"/>
+            Back
+          </BackButton>
+          <Title>
+            <span>Loading...</span>
+          </Title>
+        </Header>
+        <ListItemSkeleton />
+      </Fragment>
+      )
     }
 
     const convertedRuntime = item.runtime ? formatRuntime(item.runtime) : null;
