@@ -152,8 +152,8 @@ const Seasons = styled.p`
 
 const Synopsis = styled.p`
   color: ${colors.BLACK};
-  font-size: 14px;
-  line-height: 21px;
+  font-size: ${props => props.length < 375 ? '14px' : '12px'};
+  line-height: 1.5;
   flex: 1;
 `
 
@@ -295,7 +295,7 @@ class Single extends Component {
             <InfoSection>
               <InfoUnit>
                 <Label>Synopsis</Label>
-                <Synopsis>
+                <Synopsis length={item.synopsis.length}>
                   {item.synopsis}
                 </Synopsis>
               </InfoUnit>
