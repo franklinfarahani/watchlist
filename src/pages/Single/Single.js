@@ -79,34 +79,56 @@ const IconImage = styled(faImage)`
 const InformationContainer = styled.div`
   display:flex;
   flex-direction: column;
+  flex-wrap: wrap;
   justify-content: space-between;
   padding: 28px 30px;
 `
 
-const Title = styled.h3`
-  font-size: 21px;
+const InfoSection = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const InfoUnit = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex: 1;
+  align-content: flex-start;
+`
+
+const Label = styled.span`
+  flex-basis: 100%;
+  font-size: 11px;
   font-weight: 600;
-  padding-bottom: 8px;
+  color: ${colors.subtitle.MEDIUM};
+  text-transform: uppercase;
+  margin-bottom: 6px;
+`
+
+const Title = styled.h3`
+  font-size: 24px;
+  font-weight: 600;
 `
 
 const YearSpan = styled.span`
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 400;
   padding: 0 10px;
   color: ${colors.subtitle.MEDIUM};
 `
 
 const GenresContainer = styled.span`
-  color: ${colors.subtitle.MEDIUM};
-  padding-top: 6px;
-  padding-bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
 `
 
 const Genre = styled.span`
   color: ${colors.WHITE};
   border-radius: 4px;
-  padding: 2px 5px;
-  margin-right: 6px;
+  padding: 2.5px 5px;
+  margin-bottom: 3px;
+  margin-right: 3px;
   background: linear-gradient(to bottom, ${colors.SECONDARY} 0%, ${colors.PRIMARY} 100%);
   text-transform: uppercase;
   font-weight: 600;
@@ -114,12 +136,20 @@ const Genre = styled.span`
   letter-spacing: .5px;
 `
 
+const Runtime = styled.span`
+  color: ${colors.subtitle.MEDIUM};
+  font-size: 12px;
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 2px 4px;
+  font-weight: 400;
+`
+
 const Synopsis = styled.p`
   color: ${colors.BLACK};
-  font-size: 12px;
-  line-height: 20px;
+  font-size: 14px;
+  line-height: 21px;
   flex: 1;
-  margin-top: 5px;
 `
 
 const MetaContainer = styled.div`
@@ -139,24 +169,10 @@ const Rating = styled.div`
   }
 `
 
-const Meta = styled.span`
-  color: ${colors.subtitle.MEDIUM};
-  font-size: 12px;
-  border: 1px solid;
-  border-radius: 4px;
-  padding: 2px 4px;
-  font-weight: 400;
-  margin-left: 6px;
-`
-
 const NoRatings = styled.span`
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-`
-
-const Header = styled.header`
-  padding: 24px;
 `
 
 class Single extends Component {
@@ -211,46 +227,63 @@ class Single extends Component {
             </EmptyImage>
           }
           <InformationContainer>
-            <GenresContainer>            
-                {/* Slice the array into only 3 genres for better UI */}
-                {item.genres.map(genre =>
-                  <Genre key={genre}>
-                    {getGenreName(genre, item.media_type)}
-                  </Genre>
-                )}
-            </GenresContainer>
-            <Synopsis>
-              {item.synopsis}
-            </Synopsis>
-            <MetaContainer>
-              {            
-                imdbScore || rtScore ?
-                  <Fragment>
-                    {imdbScore &&
-                      <Rating>
-                        <ImdbIcon size={15} />{imdbScore.toFixed(1)}
-                      </Rating>
-                    }
-                    {rtScore &&
-                      (rtScore >= 60 ?
-                        <Rating>
-                          <RtFreshIcon size={15} />{rtScore}{'%'}
-                        </Rating> :
-                        <Rating>
-                          <RtRottenIcon size={15} />{rtScore}{'%'}
-                        </Rating>
-                      )
-                    }
-                  </Fragment> :
-                  <NoRatings>Ratings Not Available</NoRatings>
-              }
-              {convertedRuntime &&
-                <Meta>
-                  <IconClock title="Runtime"/>
-                  {`${convertedRuntime.hours}h ${convertedRuntime.minutes}mins`}
-                </Meta>
-              }
-            </MetaContainer>
+            <InfoSection>
+              <InfoUnit>
+                <Label>Genres</Label>
+                <GenresContainer>            
+                    {/* Slice the array into only 3 genres for better UI */}
+                    {item.genres.map(genre =>
+                      <Genre key={genre}>
+                        {getGenreName(genre, item.media_type)}
+                      </Genre>
+                    )}
+                </GenresContainer>
+              </InfoUnit>
+              <InfoUnit>
+                <Label>Runtime</Label>
+                {convertedRuntime &&
+                  <Runtime>
+                    <IconClock title="Runtime"/>
+                    {`${convertedRuntime.hours}h ${convertedRuntime.minutes}mins`}
+                  </Runtime>
+                }
+              </InfoUnit>
+            </InfoSection>
+            <InfoSection>
+              <InfoUnit>
+                <Label>Synopsis</Label>
+                <Synopsis>
+                  {item.synopsis}
+                </Synopsis>
+              </InfoUnit>
+            </InfoSection>
+            <InfoSection>
+              <InfoUnit>
+                <MetaContainer>
+                  {            
+                    imdbScore || rtScore ?
+                      <Fragment>
+                        {imdbScore &&
+                          <Rating>
+                            <ImdbIcon size={15} />{imdbScore.toFixed(1)}
+                          </Rating>
+                        }
+                        {rtScore &&
+                          (rtScore >= 60 ?
+                            <Rating>
+                              <RtFreshIcon size={15} />{rtScore}{'%'}
+                            </Rating> :
+                            <Rating>
+                              <RtRottenIcon size={15} />{rtScore}{'%'}
+                            </Rating>
+                          )
+                        }
+                      </Fragment> :
+                      <NoRatings>Ratings Not Available</NoRatings>
+                  }
+                </MetaContainer>
+              </InfoUnit>
+            </InfoSection>            
           </InformationContainer>        
         </SingleWrapper>
       </Fragment>
