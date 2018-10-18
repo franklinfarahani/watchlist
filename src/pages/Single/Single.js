@@ -181,6 +181,22 @@ const NoRatings = styled.span`
   text-transform: uppercase;
 `
 
+const TrailersWrapper = styled.section`
+  background: ${colors.WHITE};
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: ${shadows.VERYLOW};
+  iframe {
+    margin-bottom: 4px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+`
+
 class Single extends Component {
   // constructor(props){
   //   super(props)
@@ -314,6 +330,26 @@ class Single extends Component {
             </InfoSection>            
           </InformationContainer>        
         </SingleWrapper>
+        {item.clips && item.clips.length !== 0 &&
+          <TrailersWrapper>
+            {
+              item.clips.slice(0,1).map(clip => {
+                return (
+                  <iframe
+                    title={clip.name}
+                    key={clip.external_id} 
+                    width="720"
+                    height="405"
+                    src={`https://www.youtube.com/embed/${clip.external_id}`}
+                    frameBorder="0"
+                    allow="autoplay; encrypted-media"
+                    allowFullScreen>
+                  </iframe>
+                )
+              })
+            }
+          </TrailersWrapper>
+        }
       </Fragment>
     );
   }
