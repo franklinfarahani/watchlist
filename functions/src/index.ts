@@ -39,6 +39,7 @@ interface Media {
   synopsis?: string,
   ratings?: Array<object>,
   runtime?: number,
+  age_rating?: string,
   seasons?: number,
   viewing_options?: Array<object>,
   clips?: Array<object>
@@ -99,7 +100,8 @@ async function getTitle(id: number, type: "movie" | "show") {
       release_date: json.localized_release_date,
       genres: json.genre_ids,
       synopsis: json.short_description,
-      ratings: json.scoring
+      ratings: json.scoring,
+      age_rating: json.age_certification
     };
     json.offers ? item.viewing_options = json.offers.map(option => 
       // Create array of viewing option keys
