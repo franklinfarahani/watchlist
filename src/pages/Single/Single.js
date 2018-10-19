@@ -29,6 +29,7 @@ const IconClock = styled(faClock)`
 
 const Header = styled.header`
   padding: 24px;
+  margin-bottom: 15px;
 `
 
 const BackButton = styled.button`
@@ -54,10 +55,11 @@ const SingleWrapper = styled.section`
   overflow: hidden;
   border-radius: 4px;
   box-shadow: ${shadows.VERYLOW};
+  margin-left: 30px;
   & > img {
-    max-height: 100%;
-    height: 33.34%;
-    width: 33.34%;
+    border-radius: 4px;
+    position: absolute;
+    margin: -15px 0px 0px -30px;
   }
 `
 
@@ -80,12 +82,13 @@ const InformationContainer = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 28px 30px;
+  padding: 28px 30px 28px ${276}px;
 `
 
 const InfoSection = styled.div`
   display: flex;
   flex-direction: row;
+  margin-bottom: 24px;
 `
 
 const InfoUnit = styled.div`
@@ -94,7 +97,7 @@ const InfoUnit = styled.div`
   flex-wrap: wrap;
   flex: 1;
   align-content: flex-start;
-  margin-right: 4px;
+  padding-right: 8px;
 `
 
 const Label = styled.span`
@@ -124,16 +127,17 @@ const GenresContainer = styled.span`
 `
 
 const Genre = styled.span`
-  color: ${colors.WHITE};
-  border-radius: 4px;
-  padding: 2.5px 5px;
+  font-size: 9.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  line-height: 1.5;
+  padding: 0px 5px;
   margin-bottom: 3px;
   margin-right: 3px;
+  border-radius: 4px;
+  color: ${colors.WHITE};  
   background: linear-gradient(to bottom, ${colors.SECONDARY} 0%, ${colors.PRIMARY} 100%);
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 9.5px;
-  letter-spacing: .5px;
 `
 
 const Runtime = styled.span`
@@ -145,19 +149,19 @@ const Runtime = styled.span`
   font-weight: 400;
 `
 
-const Seasons = styled.p`
+const Misc = styled.p`
   color: ${colors.BLACK};
   font-size: 14px;
 `
 
 const Synopsis = styled.p`
   color: ${colors.BLACK};
-  font-size: ${props => props.length < 375 ? '14px' : '12px'};
+  font-size: 14px;
   line-height: 1.5;
   flex: 1;
 `
 
-const MetaContainer = styled.div`
+const RatingsContainer = styled.div`
   font-size: 16px;
   display: flex;
   align-items: center;
@@ -285,7 +289,7 @@ class Single extends Component {
                   {item.seasons && 
                     <InfoUnit>
                       <Label>Seasons</Label>                
-                      <Seasons>{item.seasons}</Seasons>                
+                      <Misc>{item.seasons}</Misc>                
                     </InfoUnit>
                   }
                 </Fragment>
@@ -294,15 +298,8 @@ class Single extends Component {
             </InfoSection>
             <InfoSection>
               <InfoUnit>
-                <Label>Synopsis</Label>
-                <Synopsis length={item.synopsis.length}>
-                  {item.synopsis}
-                </Synopsis>
-              </InfoUnit>
-            </InfoSection>
-            <InfoSection>
-              <InfoUnit>
-                <MetaContainer>
+                <Label>Scores</Label>
+                <RatingsContainer>
                   {            
                     imdbScore || rtScore ?
                       <Fragment>
