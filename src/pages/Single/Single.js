@@ -212,9 +212,9 @@ class Single extends Component {
   }
 
   render() {
-    const { item } = this.props.single;
+    const { item, isLoading } = this.props.single;
     const { history } = this.props;
-    if(isEmpty(item)) {
+    if(isEmpty(item) || isLoading) {
       return (
       <Fragment>
         <Header>
