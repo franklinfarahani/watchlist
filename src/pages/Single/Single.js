@@ -280,8 +280,15 @@ class Single extends Component {
                   <Label>Runtime</Label>    
                   <PillMeta>
                     <IconClock title="Runtime"/>
-                    {`${convertedRuntime.hours}h ${convertedRuntime.minutes}mins`}
-                  </Runtime>                
+                    {console.log(convertedRuntime.minutes)}
+                    {convertedRuntime.hours !== 0 ?
+                      (convertedRuntime.minutes !== 0 ? 
+                        `${convertedRuntime.hours}h ${convertedRuntime.minutes}mins` :
+                        `${convertedRuntime.hours}h`
+                      ) :
+                      `${convertedRuntime.minutes}mins`
+                    }
+                  </PillMeta>    
                 </InfoUnit> :
                 <Fragment>
                   {item.seasons && 
