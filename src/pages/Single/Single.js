@@ -321,7 +321,21 @@ class Single extends Component {
                       </Fragment> :
                       <NoRatings>Ratings Not Available</NoRatings>
                   }
-                </MetaContainer>
+                </RatingsContainer>
+              </InfoUnit>
+              {item.age_rating &&
+                <InfoUnit>
+                  <Label>Age Rating</Label>
+                  <Misc>{item.age_rating}</Misc>
+                </InfoUnit>
+              }
+            </InfoSection>
+            <InfoSection>
+              <InfoUnit>
+                <Label>Synopsis</Label>
+                <Synopsis length={item.synopsis.length}>
+                  {item.synopsis}
+                </Synopsis>
               </InfoUnit>
             </InfoSection>            
           </InformationContainer>        
