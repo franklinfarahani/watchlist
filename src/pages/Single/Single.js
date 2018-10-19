@@ -24,7 +24,8 @@ const IconBack = styled(mdBack)`
 
 const IconClock = styled(faClock)`
   width: 12px;
-  margin-right: 2px;
+  margin-right: 4px;
+  margin-bottom: -0.5px;
 `
 
 const Header = styled.header`
@@ -140,7 +141,7 @@ const Genre = styled.span`
   background: linear-gradient(to bottom, ${colors.SECONDARY} 0%, ${colors.PRIMARY} 100%);
 `
 
-const Runtime = styled.span`
+const PillMeta = styled.span`
   color: ${colors.subtitle.MEDIUM};
   font-size: 12px;
   border: 1px solid;
@@ -178,10 +179,8 @@ const Rating = styled.div`
   }
 `
 
-const NoRatings = styled.span`
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
+const Provider = styled.li`
+  padding-right: 4px;
 `
 
 const TrailersWrapper = styled.section`
@@ -268,8 +267,7 @@ class Single extends Component {
             <InfoSection>
               <InfoUnit>
                 <Label>Genres</Label>
-                <GenresContainer>            
-                    {/* Slice the array into only 3 genres for better UI */}
+                <GenresContainer>
                     {item.genres.map(genre =>
                       <Genre key={genre}>
                         {getGenreName(genre, item.media_type)}
@@ -279,8 +277,8 @@ class Single extends Component {
               </InfoUnit>
               {convertedRuntime ?
                 <InfoUnit>
-                  <Label>Runtime</Label>                
-                  <Runtime>
+                  <Label>Runtime</Label>    
+                  <PillMeta>
                     <IconClock title="Runtime"/>
                     {`${convertedRuntime.hours}h ${convertedRuntime.minutes}mins`}
                   </Runtime>                
@@ -288,8 +286,8 @@ class Single extends Component {
                 <Fragment>
                   {item.seasons && 
                     <InfoUnit>
-                      <Label>Seasons</Label>                
-                      <Misc>{item.seasons}</Misc>                
+                      <Label>Seasons</Label>    
+                      <Misc>{item.seasons}</Misc>    
                     </InfoUnit>
                   }
                 </Fragment>
@@ -300,7 +298,7 @@ class Single extends Component {
               <InfoUnit>
                 <Label>Scores</Label>
                 <RatingsContainer>
-                  {            
+                  {
                     imdbScore || rtScore ?
                       <Fragment>
                         {imdbScore &&
@@ -319,14 +317,14 @@ class Single extends Component {
                           )
                         }
                       </Fragment> :
-                      <NoRatings>Ratings Not Available</NoRatings>
+                      <Misc>—</Misc>
                   }
                 </RatingsContainer>
               </InfoUnit>
               {item.age_rating &&
                 <InfoUnit>
                   <Label>Age Rating</Label>
-                  <Misc>{item.age_rating}</Misc>
+                  <PillMeta>{item.age_rating}</PillMeta>
                 </InfoUnit>
               }
             </InfoSection>
@@ -342,8 +340,7 @@ class Single extends Component {
         </SingleWrapper>
         {item.clips && item.clips.length !== 0 &&
           <TrailersWrapper>
-            {
-              item.clips.slice(0,1).map(clip => {
+            {item.clips.slice(0,1).map(clip => {
                 return (
                   <iframe
                     title={clip.name}
@@ -356,8 +353,7 @@ class Single extends Component {
                     allowFullScreen>
                   </iframe>
                 )
-              })
-            }
+            })}
           </TrailersWrapper>
         }
       </Fragment>
