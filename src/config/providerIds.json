@@ -1,0 +1,249 @@
+[
+  {
+    "id": 8,
+    "value": "nfx",
+    "label": "Netflix",
+    "priority": 1,
+    "model": [
+      "flatrate"
+    ],
+    "slug": "netflix"
+  },
+  {
+    "id": 52,
+    "value": "ctv",
+    "label": "CraveTV",
+    "priority": 2,
+    "model": [
+      "flatrate"
+    ],
+    "slug": "cravetv"
+  },
+  {
+    "id": 119,
+    "value": "prv",
+    "label": "Amazon Prime Video",
+    "priority": 3,
+    "model": [
+      "flatrate"
+    ],
+    "slug": "amazon-prime-video"
+  },
+  {
+    "id": 169,
+    "value": "tng",
+    "label": "The Movie Network Go",
+    "priority": 4,
+    "model": [
+      "flatrate"
+    ],
+    "slug": "the-movie-network-go"
+  },
+  {
+    "id": 2,
+    "value": "itu",
+    "label": "Apple iTunes",
+    "priority": 5,
+    "model": [
+      "rent",
+      "buy"
+    ],
+    "slug": "apple-itunes"
+  },
+  {
+    "id": 3,
+    "value": "ply",
+    "label": "Google Play Movies",
+    "priority": 6,
+    "model": [
+      "rent",
+      "buy"
+    ],
+    "slug": "google-play-movies"
+  },
+  {
+    "id": 212,
+    "value": "hop",
+    "label": "Hoopla",
+    "priority": 7,
+    "model": [
+      "flatrate"
+    ],
+    "slug": "hoopla"
+  },
+  {
+    "id": 146,
+    "value": "itt",
+    "label": "iciTouTV",
+    "priority": 8,
+    "model": [
+      "ads",
+      "flatrate"
+    ],
+    "slug": "icitoutv"
+  },
+  {
+    "id": 140,
+    "value": "cpx",
+    "label": "Cineplex",
+    "priority": 9,
+    "model": [
+      "rent",
+      "buy"
+    ],
+    "slug": "cineplex"
+  },
+  {
+    "id": 73,
+    "value": "tbv",
+    "label": "Tubi TV",
+    "priority": 10,
+    "model": [
+      "ads"
+    ],
+    "slug": "tubi-tv"
+  },
+  {
+    "id": 18,
+    "value": "pls",
+    "label": "PlayStation",
+    "priority": 11,
+    "model": [
+      "rent",
+      "buy"
+    ],
+    "slug": "playstation"
+  },
+  {
+    "id": 68,
+    "value": "msf",
+    "label": "Microsoft Store",
+    "priority": 12,
+    "model": [
+      "rent",
+      "buy"
+    ],
+    "slug": "microsoft-store"
+  },
+  {
+    "id": 182,
+    "value": "hws",
+    "label": "Hollywood Suite",
+    "priority": 13,
+    "model": [
+      "flatrate"
+    ],
+    "slug": "hollywood-suite"
+  },
+  {
+    "id": 25,
+    "value": "fnd",
+    "label": "Fandor",
+    "priority": 14,
+    "model": [
+      "flatrate"
+    ],
+    "slug": "fandor"
+  },
+  {
+    "id": 87,
+    "value": "act",
+    "label": "Acorn TV",
+    "priority": 15,
+    "model": [
+      "flatrate"
+    ],
+    "slug": "acorn-tv"
+  },
+  {
+    "id": 143,
+    "value": "sdn",
+    "label": "Sundance Now",
+    "priority": 16,
+    "model": [
+      "flatrate"
+    ],
+    "slug": "sundance-now"
+  },
+  {
+    "id": 99,
+    "value": "shd",
+    "label": "Shudder",
+    "priority": 17,
+    "model": [
+      "flatrate"
+    ],
+    "slug": "shudder"
+  },
+  {
+    "id": 192,
+    "value": "yot",
+    "label": "YouTube",
+    "priority": 18,
+    "model": [
+      "buy",
+      "rent"
+    ],
+    "slug": "youtube"
+  },
+  {
+    "id": 11,
+    "value": "mbi",
+    "label": "Mubi",
+    "priority": 19,
+    "model": [
+      "flatrate"
+    ],
+    "slug": "mubi"
+  },
+  {
+    "id": 188,
+    "value": "ytr",
+    "label": "YouTube Premium",
+    "priority": 20,
+    "model": [
+      "flatrate"
+    ],
+    "slug": "youtube-premium"
+  },
+  {
+    "id": 100,
+    "value": "gdc",
+    "label": "GuideDoc",
+    "priority": 21,
+    "model": [
+      "flatrate"
+    ],
+    "slug": "guidedoc"
+  },
+  {
+    "id": 175,
+    "value": "nfk",
+    "label": "Netflix Kids",
+    "priority": 22,
+    "model": [
+      "flatrate"
+    ],
+    "slug": "netflix-kids"
+  },
+  {
+    "id": 81,
+    "value": "mts",
+    "label": "Movietickets",
+    "priority": 23,
+    "model": [
+      "cinema"
+    ],
+    "slug": "movietickets"
+  },
+  {
+    "id": 151,
+    "value": "bbo",
+    "label": "BritBox",
+    "priority": 24,
+    "model": [
+      "flatrate"
+    ],
+    "slug": "britbox"
+  }
+]
