@@ -1,4 +1,5 @@
-import genres from '../config/genreIds.json'
+import genres from '../config/genreIds.json';
+import providers from '../config/providerIds.json';
 
 export function isEmpty(obj){
   for(let name in obj){
@@ -14,6 +15,10 @@ export function imagesLoaded(parentNode) {
 
 export function getGenreName(id){
   return genres[genres.findIndex(genre => genre.id === id)].label
+}
+
+export function getProvider(id){
+  return providers[providers.findIndex(providers => providers.id === id)].icon
 }
 
 export function formatRuntime(runtime){
