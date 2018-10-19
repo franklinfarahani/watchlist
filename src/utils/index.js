@@ -18,7 +18,7 @@ export function getGenreName(id){
 }
 
 export function getProvider(id){
-  return providers[providers.findIndex(providers => providers.id === id)].icon
+  return providers[providers.findIndex(providers => providers.id === id)]
 }
 
 export function formatRuntime(runtime){
