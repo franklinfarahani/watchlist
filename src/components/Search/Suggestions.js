@@ -164,11 +164,12 @@ class Suggestions extends Component {
                   }
                 </CategorySpan>
               </RowTextContainer>
-          <AddToList
-            item={{ id: row.id, media_type: row.media_type }}
-            callback={ () => {this.setState({ display: false }); this.props.isOpen(false);}  }
-          />
-        </ResultRow>
+            </Link>
+              <AddToList
+                item={{ id: row.id, media_type: row.media_type }}
+                callback={ () => {this.setState({ display: false }); this.props.isOpen(false);}  }
+              />
+          </ResultRow>
       )
     })
   
