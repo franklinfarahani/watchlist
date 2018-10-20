@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { getTitle } from '../../actions';
-import { getGenreName, formatRuntime, isEmpty } from '../../utils'
+import { getGenreName, getProvider, formatRuntime, isEmpty } from '../../utils'
 import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
 
 import styled from 'styled-components';
@@ -12,6 +12,7 @@ import {KeyboardBackspace as mdBack} from 'styled-icons/material/KeyboardBackspa
 import ImdbIcon from '../../components/BrandIcon/ImdbIcon';
 import RtFreshIcon from '../../components/BrandIcon/RtFreshIcon';
 import RtRottenIcon from '../../components/BrandIcon/RtRottenIcon';
+import * as providers from '../../assets/icons/providers';
 
 // TODO: Add viewing options
 // TODO: Add responsive styles
@@ -82,7 +83,7 @@ const InformationContainer = styled.div`
   display:flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-between;
+  min-height: 332px;
   padding: 28px 30px 28px ${276}px;
 `
 
@@ -90,6 +91,9 @@ const InfoSection = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 24px;
+  &:last-child {
+    margin-bottom: 0;
+  }
 `
 
 const InfoUnit = styled.div`
@@ -107,7 +111,7 @@ const Label = styled.span`
   font-weight: 600;
   color: ${colors.subtitle.MEDIUM};
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 `
 
 const Title = styled.h3`
@@ -179,8 +183,13 @@ const Rating = styled.div`
   }
 `
 
+const ProviderList = styled.ul`
+  list-style-type: none;
+  display: flex;
+`
+
 const Provider = styled.li`
-  padding-right: 4px;
+  padding-right: 16px;
 `
 
 const TrailersWrapper = styled.section`
@@ -342,7 +351,26 @@ class Single extends Component {
                   {item.synopsis}
                 </Synopsis>
               </InfoUnit>
-            </InfoSection>            
+            </InfoSection>
+            <InfoSection>
+              <InfoUnit>
+                <Label>Viewing Options</Label>
+                {item.viewing_options && item.viewing_options.length !== 0 &&
+                  <ProviderList>
+                    {item.viewing_options.map(option => {
+                      const {value, label} = getProvider(option.provider_id);
+                      return (
+                        <Provider key={option.provider_id}>
+                          <a href={option.urls.standard_web}>
+                            <img src={providers[value]} alt={label} />
+                          </a>
+                        </Provider>
+                      )
+                    })}
+                  </ProviderList>
+                }
+              </InfoUnit>
+            </InfoSection>
           </InformationContainer>        
         </SingleWrapper>
         {item.clips && item.clips.length !== 0 &&
