@@ -186,10 +186,11 @@ const Rating = styled.div`
 const ProviderList = styled.ul`
   list-style-type: none;
   display: flex;
+  padding-top: 2px;
 `
 
 const Provider = styled.li`
-  padding-right: 16px;
+  padding-right: 8px;
 `
 
 const TrailersWrapper = styled.section`
@@ -361,7 +362,7 @@ class Single extends Component {
                       const {value, label} = getProvider(option.provider_id);
                       return (
                         <Provider key={option.provider_id}>
-                          <a href={option.urls.standard_web}>
+                          <a href={option.urls.standard_web} target="_blank" >
                             <img src={providers[value]} alt={label} />
                           </a>
                         </Provider>
