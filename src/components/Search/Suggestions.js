@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import {Image as faImage} from 'styled-icons/fa-regular/Image';
 import {Movie as IconMovie} from 'styled-icons/material/Movie';
@@ -49,10 +50,18 @@ const ResultRow = styled.li`
   align-items: center;
   padding: 8px 16px;
 
-  img {
-    width: 40px;
-    height: 60px;
-  }
+  a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex: 1;
+    align-items: center;
+
+    img {
+      width: 40px;
+      height: 60px;
+    }
+  }  
 
   &:hover {
     background: ${colors.bg.LIGHT};
@@ -127,33 +136,34 @@ class Suggestions extends Component {
   render() {
     const options = this.props.results.map(row => {
       return (
-        row.vote_count !== 0 &&
-        <ResultRow key={row.id}>
-          {row.poster ? 
-            <img
-              src = {`https://images.justwatch.com${row.poster}s166`}
-              alt = {`poster preview for ${row.title}`}
-            />
-            :
-            <EmptyImage>
-              <IconImage title='No Image Icon' />
-            </EmptyImage>
-          }
-          <RowTextContainer>
-            <h4>
-              {row.title}
-              <YearSpan>
-                {row.year ? `(${row.year})` : '(TBA)'}
-              </YearSpan>
-            </h4>
-            <CategorySpan>
-              {
-                row.media_type === "movie" ?
-                <Fragment><IconMovie /> movie</Fragment> :
-                <Fragment><IconTV /> tv show</Fragment>
+        row.vote_count !== 0 &&          
+          <ResultRow key={row.id}>
+            <Link to={`/${row.media_type}/${row.id}-${row.slug}`}>
+              {row.poster ? 
+                <img
+                  src = {`https://images.justwatch.com${row.poster}s166`}
+                  alt = {`poster preview for ${row.title}`}
+                />
+                :
+                <EmptyImage>
+                  <IconImage title='No Image Icon' />
+                </EmptyImage>
               }
-            </CategorySpan>
-          </RowTextContainer>
+              <RowTextContainer>
+                <h4>
+                  {row.title}
+                  <YearSpan>
+                    {row.year ? `(${row.year})` : '(TBA)'}
+                  </YearSpan>
+                </h4>
+                <CategorySpan>
+                  {
+                    row.media_type === "movie" ?
+                    <Fragment><IconMovie /> movie</Fragment> :
+                    <Fragment><IconTV /> tv show</Fragment>
+                  }
+                </CategorySpan>
+              </RowTextContainer>
           <AddToList
             item={{ id: row.id, media_type: row.media_type }}
             callback={ () => {this.setState({ display: false }); this.props.isOpen(false);}  }
