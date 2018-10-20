@@ -62,6 +62,7 @@ const SingleWrapper = styled.section`
     border-radius: 4px;
     position: absolute;
     margin: -15px 0px 0px -30px;
+    box-shadow: ${shadows.VERYHIGH}
   }
 `
 
@@ -220,6 +221,14 @@ class Single extends Component {
     getTitle(params.id, params.mediaType)
   }
 
+  componentDidUpdate(prevProps){
+    const { getTitle } = this.props;
+    const { params } = this.props.match;
+    if(params !== prevProps.match.params){
+      getTitle(params.id, params.mediaType)
+    }
+  }
+
   render() {
     const { item, isLoading } = this.props.single;
     const { history } = this.props;
@@ -290,7 +299,6 @@ class Single extends Component {
                   <Label>Runtime</Label>    
                   <PillMeta>
                     <IconClock title="Runtime"/>
-                    {console.log(convertedRuntime.minutes)}
                     {convertedRuntime.hours !== 0 ?
                       (convertedRuntime.minutes !== 0 ? 
                         `${convertedRuntime.hours}h ${convertedRuntime.minutes}mins` :

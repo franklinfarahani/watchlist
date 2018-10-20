@@ -81,6 +81,18 @@ class Search extends Component {
 
   }
 
+  componentDidUpdate(prevProps){
+    const { pathname } = this.props.location;
+    if(pathname !== prevProps.location.pathname){
+      this.search.value = '';
+      this.props.clearResults();
+      this.setState({
+        query: '',
+        isFocused: false
+      })
+    }
+  }
+
   handleChange(e) {
     clearTimeout(this.typingTimeout);
 

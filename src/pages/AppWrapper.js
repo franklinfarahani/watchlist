@@ -86,7 +86,7 @@ class AppWrapper extends Component{
       // Location needs to be explicitly passed to avoid blocking router updates
       <Wrapper location={this.props.location}>
         <Nav />
-        <Search />
+        <Search location={this.props.location}/>
         {this.props.loading ? 
           <LoaderWrapper>
             <div>            
