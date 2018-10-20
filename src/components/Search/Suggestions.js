@@ -5,7 +5,7 @@ import {Image as faImage} from 'styled-icons/fa-regular/Image';
 import {Movie as IconMovie} from 'styled-icons/material/Movie';
 import {Tv as IconTV} from 'styled-icons/material/Tv';
 import AddToList from '../AddToList';
-import { colors } from '../../config/styleVariables';
+import { colors, shadows } from '../../config/styleVariables';
 
 // Styles
 
@@ -13,7 +13,7 @@ const SuggestionsContainer = styled.div`
   background: ${colors.WHITE};
   margin: 8px 0;
   border-radius: 4px;
-  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+  box-shadow: ${shadows.VERYLOW};
   position: absolute;
   width: 100%;
   top: 85px;
