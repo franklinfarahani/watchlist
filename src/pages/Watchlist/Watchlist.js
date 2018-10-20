@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import ListItem from '../../components/ListItem/ListItem';
 import { colors } from '../../config/styleVariables';
 import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
-import * as actions from '../../actions';
+import {fetchList} from '../../actions';
 import Container from '../../components/Container';
 import Tab, {TabGroup} from '../../components/Tab';
 import {Info as mdInfo} from 'styled-icons/material/Info';
@@ -154,4 +154,4 @@ const mapStateToProps = ({ watchlist, auth }) => {
   };
 };
 
-export default connect(mapStateToProps, actions)(Watchlist);
+export default connect(mapStateToProps, {fetchList})(Watchlist);

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import { searchTitles, clearResults } from '../../actions';
 import styled from 'styled-components';
 import {Search as faSearch} from 'styled-icons/fa-solid/Search';
 import {Close as mdClose} from 'styled-icons/material/Close';
@@ -189,7 +189,7 @@ const mapStateToProps = ({ search }) => {
   };
 };
 
-export default connect(mapStateToProps, actions)(Search);
+export default connect(mapStateToProps, { searchTitles, clearResults })(Search);
 
 
 

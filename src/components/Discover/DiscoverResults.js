@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import * as actions from '../../actions';
+import { fetchList, discoverTitles } from '../../actions';
 import { colors, shadows } from '../../config/styleVariables';
 import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
 import AddToList from '../AddToList';
@@ -183,4 +183,4 @@ const mapStateToProps = ({ discover, auth, watchlist }) => {
   };
 };
 
-export default connect(mapStateToProps, actions)(DiscoverResults);
+export default connect(mapStateToProps, { fetchList, discoverTitles })(DiscoverResults);
