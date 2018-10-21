@@ -1,15 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Discover from '../../components/Discover'
 
-const TV = ({location}) => {
+const TV = () => {
   return (
-    <Discover mediaType='show' location={location}/>
+    <Discover mediaType='show'/>
   )
 }
-
-TV.propTypes = {
-  location: PropTypes.object.isRequired
-};
 
 export default TV;
