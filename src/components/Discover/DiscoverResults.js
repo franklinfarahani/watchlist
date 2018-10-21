@@ -126,7 +126,7 @@ class DiscoverResults extends Component {
     if (selectedGenres !== prevProps.selectedGenres || selectedProviders !== prevProps.selectedProviders) {
       const options = {
         mediaType,
-        genres: selectedGenres.length !== 0 ? JSON.stringify(selectedGenres) : null,
+        genres: selectedGenres.length !== 0 ? selectedGenres : null,
         providers: selectedProviders.length !== 0 ? JSON.stringify(selectedProviders) : null,
         page,
         pageSize

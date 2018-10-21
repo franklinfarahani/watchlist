@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 
 import styled from 'styled-components';
@@ -46,7 +47,6 @@ class Discover extends Component {
     this.handleGenreChange = this.handleGenreChange.bind(this);
   }
 
-  // TODO: add componentDidMount and componentDidUpdate for parsing location prop changes
   componentDidMount() {
     const { search } = this.props.location;
     const parsed = queryString.parse(search);
@@ -74,12 +74,20 @@ class Discover extends Component {
   }
 
   handleGenreChange(newSelectedGenres){
-    this.setState({selectedGenres: newSelectedGenres.map(genre => genre.value)})
+    const { history, isLoading } = this.props;
+    const genreValues = newSelectedGenres.map(genre => genre.value);
+    console.log(newSelectedGenres)
+    // this.setState({selectedGenres: genreValues})    
+    history.push({
+      search: `?genres=${JSON.stringify(genreValues)}`
+    })
   }
 
   render() {
     const { selectedGenres, selectedProviders, page, pageSize } = this.state;
     const { mediaType } = this.props;
+    // console.log(JSON.parse(selectedGenres))
+    // const genresObject = JSON.parse(selectedGenres).map(selectedGenre => genres[genres.findIndex(genre => genre.value === selectedGenre)]);
     
     return (
       <Container>
@@ -89,6 +97,7 @@ class Discover extends Component {
             <GenreSelect
               isMulti
               options={genres}
+              // defaultValue={genresObject}
               onChange={this.handleGenreChange}
               closeMenuOnSelect={false}
               placeholder={'Select genre...'}
@@ -121,4 +130,4 @@ const mapStateToProps = ({ discover }) => {
   };
 };
 
-export default connect(mapStateToProps)(Discover);
+export default withRouter(connect(mapStateToProps)(Discover));
