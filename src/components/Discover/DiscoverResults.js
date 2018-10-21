@@ -33,17 +33,28 @@ const DiscoverItem = styled.li`
   overflow: hidden;
   border-radius: 4px;
   box-shadow: ${shadows.VERYLOW};
+`
+
+const CardBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 67px;
+  padding: 11px 12px;
 
   h3 {
     font-size: 13px;
     font-weight: 500;
     line-height: 1.2;
-    padding: 11px 12px;
     color: ${colors.BLACK};
 
     span {
       color: ${colors.subtitle.MEDIUM};
     }
+  }
+
+  button {
+    align-self: flex-end;
   }
 `
 
@@ -139,16 +150,17 @@ class DiscoverResults extends Component {
             alt = {`poster preview for ${value.title}`}
           />
         </Link>
-          <h3>
-            {value.title} 
-            <span>
-              {` (${value.year})`}
-            </span>
+          <CardBody>
+            <h3>
+              {value.title} 
+              <span>
+                {` (${value.year})`}
+              </span>            
+            </h3>
             <AddToList
               item={{ id: value.id, media_type: value.media_type }}
             />
-            
-          </h3>        
+          </CardBody>    
       </DiscoverItem>);
 
       return (
