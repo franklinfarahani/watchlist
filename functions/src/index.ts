@@ -152,6 +152,10 @@ app.get("/search", async (req, resp) => {
   const genre = req.query.genre || null;
   const ageRating = req.query.age_rating || null;
   const provider = req.query.provider || null;
+  const releaseYearFrom = req.query.year_from || null;
+  const releaseYearUntil = req.query.year_until || null;
+  const minScoringValue = req.query.min_score || 0;
+  const maxScoringValue = req.query.max_score || 0;
   const page = req.query.page || 1;
   const pageSize = req.query.page_size || 8;
   const url = 'https://apis.justwatch.com/content/titles/en_CA/popular?body={' +
@@ -160,6 +164,9 @@ app.get("/search", async (req, resp) => {
     `"genres":${genre},` +
     `"age_certifications":${ageRating},` +
     `"providers":${provider},` +
+    `"release_year_from":${releaseYearFrom},` +
+    `"release_year_until":${releaseYearUntil},` +
+    `"scoring_filter_types":{"imdb:score":{"min_scoring_value":${minScoringValue},"max_scoring_value":${maxScoringValue}}},` +
     `"page":${page},` +
     `"page_size":${pageSize}}`
 
