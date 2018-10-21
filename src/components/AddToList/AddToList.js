@@ -40,6 +40,7 @@ class AddToList extends Component {
     )
   }
 
+  // TODO: add buffer action and reducer state for added/removed items when not logged in
   handleClick(e, itemSelected) {
     const { addToList, removeFromList, signIn, auth, callback } = this.props;
     e.preventDefault();

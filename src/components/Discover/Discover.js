@@ -9,6 +9,7 @@ import Container from '../../components/Container';
 import GenreSelect from '../../components/GenreSelect'
 import genres from '../../config/genreIds.json';
 
+// TODO: fix default values for react-select
 // TODO: build filtering system using react-select
 // TODO: build dropdown for sorting by Release date, Aggregate Rating
 
