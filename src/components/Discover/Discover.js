@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import queryString from 'query-string';
 
 import styled from 'styled-components';
 import { select } from '../../config/styleVariables';
@@ -44,7 +45,32 @@ class Discover extends Component {
     this.handleGenreChange = this.handleGenreChange.bind(this);
   }
 
-  //TODO: add componentDidMount and componentDidUpdate for parsing location prop changes
+  // TODO: add componentDidMount and componentDidUpdate for parsing location prop changes
+  componentDidMount() {
+    const { search } = this.props.location;
+    const parsed = queryString.parse(search);
+    this.setState({
+      selectedGenres: parsed.genres ? parsed.genres : [],
+      selectedProviders: parsed.providers ? parsed.providers : [],
+      sortBy: parsed.sort_by ? parsed.sort_by : 'release_date',
+      page: parsed.page ? parsed.page : 1,
+      pageSize: parsed.page_size ? parsed.page_size : 16
+    })
+  }
+
+  componentDidUpdate(prevProps) {
+    const { search } = this.props.location;
+    if (search !== prevProps.location.search) {
+      const parsed = queryString.parse(search);
+      this.setState({
+        selectedGenres: parsed.genres ? parsed.genres : [],
+        selectedProviders: parsed.providers ? parsed.providers : [],
+        sortBy: parsed.sort_by ? parsed.sort_by : 'release_date',
+        page: parsed.page ? parsed.page : 1,
+        pageSize: parsed.page_size ? parsed.page_size : 16
+      })
+    }
+  }
 
   handleGenreChange(newSelectedGenres){
     this.setState({selectedGenres: newSelectedGenres.map(genre => genre.value)})

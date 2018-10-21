@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Discover from '../../components/Discover'
+import Discover from '../../components/Discover';
 
 const Movies = ({location}) => {
   return (
