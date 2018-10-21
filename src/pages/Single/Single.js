@@ -14,8 +14,8 @@ import RtFreshIcon from '../../components/BrandIcon/RtFreshIcon';
 import RtRottenIcon from '../../components/BrandIcon/RtRottenIcon';
 import * as providers from '../../assets/icons/providers';
 
-// TODO: Add viewing options
 // TODO: Add responsive styles
+// TODO: Fix loading skeleton
 
 const IconBack = styled(mdBack)`
   color: ${colors.PRIMARY};

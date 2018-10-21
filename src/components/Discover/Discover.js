@@ -44,6 +44,8 @@ class Discover extends Component {
     this.handleGenreChange = this.handleGenreChange.bind(this);
   }
 
+  //TODO: add componentDidMount and componentDidUpdate for parsing location prop changes
+
   handleGenreChange(newSelectedGenres){
     this.setState({selectedGenres: newSelectedGenres.map(genre => genre.value)})
   }

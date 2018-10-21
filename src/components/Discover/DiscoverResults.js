@@ -8,6 +8,8 @@ import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
 import AddToList from '../AddToList';
 import {Info as mdInfo} from 'styled-icons/material/Info';
 
+//TODO: fix loading skeleton
+
 const IconInfo = styled(mdInfo)`
   color: ${colors.subtitle.MEDIUM};
   width: 60px;
