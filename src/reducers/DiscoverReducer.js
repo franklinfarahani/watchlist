@@ -6,6 +6,10 @@ import {
 
 const initialState = {
   results: [],
+  page: 1,
+  pageSize: 16,
+  totalPages: null,
+  totalResults: null,
   isLoading: false,
   error: null
 }
@@ -15,9 +19,14 @@ export default (state = initialState, action) => {
     case DISCOVER_INIT:
       return { ...state, isLoading: true }
     case DISCOVER_SUCCESS:
+      const { items, page, page_size, total_pages, total_results } = action.payload;
       return {
         ...state,
-        results: action.payload,
+        results: items,
+        page: page,
+        pageSize: page_size,
+        totalPages: total_pages,
+        totalResults: total_results,
         isLoading: false
       };
     case DISCOVER_FAIL:

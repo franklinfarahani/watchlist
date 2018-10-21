@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import { connect } from 'react-redux';
 
+import styled from 'styled-components';
 import { select } from '../../config/styleVariables';
 import DiscoverResults from './DiscoverResults';
 import Container from '../../components/Container';
@@ -44,7 +45,6 @@ class Discover extends Component {
   }
 
   handleGenreChange(newSelectedGenres){
-    // console.log(newSelectedGenres.map(genre => genre.value));
     this.setState({selectedGenres: newSelectedGenres.map(genre => genre.value)})
   }
 
@@ -63,7 +63,7 @@ class Discover extends Component {
               onChange={this.handleGenreChange}
               closeMenuOnSelect={false}
               placeholder={'Select genre...'}
-              className='select-container'
+              className="select-container"
               classNamePrefix={select}
             />
           </div>
@@ -80,4 +80,16 @@ class Discover extends Component {
   }
 }
 
-export default Discover;
+const mapStateToProps = ({ discover }) => {
+  return {
+    results: discover.results,
+    page: discover.page,
+    pageSize: discover.pageSize,
+    totalPages: discover.totalPages,
+    totalResults: discover.totalResults,
+    isLoading: discover.isLoading,
+    error: discover.error,
+  };
+};
+
+export default connect(mapStateToProps)(Discover);

@@ -72,7 +72,7 @@ export const discoverTitles = (options) => ({
       `&page=${options.page}` +
       `&page_size=${options.pageSize}`,
     init: label => discoverInit(label),
-    success: results => discoverSuccess(results.items),
+    success: results => discoverSuccess(results),
     fail: label => discoverFail(label),
     label: 'discover'
   }
