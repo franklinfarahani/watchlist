@@ -1,15 +1,16 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { signIn, signOut } from '../../actions';
 import PropTypes from 'prop-types';
+import { signIn, signOut } from '../../actions';
+import Button from '../Button';
+import DropMenu from '../DropMenu';
+
 import styled from 'styled-components';
 import watchlistLogo from '../../assets/icons/watchlist.svg';
 import { ChevronDown as faChevronDown } from 'styled-icons/fa-solid/ChevronDown';
 import { ChevronUp as faChevronUp } from 'styled-icons/fa-solid/ChevronUp';
 import UserMenuSkeleton from '../Skeleton/UserMenuSkeleton';
-import Button from '../Button';
-import DropMenu from '../DropMenu';
 import {colors} from '../../config/styleVariables';
 
 const IconDown = styled(faChevronDown)`
@@ -116,10 +117,6 @@ class Nav extends Component {
     this.setState({isOpen: dataFromMenu});
   }
   
-  static contextTypes = {
-    router: PropTypes.object
-  };
-
   render(){
     const { authenticated, loading, signIn, signOut, user } = this.props;
 
@@ -166,6 +163,15 @@ class Nav extends Component {
       </NavContainer>
     )
   }
+};
+
+Nav.propTypes = {
+  router: PropTypes.object,
+  authenticated: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+  signIn: PropTypes.func.isRequired,
+  signOut: PropTypes.func.isRequired,
+  user: PropTypes.object
 };
 
 function mapStateToProps({ auth }) {
