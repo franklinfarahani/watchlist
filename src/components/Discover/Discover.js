@@ -64,31 +64,31 @@ class Discover extends Component {
     if (search !== prevProps.location.search) {
       const parsed = queryString.parse(search);
       this.setState({
-        selectedGenres: parsed.genres ? parsed.genres : [],
-        selectedProviders: parsed.providers ? parsed.providers : [],
-        sortBy: parsed.sort_by ? parsed.sort_by : 'release_date',
-        page: parsed.page ? parsed.page : 1,
-        pageSize: parsed.page_size ? parsed.page_size : 16
+        selectedGenres: parsed.genres || [],
+        selectedProviders: parsed.providers || [],
+        sortBy: parsed.sort_by || 'release_date',
+        page: parsed.page || 1,
+        pageSize: parsed.page_size || 16
       })
     }
   }
 
   handleGenreChange(newSelectedGenres){
-    const { history, isLoading } = this.props;
+    const { history } = this.props;
     const genreValues = newSelectedGenres.map(genre => genre.value);
-    console.log(newSelectedGenres)
-    // this.setState({selectedGenres: genreValues})    
+    // this.setState({selectedGenres: genreValues})
     history.push({
-      search: `?genres=${JSON.stringify(genreValues)}`
+      search: genreValues.length !== 0 ? `?genres=${JSON.stringify(genreValues)}` : ''
     })
   }
 
   render() {
     const { selectedGenres, selectedProviders, page, pageSize } = this.state;
     const { mediaType } = this.props;
-    // console.log(JSON.parse(selectedGenres))
-    // const genresObject = JSON.parse(selectedGenres).map(selectedGenre => genres[genres.findIndex(genre => genre.value === selectedGenre)]);
-    
+    const genresObject = selectedGenres.length !== 0 ?
+      JSON.parse(selectedGenres)
+        .map(selectedGenre => genres[genres.findIndex(genre => genre.value === selectedGenre)]) : [];
+
     return (
       <Container>
         <Controls>
@@ -97,7 +97,7 @@ class Discover extends Component {
             <GenreSelect
               isMulti
               options={genres}
-              // defaultValue={genresObject}
+              value={genresObject}
               onChange={this.handleGenreChange}
               closeMenuOnSelect={false}
               placeholder={'Select genre...'}
