@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
+import Paginate from 'react-paginate'; 
 
 import styled from 'styled-components';
 import { select } from '../../config/styleVariables';
@@ -45,6 +46,7 @@ class Discover extends Component {
     }
 
     this.handleGenreChange = this.handleGenreChange.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   componentDidMount() {
@@ -78,13 +80,24 @@ class Discover extends Component {
     const genreValues = newSelectedGenres.map(genre => genre.value);
     // this.setState({selectedGenres: genreValues})
     history.push({
-      search: genreValues.length !== 0 ? `?genres=${JSON.stringify(genreValues)}` : ''
+      search: genreValues.length !== 0 ? `genres=${JSON.stringify(genreValues)}` : ''
+    })
+  }
+
+  handlePageChange(newPage){
+    const { history } = this.props;
+    console.log(newPage.selected !== 0 ? `page=${newPage.selected + 1}` : '');
+    history.push({
+      search: newPage.selected !== 0 ? `page=${newPage.selected + 1}` : '',
+    })
+    history.push({
+      search: 'test',
     })
   }
 
   render() {
     const { selectedGenres, selectedProviders, page, pageSize } = this.state;
-    const { mediaType } = this.props;
+    const { mediaType, totalPages } = this.props;
     const genresObject = selectedGenres.length !== 0 ?
       JSON.parse(selectedGenres)
         .map(selectedGenre => genres[genres.findIndex(genre => genre.value === selectedGenre)]) : [];
@@ -112,6 +125,19 @@ class Discover extends Component {
           selectedProviders={selectedProviders}
           page={page}
           pageSize={pageSize}
+        />
+        <Paginate
+          previousLabel={<div>prev</div>}
+          nextLabel={"next"}
+          breakLabel={<a href="">...</a>}
+          breakClassName={"break-me"}
+          pageCount={totalPages}
+          marginPagesDisplayed={1}
+          pageRangeDisplayed={4}
+          onPageChange={this.handlePageChange}
+          containerClassName={"pagination"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"}
         />
       </Container>
     );
