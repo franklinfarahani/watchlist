@@ -90,9 +90,6 @@ class Discover extends Component {
     history.push({
       search: newPage.selected !== 0 ? `page=${newPage.selected + 1}` : '',
     })
-    history.push({
-      search: 'test',
-    })
   }
 
   render() {
