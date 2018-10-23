@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { fetchList, discoverTitles } from '../../actions';
 import { colors, shadows } from '../../config/styleVariables';
 import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
+import Img from '../../components/Img';
 import AddToList from '../AddToList';
 import {Info as mdInfo} from 'styled-icons/material/Info';
 
@@ -145,8 +146,8 @@ class DiscoverResults extends Component {
     const list = results.map((value, key) => 
       <DiscoverItem key={key}>
         <Link to={`/${value.media_type}/${value.id}-${value.slug}`}>
-          <img
-            src = {`https://images.justwatch.com${value.poster}s166`}
+          <Img
+            src = {value.poster && `https://images.justwatch.com${value.poster}s166`}
             alt = {`poster preview for ${value.title}`}
           />
         </Link>
