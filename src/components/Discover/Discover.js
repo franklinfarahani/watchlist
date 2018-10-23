@@ -61,8 +61,10 @@ class Discover extends Component {
     })
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const { search } = this.props.location;
+    const { page, selectedGenres } = this.state;
+    const { history } = this.props;
     if (search !== prevProps.location.search) {
       const parsed = queryString.parse(search);
       this.setState({
@@ -73,23 +75,37 @@ class Discover extends Component {
         pageSize: parsed.page_size || 16
       })
     }
+
+    // Check to see if state has changed. If it has, create new query from them to be pushed on the history stack
+    if (page !== prevState.page || selectedGenres !== prevState.selectedGenres){
+      const query = {
+        genres: selectedGenres
+      }
+
+      // if current page is 1 do not display it in the address
+      if (page !== 1) {
+        query.page = page;
+      }
+      // query needs to be properly formatted and stringified from object to string
+      const stringifiedQuery = queryString.stringify(query);
+      history.push({
+        search: stringifiedQuery,
+      })
+    }
   }
 
   handleGenreChange(newSelectedGenres){
-    const { history } = this.props;
+    // Convert the object returned from react-select to only its value
+    // Reset current page is genre is changed for better UX
     const genreValues = newSelectedGenres.map(genre => genre.value);
-    // this.setState({selectedGenres: genreValues})
-    history.push({
-      search: genreValues.length !== 0 ? `genres=${JSON.stringify(genreValues)}` : ''
+    this.setState({
+      selectedGenres: genreValues.length !== 0 ? JSON.stringify(genreValues) : '',
+      page: 1
     })
   }
 
   handlePageChange(newPage){
-    const { history } = this.props;
-    console.log(newPage.selected !== 0 ? `page=${newPage.selected + 1}` : '');
-    history.push({
-      search: newPage.selected !== 0 ? `page=${newPage.selected + 1}` : '',
-    })
+    this.setState({page: newPage.selected !== 0 ? newPage.selected + 1 : ''})
   }
 
   render() {
