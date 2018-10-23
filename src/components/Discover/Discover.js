@@ -117,11 +117,11 @@ class Discover extends Component {
     const { search } = this.props.location;
     const parsed = queryString.parse(search);
     this.setState({
-      selectedGenres: parsed.genres ? parsed.genres : [],
-      selectedProviders: parsed.providers ? parsed.providers : [],
-      sortBy: parsed.sort_by ? parsed.sort_by : 'release_date',
-      page: parsed.page ? parsed.page : 1,
-      pageSize: parsed.page_size ? parsed.page_size : 16
+      selectedGenres: parsed.genres || [],
+      selectedProviders: parsed.providers || [],
+      sortBy: parsed.sort_by || 'release_date',
+      page: parsed.page || 1,
+      pageSize: parsed.page_size || 16
     })
   }
 
@@ -205,6 +205,7 @@ class Discover extends Component {
         />
         <PaginateWrapper>
           <Paginate
+            forcePage={Number(page-1)}
             previousLabel={<IconLeft />}
             nextLabel={<IconRight />}
             breakLabel={"..."}
