@@ -2,7 +2,8 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { getTitle } from '../../actions';
 import { getGenreName, getProvider, formatRuntime, isEmpty } from '../../utils'
-import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
+import SingleBodySkeleton from '../../components/Skeleton/SingleBodySkeleton';
+import SingleTitleSkeleton from '../../components/Skeleton/SingleTitleSkeleton';
 
 import styled from 'styled-components';
 import { colors, shadows } from '../../config/styleVariables';
@@ -241,10 +242,10 @@ class Single extends Component {
             Back
           </BackButton>
           <Title>
-            <span>Loading...</span>
+            <SingleTitleSkeleton />
           </Title>
         </Header>
-        <ListItemSkeleton />
+        <SingleBodySkeleton />
       </Fragment>
       )
     }
