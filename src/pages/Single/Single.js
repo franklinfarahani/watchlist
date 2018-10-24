@@ -16,7 +16,7 @@ import RtRottenIcon from '../../components/BrandIcon/RtRottenIcon';
 import * as providers from '../../assets/icons/providers';
 
 // TODO: Add responsive styles
-// TODO: Fix loading skeleton
+// TODO: use Img instead of img
 
 const IconBack = styled(mdBack)`
   color: ${colors.PRIMARY};
