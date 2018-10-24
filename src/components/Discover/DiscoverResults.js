@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchList, discoverTitles } from '../../actions';
 import { colors, shadows } from '../../config/styleVariables';
-import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
+import DiscoverItemSkeleton from '../../components/Skeleton/DiscoverItemSkeleton';
 import Img from '../../components/Img';
 import AddToList from '../AddToList';
 import {Info as mdInfo} from 'styled-icons/material/Info';
@@ -95,7 +95,10 @@ const EmptyList = styled.div`
 `
 
 const SkeletonWrapper = styled.div`
-  padding-top: 114px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
 `
 
 class DiscoverResults extends Component {
@@ -138,7 +141,7 @@ class DiscoverResults extends Component {
 
   renderSkeleton(number){
     let loaders = [...Array(number).keys()]
-    return loaders.map((key) => <ListItemSkeleton key={key}/>)
+    return loaders.map((key) => <DiscoverItemSkeleton key={key}/>)
   }
 
   render (){
@@ -167,7 +170,7 @@ class DiscoverResults extends Component {
       return (
         isLoading ? 
           <SkeletonWrapper>  
-            {this.renderSkeleton(8)}
+            {this.renderSkeleton(16)}
           </SkeletonWrapper> :
           (results.length !== 0) ?
             <ListWrapper>
