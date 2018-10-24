@@ -371,7 +371,7 @@ class Single extends Component {
                       const {value, label} = getProvider(option.provider_id);
                       return (
                         <Provider key={option.provider_id}>
-                          <a href={option.urls.standard_web} target="_blank" >
+                          <a href={option.urls.standard_web} target="_blank" rel="noopener noreferrer">
                             <img src={providers[value]} alt={label} />
                           </a>
                         </Provider>
