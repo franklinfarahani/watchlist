@@ -6,7 +6,7 @@ import SingleBodySkeleton from '../../components/Skeleton/SingleBodySkeleton';
 import SingleTitleSkeleton from '../../components/Skeleton/SingleTitleSkeleton';
 
 import styled from 'styled-components';
-import { colors, shadows } from '../../config/styleVariables';
+import { colors, shadows, media, sizes } from '../../config/styleVariables';
 import {Image as faImage} from 'styled-icons/fa-regular/Image';
 import {Clock as faClock} from 'styled-icons/fa-regular/Clock';
 import {KeyboardBackspace as mdBack} from 'styled-icons/material/KeyboardBackspace';
@@ -33,6 +33,7 @@ const IconClock = styled(faClock)`
 const Header = styled.header`
   padding: 24px;
   margin-bottom: 15px;
+  ${media.phone`margin-bottom: 0;`}
 `
 
 const BackButton = styled.button`
@@ -54,17 +55,26 @@ const BackButton = styled.button`
 const SingleWrapper = styled.section`
   background: ${colors.WHITE};
   display: flex;
+  ${media.phone`display: block;`}
   margin-bottom: 16px;
   overflow: hidden;
   border-radius: 4px;
   box-shadow: ${shadows.VERYLOW};
   margin-left: 30px;
+  ${media.phone`margin-left: 0;`}
   & > img {
     border-radius: 4px;
     position: absolute;
+    ${media.phone`position: inherit;`}
     margin: -15px 0px 0px -30px;
-    box-shadow: ${shadows.VERYHIGH}
-  }
+    ${media.phone`margin: 0;`}
+    box-shadow: ${shadows.VERYHIGH};
+    ${media.phone`
+      display: block;
+      width: 100%;
+      height: auto;
+    `}  
+    }
 `
 
 const EmptyImage = styled.div`
@@ -87,6 +97,7 @@ const InformationContainer = styled.div`
   flex-wrap: wrap;
   min-height: 332px;
   padding: 28px 30px 28px ${276}px;
+  ${media.phone`padding: 28px 30px 28px 30px;`}
 `
 
 const InfoSection = styled.div`
@@ -204,6 +215,8 @@ const TrailersWrapper = styled.section`
   border-radius: 4px;
   box-shadow: ${shadows.VERYLOW};
   iframe {
+    min-height: 405px;
+    ${media.phone`min-height: 292px;`}
     margin-bottom: 4px;
     &:last-child {
       margin-bottom: 0;
@@ -276,6 +289,10 @@ class Single extends Component {
           {item.poster ? 
             <img
               src = {`https://images.justwatch.com${item.poster}s276`}
+              srcSet= {`https://images.justwatch.com${item.poster}s276 276w,
+                        https://images.justwatch.com${item.poster}s592 592w`}
+              sizes={`(max-width: ${sizes.phone}px) 592px,
+                      (min-width: ${sizes.phone}px) 276px`}
               alt = {`poster preview for ${item.title}`}
             />
             :
@@ -390,8 +407,6 @@ class Single extends Component {
                   <iframe
                     title={clip.name}
                     key={clip.external_id} 
-                    width="720"
-                    height="405"
                     src={`https://www.youtube.com/embed/${clip.external_id}`}
                     frameBorder="0"
                     allow="autoplay; encrypted-media"
