@@ -57,7 +57,7 @@ const PaginateWrapper = styled.div`
     align-items: center;
     li {
       position: relative;
-      padding: 14px 10px;
+      padding: 14px 6px;
       margin: 0 6px;
       cursor: pointer;
       color: ${colors.subtitle.MEDIUM};
