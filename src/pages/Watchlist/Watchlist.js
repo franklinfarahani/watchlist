@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import ListItem from '../../components/ListItem/ListItem';
-import { colors } from '../../config/styleVariables';
+import { colors, media } from '../../config/styleVariables';
 import ListItemSkeleton from '../../components/Skeleton/ListItemSkeleton';
 import {fetchList} from '../../actions';
 import Container from '../../components/Container';
@@ -60,6 +60,7 @@ const Controls = styled.div`
 
 const WatchlistWrapper = styled.ul`
   background: transparent;
+  ${media.phone`margin: 0 16px;`}
 `
 
 const SkeletonWrapper = styled.div`
