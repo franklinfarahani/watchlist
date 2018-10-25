@@ -5,7 +5,7 @@ import {Image as faImage} from 'styled-icons/fa-regular/Image';
 import {Movie as IconMovie} from 'styled-icons/material/Movie';
 import {Tv as IconTV} from 'styled-icons/material/Tv';
 import AddToList from '../AddToList';
-import { colors, shadows } from '../../config/styleVariables';
+import { colors, shadows, media } from '../../config/styleVariables';
 
 // Styles
 
@@ -17,12 +17,14 @@ const SuggestionsContainer = styled.div`
   position: absolute;
   width: 100%;
   top: 85px;
+  ${media.phone`top: 44px;`}
 `
 
 const ResultList = styled.ul`
   background: transparent;
   margin: 0;
   padding: 0 16px;
+  ${media.phone`padding: 0;`}
 `
 
 const RowTextContainer = styled.div`
@@ -30,11 +32,14 @@ const RowTextContainer = styled.div`
   flex: 1;
   flex-direction: column;
   align-items: space-around;
-  padding-left: 16px;
+  padding: 0 16px;
+  ${media.phone`padding: 0 12px;`}
   
   h4{
     font-weight: 600;
+    line-height: 1.2;
     margin-bottom: 4px;
+    ${media.phone`margin-bottom: 0;`}
   }
 
   span {
@@ -49,6 +54,7 @@ const ResultRow = styled.li`
   display: flex;
   align-items: center;
   padding: 8px 16px;
+  ${media.phone`padding: 0 12px 12px;`}
 
   a {
     text-decoration: none;
@@ -70,10 +76,12 @@ const ResultRow = styled.li`
 
   &:first-child {
     margin-top: 16px;
+    ${media.phone`margin-top: 12px;`}
   }
 
   &:last-child {
     margin-bottom: 16px;
+    ${media.phone`margin-bottom: 0;`}
   }
 `
 
