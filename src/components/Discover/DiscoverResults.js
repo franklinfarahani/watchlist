@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchList, discoverTitles } from '../../actions';
-import { colors, shadows } from '../../config/styleVariables';
+import { colors, shadows, media } from '../../config/styleVariables';
 import DiscoverItemSkeleton from '../../components/Skeleton/DiscoverItemSkeleton';
 import Img from '../../components/Img';
 import AddToList from '../AddToList';
@@ -21,6 +21,7 @@ const ListWrapper = styled.ul`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+  ${media.phone`justify-content: space-evenly;`}
 `
 
 const DiscoverItem = styled.li`
@@ -97,6 +98,7 @@ const SkeletonWrapper = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+  ${media.phone`justify-content: space-evenly;`}
 `
 
 class DiscoverResults extends Component {
