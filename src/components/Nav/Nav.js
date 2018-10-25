@@ -11,7 +11,7 @@ import watchlistLogo from '../../assets/icons/watchlist.svg';
 import { ChevronDown as faChevronDown } from 'styled-icons/fa-solid/ChevronDown';
 import { ChevronUp as faChevronUp } from 'styled-icons/fa-solid/ChevronUp';
 import UserMenuSkeleton from '../Skeleton/UserMenuSkeleton';
-import {colors} from '../../config/styleVariables';
+import {colors, media} from '../../config/styleVariables';
 
 const IconDown = styled(faChevronDown)`
   color: ${colors.PRIMARY};
@@ -25,10 +25,12 @@ const IconUp = styled(faChevronUp)`
   margin-bottom: -1px;
 `
 
-const NavContainer = styled.div`
+const NavContainer = styled.nav`
   display: flex;
   height: 100px;
+  ${media.phone`height: 60px;`}
   justify-content: space-between;
+  ${media.phone`padding: 6px 16px;`}
   &::before {
     content: "";
     position: absolute;
@@ -46,29 +48,39 @@ const LogoContainerLink = styled(Link)`
   align-items: center;
   justify-content: space-between;
   padding-left: 5px;
-  width: 135px;
   font-size: 24px;
+  ${media.phone`font-size: 20px;`}
   font-weight: 400;
   text-decoration:none;
   color: ${colors.BLACK};
-`
-
-const NavLinks = styled.nav`
-  display: flex;
-  align-items: center;
-  ul, div {
-    list-style-type: none;
-    display: flex;
-    justify-content: space-between;
-    margin: 0;
+  img {
+    padding-right: 8px;
+    ${media.phone`padding-right: 6px;`}
   }
 `
+
 const NavLinksPages = styled.ul`
-  width: 150px;
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  ${media.phone`justify-content: space-evenly;`}
+  align-items: center;
   padding : 0 30px;
+  ${media.phone`padding : 0 20px;`}
+  li {
+    padding-right: 30px;
+    ${media.phone`padding-right: 16px;`}
+    &:last-child{
+      padding-right: 0;
+    }
+    span {
+      ${media.phone`display: none;`}
+    }
+  }
   li a {
     text-decoration: none;
-    font-size: 15px;
+    font-size: 16px;
+    ${media.phone`font-size: 14px;`}
     color: ${colors.NAV};
     transition: color .2s;
     &:hover {
@@ -83,6 +95,20 @@ const NavLinksCTA = styled.div`
   
   ${Button} {
     margin-left: .5em;
+    ${media.phone`margin-left: 0;`}
+    &:first-of-type {
+      ${media.phone`display: none;`}
+    }
+    &:last-of-type {
+      span:last-child {
+        display: initial;
+        ${media.phone`display: none;`}
+      }
+      span:first-child {
+        display: none;
+        ${media.phone`display: initial;`}
+      }
+    }
   }
 
   img {
@@ -126,10 +152,9 @@ class Nav extends Component {
             <img src={watchlistLogo} height="24" alt="Watchlist" />
             Watchlist
           </LogoContainerLink>
-        <NavLinks>
           <NavLinksPages role='navigation'>
             <li><Link to='/movies'>Movies</Link></li>
-            <li><Link to='/tv'>TV Shows</Link></li>
+            <li><Link to='/tv'>TV <span>Shows</span></Link></li>
           </NavLinksPages>
           <NavLinksCTA>
             {loading || !user ? 
@@ -155,11 +180,10 @@ class Nav extends Component {
                 :
                 <Fragment>
                   <Button onClick={signIn}>Log In</Button>
-                  <Button onClick={signIn} category='primary'>Register</Button>
+                  <Button onClick={signIn} category='primary'><span>Sign In/Up</span><span>Register</span></Button>
                 </Fragment>
             }
           </NavLinksCTA>
-        </NavLinks>
       </NavContainer>
     )
   }
