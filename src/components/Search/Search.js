@@ -7,7 +7,7 @@ import {Close as mdClose} from 'styled-icons/material/Close';
 import Suggestions from './Suggestions';
 import SearchBackdrop from './SearchBackdrop'
 import MDSpinner from 'react-md-spinner';
-import { colors, shadows } from '../../config/styleVariables';
+import { colors, shadows, media } from '../../config/styleVariables';
 
 
 const FormContainer = styled.form`
@@ -15,6 +15,7 @@ const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   position: relative;
+  ${media.phone`margin: 0 16px;`}
 `
 
 const SearchBarContainer = styled.div`
@@ -30,16 +31,19 @@ const IconContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 80px;
+  ${media.phone`width: 40px;`}
 `
 
 const IconSearch = styled(faSearch)`
   color: ${colors.subtitle.MEDIUM};
   width: 24px;
+  ${media.phone`width: 20px;`}
 `
 
 const IconClose = styled(mdClose)`
   color: ${colors.BLACK};
   width: 32px;
+  ${media.phone`width: 28px;`}
 `
 
 const SearchBar = styled.input`
@@ -50,6 +54,8 @@ const SearchBar = styled.input`
   display: block;
   line-height: 80px;
   font-size: 32px;
+  ${media.phone`line-height: 40px;`}
+  ${media.phone`font-size: 20px;`}
   font-weight: 200;
   margin: 0;
   min-width: 0;
