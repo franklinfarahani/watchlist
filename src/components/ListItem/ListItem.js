@@ -6,7 +6,7 @@ import Button from '../../components/Button';
 import { getGenreName, formatRuntime, truncateText } from '../../utils'
 
 import styled from 'styled-components';
-import { colors, shadows } from '../../config/styleVariables';
+import { colors, shadows, media } from '../../config/styleVariables';
 import {Image as faImage} from 'styled-icons/fa-regular/Image';
 import {Close as mdClose} from 'styled-icons/material/Close';
 import {Clock as faClock} from 'styled-icons/fa-regular/Clock';
@@ -30,8 +30,12 @@ const ListItemWrapper = styled.li`
   overflow: hidden;
   border-radius: 4px;
   box-shadow: ${shadows.VERYLOW};
-  img {
+  & > img {
     max-height: 100%;
+    ${media.phone`
+      width: 83px;
+      height: 118px;
+    `}
   }
 
   a:first-of-type {
@@ -64,12 +68,15 @@ const InformationContainer = styled.div`
   justify-content: space-between;
   flex: 1;
   padding: 28px 30px;
+  ${media.phone`padding: 12px 12px;`}
 `
 
 const Title = styled.h3`
   font-size: 21px;
+  ${media.phone`font-size: 16px;`}
   font-weight: 600;
   padding-bottom: 8px;
+  ${media.phone`padding-bottom: 0;`}
 `
 
 const YearSpan = styled.span`
@@ -80,21 +87,24 @@ const YearSpan = styled.span`
 `
 
 const GenresContainer = styled.span`
-  color: ${colors.subtitle.MEDIUM};
+  display: flex;
+  flex-wrap: wrap;
   padding-top: 6px;
   padding-bottom: 8px;
 `
 
 const Genre = styled.span`
-  color: ${colors.WHITE};
-  border-radius: 4px;
-  padding: 2px 5px;
-  margin-right: 6px;
-  background: linear-gradient(to bottom, ${colors.SECONDARY} 0%, ${colors.PRIMARY} 100%);
-  text-transform: uppercase;
-  font-weight: 600;
   font-size: 9.5px;
+  font-weight: 600;
+  text-transform: uppercase;
   letter-spacing: .5px;
+  line-height: 1.5;
+  padding: 0px 5px;
+  margin-bottom: 3px;
+  margin-right: 3px;
+  border-radius: 4px;
+  color: ${colors.WHITE};  
+  background: linear-gradient(to bottom, ${colors.SECONDARY} 0%, ${colors.PRIMARY} 100%);
 `
 
 const Synopsis = styled.p`
@@ -103,6 +113,7 @@ const Synopsis = styled.p`
   line-height: 20px;
   flex: 1;
   margin-top: 5px;
+  ${media.phone`display: none;`}
 `
 
 const MetaContainer = styled.div`
@@ -140,6 +151,7 @@ const NoRatings = styled.span`
 
 const ControlsContainer = styled.div`
   padding: 24px;
+  ${media.phone`padding: 3px 2px;`}
 `
 
 class ListItem extends Component {
