@@ -36,6 +36,9 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+  &::selection {
+    background: ${colors.subtitle.PINK};
+  }
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -44,6 +47,8 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+  -webkit-tap-highlight-color: rgba(48,48,48,.5);
+  
 }
 ol, ul {
 	list-style: none;
