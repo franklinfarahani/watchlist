@@ -86,6 +86,13 @@ const YearSpan = styled.span`
   color: ${colors.subtitle.MEDIUM};
 `
 
+const GenresPositioner = styled.div`
+  ${media.phone`
+    flex: 1;
+    margin-top: 4px;
+  `}
+`
+
 const GenresContainer = styled.span`
   display: flex;
   flex-wrap: wrap;
@@ -220,14 +227,16 @@ class ListItem extends Component {
               </YearSpan>
             </Title>
           </Link>
-          <GenresContainer>            
-              {/* Slice the array into only 3 genres for better UI */}
-              {item.genres.slice(0, 3).map(genre =>
-                <Genre key={genre}>
-                  {getGenreName(genre, item.media_type)}
-                </Genre>
-              )}
-          </GenresContainer>
+          <GenresPositioner>
+            <GenresContainer>            
+                {/* Slice the array into only 3 genres for better UI */}
+                {item.genres.slice(0, 3).map(genre =>
+                  <Genre key={genre}>
+                    {getGenreName(genre, item.media_type)}
+                  </Genre>
+                )}
+            </GenresContainer>
+          </GenresPositioner>
           <Synopsis>
             {isTitleOverflowing ? truncateText(item.synopsis, 170) : truncateText(item.synopsis, 230)}
             {item.synopsis.length > 175 && '...'}
