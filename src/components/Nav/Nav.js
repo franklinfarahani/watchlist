@@ -175,7 +175,7 @@ class Nav extends Component {
                 >
                   
                   <Link to='/app'>My List</Link>
-                  <a role='menuitem' onClick={signOut}>Log Out</a>
+                  <button role='menuitem' onClick={signOut}>Log Out</button>
                 </DropMenu>
                 :
                 <Fragment>

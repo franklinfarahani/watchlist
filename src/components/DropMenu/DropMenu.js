@@ -32,7 +32,7 @@ const MenuListItem = styled.li`
   color: ${colors.subtitle.MEDIUM}; 
   border-radius: 4px;
   
-  a {
+  a, button {
     padding: 8px 16px;
     color: inherit;
     text-decoration: none;
