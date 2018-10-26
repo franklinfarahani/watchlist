@@ -15,7 +15,7 @@ export const colors = {
       LIGHT: '#cccccc',
       MEDIUM_LIGHT: '#bbbbbb',
       MEDIUM: '#aaaaaa',
-      PINK: '#cea5c1'
+      PINK: '#9652cc'
     },
   bg :
     {
