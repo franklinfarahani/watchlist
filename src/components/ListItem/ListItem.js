@@ -33,8 +33,8 @@ const ListItemWrapper = styled.li`
   & > img {
     max-height: 100%;
     ${media.phone`
-      width: 83px;
-      height: 118px;
+      width: 56.27px;
+      height: 80px;
     `}
   }
 
@@ -83,6 +83,7 @@ const YearSpan = styled.span`
   font-size: 16px;
   font-weight: 400;
   padding: 0 10px;
+  ${media.phone`padding: 0 4px;`}
   color: ${colors.subtitle.MEDIUM};
 `
 
@@ -90,6 +91,7 @@ const GenresPositioner = styled.div`
   ${media.phone`
     flex: 1;
     margin-top: 4px;
+    display: none;
   `}
 `
 
@@ -148,6 +150,7 @@ const Meta = styled.span`
   padding: 2px 4px;
   font-weight: 400;
   margin-left: 6px;
+  ${media.phone`display: none;`}
 `
 
 const NoRatings = styled.span`
