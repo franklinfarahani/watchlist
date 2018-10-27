@@ -15,7 +15,7 @@ import RtFreshIcon from '../../components/BrandIcon/RtFreshIcon';
 import RtRottenIcon from '../../components/BrandIcon/RtRottenIcon';
 
 // TODO: Add viewing options
-// TODO: Add responsive styles
+// TODO: Fix swipe so that genres and runtime can be included
 
 const IconClock = styled(faClock)`
   width: 12px;
