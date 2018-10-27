@@ -1,6 +1,6 @@
 {
   "name": "watchlist",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "private": true,
   "dependencies": {
     "components": "^0.1.0",
