@@ -1,4 +1,4 @@
-import {getGenreName, getProvider, formatRuntime, formatDate} from './';
+import { getGenreName, getProvider, formatRuntime, formatDate, truncateText } from './';
 
 test('get "Drama" given genre id 6', () => {
   expect(getGenreName(6)).toBe('Drama');
@@ -14,4 +14,8 @@ test('get 2 hours and 4 minutes given 124', () => {
 
 test('get 28 October 2018 given "2018-10-28"', () => {
   expect(formatDate('2018-10-28')).toEqual({year: '2018', month: 'October', day: '28'});
+});
+
+test('get "The quick brown fox " given "The quick brown fox jumps over the lazy dog" and 22', () => {
+  expect(truncateText("The quick brown fox jumps over the lazy dog", 22)).toBe("The quick brown fox ");
 });
